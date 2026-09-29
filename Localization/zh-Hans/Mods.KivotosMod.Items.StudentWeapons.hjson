@@ -1,0 +1,49 @@
+HoshinoWeapon: {
+	DisplayName: 荷鲁斯之眼
+	Tooltip: ""
+}
+
+HinaWeapon: {
+	DisplayName: 终末·毁灭者
+	Tooltip: ""
+}
+
+HarukaWeapon: {
+	DisplayName: 驱散者
+	Tooltip: ""
+}
+
+KayokoWeapon: {
+	DisplayName: 恶魔咆哮
+	Tooltip: ""
+}
+
+MidoriWeapon: {
+	DisplayName: 清爽灵感
+	Tooltip: ""
+}
+
+KoharuWeapon: {
+	DisplayName: 黑色正义
+	Tooltip: ""
+}
+
+YuukaWeapon: {
+	DisplayName: 逻辑与理性
+	Tooltip: ""
+}
+
+MeguWeapon: {
+	DisplayName: 天惠神力！
+	Tooltip: ""
+}
+
+MomoiWeapon: {
+	DisplayName: 独特创意
+	Tooltip: ""
+}
+
+MutsukiWeapon: {
+	DisplayName: 给不给糖都捣蛋
+	Tooltip: ""
+}
