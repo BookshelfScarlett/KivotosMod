@@ -1,10 +1,6 @@
 ﻿using KivotosMod.Content.Raritys.Helper;
 using KivotosMod.Content.Raritys.Sparkles;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,7 +22,7 @@ namespace KivotosMod.Content.Raritys.DrawMethods
                 int lifetime = 160;
                 Vector2 position = RarityDrawHelper.GetParticlePosition(tooltipLine);
                 Vector2 velocity = -Vector2.UnitY * Main.rand.NextFloat(0.25f, 0.55f) * (1 * -0.75f);
-                RarityShinyOrb rarityShinyOrb = new(position, velocity, Color.Lerp(Color.Black, Color.White,Main.rand.NextFloat()), lifetime, scale);
+                RarityShinyOrb rarityShinyOrb = new(position, velocity, Color.Lerp(Color.Black, Color.White, Main.rand.NextFloat()), lifetime, scale);
                 particleList.Add(rarityShinyOrb);
             }
         }

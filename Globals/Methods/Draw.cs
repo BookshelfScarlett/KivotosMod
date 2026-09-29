@@ -113,7 +113,7 @@ namespace KivotosMod.Globals.Methods
           SB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         public static Color RandLerpColor(this Color c1, Color c2) => Color.Lerp(c1, c2, Main.rand.NextFloat());
         public static Vector2 RandVector2() => Main.rand.NextFloat(TwoPi).ToRotationVector2();
-         public static RenderTarget2D NewRT2D(float Mult = 1f)
+        public static RenderTarget2D NewRT2D(float Mult = 1f)
         {
             return new RenderTarget2D(Main.graphics.GraphicsDevice, (int)(Main.screenWidth * Mult), (int)(Main.screenHeight * Mult));
         }

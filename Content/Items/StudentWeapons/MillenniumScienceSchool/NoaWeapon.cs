@@ -1,15 +1,10 @@
 ﻿using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KivotosMod.Content.Items.StudentWeapons.MillenniumScienceSchool
 {
-    public class NoaWeapon: StudentWeaponClass
+    public class NoaWeapon : StudentWeaponClass
     {
         protected override string Owner => "Noa";
         public override void SetStaticDefaults()

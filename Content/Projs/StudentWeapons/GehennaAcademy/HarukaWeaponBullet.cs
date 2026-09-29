@@ -1,5 +1,5 @@
-﻿using KivotosMod.Cores.ParticlesECS;
-using KivotosMod.Globals.Classes;
+﻿using KivotosMod.Assets.Register;
+using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Methods;
 using Terraria;
@@ -7,11 +7,12 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KivotosMod.Content.Projs.StudentWeapons
+namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
 {
-    internal class HinaWeaponBullet : KivotosPlayerProjs
+    public class HarukaWeaponBullet : ModProjectile, ILocalizedModType
     {
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
+        public override string Texture => KivotosTextureAssets.InvisAsset.Path;
         public override void SetStaticDefaults()
         {
             Projectile.ToTrailSetting(8);
@@ -80,6 +81,5 @@ namespace KivotosMod.Content.Projs.StudentWeapons
             Main.spriteBatch.EndShaderArea();
             return false;
         }
-
     }
 }

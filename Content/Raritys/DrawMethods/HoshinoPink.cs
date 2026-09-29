@@ -1,17 +1,13 @@
 ﻿using KivotosMod.Content.Raritys.Helper;
 using KivotosMod.Content.Raritys.Sparkles;
 using KivotosMod.Globals.Methods;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace KivotosMod.Content.Raritys.DrawMethods
 {
-    public static class HoshinoPink 
+    public static class HoshinoPink
     {
         public static void DrawItemName(DrawableTooltipLine line)
         {

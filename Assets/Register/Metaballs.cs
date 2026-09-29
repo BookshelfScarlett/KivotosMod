@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace KivotosMod.Assets.Register
 {
     public partial class KivotosTextureAssets : ModSystem
     {
         public string MetaballPath => "KivotosMod/Assets/Texture/Metaballs/";
-        public static Tex2DWithPath Metaball_Bloody{ get; set; }
-        public static Tex2DWithPath Metaball_ShadowNebula{ get; set; }
+        public static Tex2DWithPath Metaball_Bloody { get; set; }
+        public static Tex2DWithPath Metaball_ShadowNebula { get; set; }
         public void LoadMetaballs()
         {
             Metaball_Bloody = new Tex2DWithPath(MetaballPath + "Bloody");

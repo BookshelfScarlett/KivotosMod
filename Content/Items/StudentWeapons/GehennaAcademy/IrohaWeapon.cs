@@ -1,11 +1,6 @@
 ﻿using KivotosMod.Globals.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KivotosMod.Content.Items.StudentWeapons.Gehenna
+namespace KivotosMod.Content.Items.StudentWeapons.GehennaAcademy
 {
     public class IrohaWeapon : StudentWeaponClass
     {

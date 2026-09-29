@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -45,9 +40,9 @@ namespace KivotosMod.Globals.Methods
         /// 获取射弹的贴图
         /// </summary>
         public static Texture2D GetTexture(this Projectile proj) => TextureAssets.Projectile[proj.type].Value;
-                public static bool IsOutScreen(this Projectile proj, float mult = 1f) => OutOffScreen(proj.Center, mult);
+        public static bool IsOutScreen(this Projectile proj, float mult = 1f) => OutOffScreen(proj.Center, mult);
 
-                /// <summary>
+        /// <summary>
         /// 轨迹设置，一般情况下默认使用模式2
         /// </summary>
         /// <param name="proj"></param>

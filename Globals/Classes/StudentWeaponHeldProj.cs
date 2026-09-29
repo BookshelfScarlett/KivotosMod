@@ -1,11 +1,6 @@
 ﻿using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Graphics;
 using KivotosMod.Globals.Methods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +11,7 @@ namespace KivotosMod.Globals.Classes
     /// <br>这个基类专门用于实现类似荷鲁斯之眼<see langword="EyeofHorus"/>的手持显示效果，已经自动管理了绝大部分从攻击到绘制的内容</br>
     /// <br>一般情况下和大部分武显模组本身冲突。</br>
     /// </summary>
-    public abstract class KivotosRangedWeaponProjectie: ModProjectile, ILocalizedModType
+    public abstract class KivotosRangedWeaponProjectie : ModProjectile, ILocalizedModType
     {
         public Player Owner => Main.player[Projectile.owner];
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
@@ -209,7 +204,6 @@ namespace KivotosMod.Globals.Classes
                 Projectile.Center = Owner.MountedCenter;
                 Projectile.position.Y += Owner.gfxOffY;
             }
-
         }
         /// <summary>
         /// 武器后坐力动画的进程控制

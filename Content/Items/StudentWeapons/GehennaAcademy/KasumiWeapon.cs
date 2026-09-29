@@ -1,15 +1,10 @@
 ﻿using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KivotosMod.Content.Items.StudentWeapons.Gehenna
+namespace KivotosMod.Content.Items.StudentWeapons.GehennaAcademy
 {
-    public class KasumiWeapon :StudentWeaponClass
+    public class KasumiWeapon : StudentWeaponClass
     {
         protected override string Owner => "Kasumi";
         public override void SetStaticDefaults()

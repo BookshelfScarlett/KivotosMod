@@ -1,74 +1,103 @@
 HoshinoWeapon: {
 	DisplayName: 荷鲁斯之眼
-	Tooltip: ""
+	Tooltip:
+		'''
+		手持时增加{0}防御力
+		低概率击晕敌人并治愈自身
+		'''
+	FlavorTooltip:
+		'''
+		星野爱用的简洁造型的霰弹枪
+		平时懒洋洋的她，唯独对于枪
+		的整备绝不会懈怠
+		'''
 }
 
 HinaWeapon: {
-	DisplayName: 终末·毁灭者
-	Tooltip: ""
+	DisplayName: 终幕·毁灭者
+	Tooltip: 攻击时间越长，发射的子弹越多
+	FlavorTooltip:
+		'''
+		日奈的机关枪，她视其为手足
+		违反校规扰乱风纪之人，都将
+		会被冷酷无情的破坏力所吹飞
+		'''
 }
 
 HarukaWeapon: {
 	DisplayName: 驱散者
 	Tooltip: ""
+	FlavorTooltip: ""
 }
 
 KayokoWeapon: {
 	DisplayName: 恶魔咆哮
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 MidoriWeapon: {
 	DisplayName: 清爽灵感
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 KoharuWeapon: {
 	DisplayName: 黑色正义
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 YuukaWeapon: {
 	DisplayName: 逻辑与理性
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 MeguWeapon: {
 	DisplayName: 天惠神力！
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 MomoiWeapon: {
 	DisplayName: 独特创意
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 MutsukiWeapon: {
 	DisplayName: 给不给糖都捣蛋
 	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 SerikaWeapon: {
-	// DisplayName: Serika Weapon
-	// Tooltip: ""
+	DisplayName: 真挚
+	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 AruWeapon: {
-	// DisplayName: Aru Weapon
-	// Tooltip: ""
+	DisplayName: 猩红仰慕
+	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 IrohaWeapon: {
-	// DisplayName: Iroha Weapon
-	// Tooltip: ""
+	DisplayName: Iroha Weapon
+	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 KasumiWeapon: {
-	// DisplayName: Kasumi Weapon
-	// Tooltip: ""
+	DisplayName: Kasumi Weapon
+	Tooltip: ""
+	// FlavorTooltip: ""
 }
 
 NoaWeapon: {
-	// DisplayName: Noa Weapon
-	// Tooltip: ""
+	DisplayName: Noa Weapon
+	Tooltip: ""
+	// FlavorTooltip: ""
 }

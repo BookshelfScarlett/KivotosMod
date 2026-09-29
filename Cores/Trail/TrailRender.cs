@@ -1,5 +1,4 @@
-﻿using KivotosMod.Cores.Trail;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria;
 
 namespace KivotosMod.Cores.Trail

@@ -20,4 +20,9 @@ KivotosClientConfig: {
 		// Label: Screen Dark Strength
 		// Tooltip: ""
 	}
+
+	TextboxSize: {
+		// Label: Textbox Size
+		// Tooltip: ""
+	}
 }

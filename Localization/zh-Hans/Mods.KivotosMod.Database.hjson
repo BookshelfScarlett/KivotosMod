@@ -9,11 +9,12 @@ StudentNames: {
 	Haruka: 伊草遥香
 	Megu: 下仓惠
 	Mutsuki: 浅黄睦月
-	// Aru: ""
-	// Noa: ""
-	// Shiroko: ""
-	// Iroha: ""
-	// Serika: ""
+	Aru: 陆八魔阿露
+	Noa: 生盐诺亚
+	Shiroko: 砂狼白子
+	Iroha: 枣伊吕波
+	Serika: 黑见芹香
+	// Kasumi: ""
 }
 
 OwnerPrefix: 武器归属

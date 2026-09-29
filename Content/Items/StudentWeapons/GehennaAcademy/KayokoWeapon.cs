@@ -1,16 +1,11 @@
-﻿using KivotosMod.Content.Projs.StudentWeapons;
+﻿using KivotosMod.Content.Projs.StudentWeapons.AbydosHighSchool;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KivotosMod.Content.Items.StudentWeapons.Gehenna
+namespace KivotosMod.Content.Items.StudentWeapons.GehennaAcademy
 {
-    public class KayokoWeapon: StudentWeaponClass
+    public class KayokoWeapon : StudentWeaponClass
     {
         protected override string Owner => "Kayoko";
         public override void SetStaticDefaults()

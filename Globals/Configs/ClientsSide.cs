@@ -13,7 +13,7 @@ namespace KivotosMod.Globals.Configs
         }
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message) => false;
-        
+
         [BackgroundColor(211, 211, 211, 192)]
         [DefaultValue(true)]
         public bool SpecialRarity { get; set; }
@@ -32,5 +32,9 @@ namespace KivotosMod.Globals.Configs
         [Range(0f, 1f)]
         [DefaultValue(1f)]
         public float ScreenDarkStrength { get; set; }
+        [BackgroundColor(211, 211, 211, 192)]
+        [Range(0f, 1f)]
+        [DefaultValue(1f)]
+        public float TextboxSize { get; set; }
     }
 }

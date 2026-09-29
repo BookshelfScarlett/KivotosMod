@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KivotosMod.Content.Items.StudentWeapons.AbydosHighSchool
+﻿namespace KivotosMod.Content.Items.StudentWeapons.AbydosHighSchool
 {
     internal class ShirokoWeapon
     {

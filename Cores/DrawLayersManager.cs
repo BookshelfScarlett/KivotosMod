@@ -1,7 +1,7 @@
-﻿using HJScarletRework.Core.PixelatedRender;
-using KivotosMod.Cores.MetaballSystem;
+﻿using KivotosMod.Cores.MetaballSystem;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Cores.ParticleSystem;
+using KivotosMod.Cores.PixelatedRender;
 using KivotosMod.Cores.ScreenEffect;
 using Terraria;
 using Terraria.ModLoader;

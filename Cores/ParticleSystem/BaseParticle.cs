@@ -63,7 +63,7 @@ namespace KivotosMod.Cores.ParticleSystem
         {
             if (Main.netMode == NetmodeID.Server)
                 return this;
-            if (UseBlendState== BlendState.AlphaBlend)
+            if (UseBlendState == BlendState.AlphaBlend)
             {
                 if (!Important && BaseParticleManager.ActiveParticlesAlpha.Count > ParticleUtilities.MaxParticles)
                     BaseParticleManager.ActiveParticlesAlpha.RemoveAt(0);
