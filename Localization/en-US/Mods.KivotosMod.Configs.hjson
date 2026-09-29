@@ -1,1 +1,23 @@
-KivotosClientConfig.DisplayName: Kivotos Client Config
+KivotosClientConfig: {
+	DisplayName: Kivotos Client Config
+
+	SpecialRarity: {
+		Label: Special Rarity
+		Tooltip: ""
+	}
+
+	MaxParticleCounts: {
+		Label: Max Particle Counts
+		Tooltip: ""
+	}
+
+	ScreenShakeStrength: {
+		Label: Screen Shake Strength
+		Tooltip: ""
+	}
+
+	ScreenDarkStrength: {
+		Label: Screen Dark Strength
+		Tooltip: ""
+	}
+}

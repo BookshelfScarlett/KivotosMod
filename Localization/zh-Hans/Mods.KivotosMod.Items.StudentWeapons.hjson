@@ -47,3 +47,28 @@ MutsukiWeapon: {
 	DisplayName: 给不给糖都捣蛋
 	Tooltip: ""
 }
+
+SerikaWeapon: {
+	// DisplayName: Serika Weapon
+	// Tooltip: ""
+}
+
+AruWeapon: {
+	// DisplayName: Aru Weapon
+	// Tooltip: ""
+}
+
+IrohaWeapon: {
+	// DisplayName: Iroha Weapon
+	// Tooltip: ""
+}
+
+KasumiWeapon: {
+	// DisplayName: Kasumi Weapon
+	// Tooltip: ""
+}
+
+NoaWeapon: {
+	// DisplayName: Noa Weapon
+	// Tooltip: ""
+}

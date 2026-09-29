@@ -13,6 +13,8 @@ namespace KivotosMod.Assets.Register
         public static Effect AlphaFade;
         public static Effect AlphaFadeNoiseColor;
         public static Effect StandardFlowShader;
+        public static Effect MetaBallShader;
+        public static Effect Pixelation;
         public override void Load()
         {
             if (Main.dedServ)
@@ -24,11 +26,15 @@ namespace KivotosMod.Assets.Register
             }
             AlphaFade = LoadShader(nameof(AlphaFade));
             AlphaFadeNoiseColor = LoadShader("AlphaFade_Noise_OColor");
-            //StandardFlowShader = LoadShader(nameof(StandardFlowShader));
+            MetaBallShader = LoadShader(nameof(MetaBallShader));
+            StandardFlowShader = LoadShader(nameof(StandardFlowShader));
+            Pixelation = LoadShader(nameof(Pixelation));
 
             RegisterMiscShader(AlphaFade, ToPassName(nameof(AlphaFade)), nameof(AlphaFade));
             RegisterMiscShader(StandardFlowShader, ToPassName(nameof(StandardFlowShader)), nameof(StandardFlowShader));
-            //RegisterMiscShader(AlphaFadeNoiseColor, ToPassName("AlphaFade_Noise_OColor"), "AlphaFade_Noise_OColor");
+            RegisterMiscShader(MetaBallShader, ToPassName(nameof(MetaBallShader)), nameof(MetaBallShader));
+            RegisterMiscShader(AlphaFadeNoiseColor, ToPassName("AlphaFade_Noise_OColor"), "AlphaFade_Noise_OColor");
+            RegisterMiscShader(Pixelation, ToPassName(nameof(Pixelation)), nameof(Pixelation));
         }
         public static string ToPassName(string oriShadername) => ShaderPrefix + oriShadername + "Pass";
         public static void RegisterMiscShader(Effect shader, string passName, string registrationName)
@@ -41,7 +47,9 @@ namespace KivotosMod.Assets.Register
         {
             AlphaFade = null;
             AlphaFadeNoiseColor = null;
-            //StandardFlowShader = null;
+            MetaBallShader = null;
+            StandardFlowShader = null;
+            Pixelation = null;
         }
     }
 }

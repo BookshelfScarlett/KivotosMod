@@ -10,7 +10,6 @@
 
 	<!-- References -->
 	<ItemGroup>
-	  <Folder Include="Assets\Effects\" />
 	  <Folder Include="Globals\Graphics\ModDusts\" />
 	  <Folder Include="Globals\Graphics\Metaballs\" />
 	  <Folder Include="Globals\Instances\Tiles\" />

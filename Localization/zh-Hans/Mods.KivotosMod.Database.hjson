@@ -7,8 +7,13 @@ StudentNames: {
 	Koharu: 下江小春
 	Kayoko: 鬼方佳代子
 	Haruka: 伊草遥香
-	Megu: "下仓惠"
-	Mutsuki: "浅黄睦月"
+	Megu: 下仓惠
+	Mutsuki: 浅黄睦月
+	// Aru: ""
+	// Noa: ""
+	// Shiroko: ""
+	// Iroha: ""
+	// Serika: ""
 }
 
 OwnerPrefix: 武器归属
