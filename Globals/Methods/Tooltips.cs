@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -87,6 +83,7 @@ namespace KivotosMod.Globals.Methods
                 tooltips.Insert(count, newLine);
             }
         }
+        public static bool IsItemName(this DrawableTooltipLine line) => line.Name == "ItemName" && line.Mod == "Terraria";
         public static string ToLangValue(this string textPath) => Language.GetTextValue(textPath);
 
         public static string ToFormatValue(this string baseTextValue, params object[] args)
@@ -99,6 +96,15 @@ namespace KivotosMod.Globals.Methods
             {
                 return baseTextValue + "格式化出错";
             }
+        }
+                public static string ToPercent(this float value)
+        {
+            float value2 = value * 100f;
+            return $"{(int)value2}%";
+        }
+        public static string ToLifeRegenFormat(this int value)
+        {
+            return $"+{(value / 2)} HP/s";
         }
     }
 }

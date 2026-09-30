@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KivotosMod.Globals.Database.IDSets
+﻿namespace KivotosMod.Globals.Database.IDSets
 {
     internal class KivotosItemIDSets
     {

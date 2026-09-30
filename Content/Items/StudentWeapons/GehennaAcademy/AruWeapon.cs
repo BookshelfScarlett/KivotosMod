@@ -1,11 +1,11 @@
-﻿using KivotosMod.Content.Projs.StudentWeapons;
+﻿using KivotosMod.Content.Projs.StudentWeapons.AbydosHighSchool;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
 
-namespace KivotosMod.Content.Items.StudentWeapons.Gehenna
+namespace KivotosMod.Content.Items.StudentWeapons.GehennaAcademy
 {
-    public class AruWeapon: StudentWeaponClass
+    public class AruWeapon : StudentWeaponClass
     {
         protected override string Owner => "Aru";
         public override void SetStaticDefaults()

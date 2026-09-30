@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -84,6 +80,20 @@ namespace KivotosMod.Globals.Methods
             ProjID = ProjectileType<T>();
             return HasProj<T>(player);
         }
-
+        /// <summary>
+        /// 计算防御力加成，返回增加的防御力数值
+        /// <br><paramref name="multiplier"/>为比率，如果低于1则返回0</br>
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="multiplier"></param>
+        /// <param name="noClamp">是否不进行 clamp 操作</param>
+        /// <returns></returns>
+        public static int DefenseMultiplier(this Player owner, float multiplier, bool noClamp = false)
+        {
+            float ratios = multiplier - 1f;
+            if (ratios <= 0f && !noClamp)
+                ratios = 0f;
+            return (int)(owner.statDefense * ratios);
+        }
     }
 }

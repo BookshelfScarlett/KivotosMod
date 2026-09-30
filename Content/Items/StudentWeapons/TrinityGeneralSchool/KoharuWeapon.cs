@@ -1,16 +1,11 @@
-﻿using KivotosMod.Content.Projs.StudentWeapons;
+﻿using KivotosMod.Content.Projs.StudentWeapons.AbydosHighSchool;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KivotosMod.Content.Items.StudentWeapons.TrinityGeneralSchool
 {
-    public class KoharuWeapon: StudentWeaponClass
+    public class KoharuWeapon : StudentWeaponClass
     {
         protected override string Owner => "Koharu";
         public override void SetStaticDefaults()

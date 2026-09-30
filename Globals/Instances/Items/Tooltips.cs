@@ -1,11 +1,7 @@
 ﻿using KivotosMod.Content.Raritys.Helper;
 using KivotosMod.Globals.Database.Lists;
 using KivotosMod.Globals.Methods;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,7 +14,16 @@ namespace KivotosMod.Globals.Instances.Items
             if (KivotosLists.StudentWeaponDictionary.TryGetValue(item.type, out string value))
             {
                 // Modify tooltips for student weapons
-                int index = tooltips.FindIndex(t => t.Name.Contains("Tooltip") && t.Mod == "Terraria");
+                int index = -1;
+                int firstLine = tooltips.FindIndex(t => t.Name.Contains("Tooltip") && t.Mod == "Terraria");
+                index = firstLine;
+                for (int i = firstLine; i < tooltips.Count; i++)
+                {
+                    if (tooltips[i].Name.Contains("Tooltip") && tooltips[i].Mod == "Terraria")
+                        index++;
+                    else
+                        break;
+                }
                 string name = Mod.GetLocalizationKey("Database.StudentNames." + value).ToLangValue();
                 string ownerPrefix = Mod.GetLocalizationKey("Database.OwnerPrefix").ToLangValue();
                 string tooltip = $"={ownerPrefix}·{name}=";

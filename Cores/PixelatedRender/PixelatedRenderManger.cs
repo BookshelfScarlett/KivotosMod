@@ -1,12 +1,11 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Cores.PixelatedRender;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Methods;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace HJScarletRework.Core.PixelatedRender
+namespace KivotosMod.Cores.PixelatedRender
 {
     public class PixelatedRenderManager : ModSystem
     {

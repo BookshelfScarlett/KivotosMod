@@ -1,17 +1,17 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Items.StudentWeapons.Gehenna;
+using KivotosMod.Content.Items.StudentWeapons.GehennaAcademy;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;
 using Terraria;
 using Terraria.Audio;
 
-namespace KivotosMod.Content.Projs.StudentWeapons
+namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
 {
-    public class HinaWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class HarukaWeaponHeldProj : KivotosRangedWeaponProjectie
     {
-        public override int OriginalItemID => ItemType<HinaWeapon>();
-        public override string Texture => GetInstance<HinaWeapon>().Texture;
+        public override int OriginalItemID => ItemType<HarukaWeapon>();
+        public override string Texture => GetInstance<HarukaWeapon>().Texture;
         public override float HoldoutDrawScale => .98f;
         public override Color HoldoutEdgeColor => Color.Pink;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
@@ -27,7 +27,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons
             for (int i = 0; i < 5; i++)
             {
                 Vector2 randomVelocity = dir.RotatedByRandom(randRot) * Main.rand.NextFloat(0.88f, 1.12f);
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, randomVelocity * 16f, ProjectileType<HoshinoWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, randomVelocity * 16f, ProjectileType<HarukaWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
             }
             for (int i = 0; i < 28; i++)
             {

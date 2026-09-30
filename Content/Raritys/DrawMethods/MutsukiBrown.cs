@@ -1,11 +1,7 @@
 ﻿using KivotosMod.Content.Raritys.Helper;
 using KivotosMod.Content.Raritys.Sparkles;
 using KivotosMod.Globals.Methods;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +11,7 @@ namespace KivotosMod.Content.Raritys.DrawMethods
     {
         public static void DrawItemName(DrawableTooltipLine line)
         {
-            RarityDrawHelper.DrawCustomTooltipLine(line, Color.Black, Color.Lerp(Color.DarkRed,Color.DarkViolet,.35f), Color.White, 1.1f);
+            RarityDrawHelper.DrawCustomTooltipLine(line, Color.Black, Color.Lerp(Color.DarkRed, Color.DarkViolet, .35f), Color.White, 1.1f);
         }
         public static void DrawFlavorNameRarity(DrawableTooltipLine drawableTooltipLine, ref List<RaritySparkle> flavorSparkles)
         {

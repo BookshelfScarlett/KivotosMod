@@ -7,7 +7,7 @@ namespace KivotosMod.Content.Items.StudentWeapons.MillenniumScienceSchool
     /// <summary>
     /// 这玩意需要做一个双持效果，但是目前还没有实现，暂时先不做了
     /// </summary>
-    public class YuukaWeapon: StudentWeaponClass
+    public class YuukaWeapon : StudentWeaponClass
     {
         protected override string Owner => "Yuuka";
         public override void SetStaticDefaults()

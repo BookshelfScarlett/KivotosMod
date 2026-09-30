@@ -2,11 +2,7 @@
 using KivotosMod.Globals.Instances.NPCs;
 using KivotosMod.Globals.Instances.Projs;
 using KivotosMod.Globals.Players;
-using System;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ModLoader;
-using XPT.Core.Audio.MP3Sharp.Decoding;
 
 namespace KivotosMod.Globals.Methods
 {
@@ -22,6 +18,10 @@ namespace KivotosMod.Globals.Methods
             item.noUseGraphic = true;
             item.channel = channel;
             item.autoReuse = autoReuse;
+        }
+        public static bool IsLegal(this Item item)
+        {
+            return !item.IsAir && item is not null;
         }
     }
 }

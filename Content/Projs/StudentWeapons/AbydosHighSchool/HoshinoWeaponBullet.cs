@@ -7,7 +7,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KivotosMod.Content.Projs.StudentWeapons
+namespace KivotosMod.Content.Projs.StudentWeapons.AbydosHighSchool
 {
     public class HoshinoWeaponBullet : ModProjectile, ILocalizedModType
     {
@@ -36,7 +36,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons
                 return;
             if (Main.rand.NextBool(6))
             {
-                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1f, 2f), 
+                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1f, 2f),
                     Color.Lerp(Color.Pink, Color.LightPink, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .5f, .2f);
             }
             if (Main.rand.NextBool(3))

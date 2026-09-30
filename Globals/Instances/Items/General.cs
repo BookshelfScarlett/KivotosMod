@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace KivotosMod.Globals.Instances.Items
 {

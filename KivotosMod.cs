@@ -1,7 +1,7 @@
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
-global using static Terraria.ModLoader.ModContent;
 global using static Microsoft.Xna.Framework.MathHelper;
+global using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
 
 

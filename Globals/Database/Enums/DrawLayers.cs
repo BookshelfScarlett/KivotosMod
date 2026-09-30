@@ -3,7 +3,7 @@
 namespace KivotosMod.Globals.Database.Enums
 {
     [Flags]
-    public enum KivotosDrawLayer 
+    public enum KivotosDrawLayer
     {
         BeforeTiles,
         BeforeNPCs,
