@@ -95,7 +95,6 @@ namespace KivotosMod.Content.Projs.StudentWeapons.MillenniumScienceSchool
         }
         public BlendState BlendState => BlendState.AlphaBlend;
         public KivotosDrawLayer LayerToRenderTo => KivotosDrawLayer.BeforeDusts;
-        public SpriteBatch SB { get => Main.spriteBatch; }
         public void RenderPixelated(SpriteBatch spriteBatch)
         {
             if (!Projectile.Kivotos().FirstFrame)
