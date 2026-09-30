@@ -97,7 +97,7 @@ namespace KivotosMod.Globals.Methods
                 return baseTextValue + "格式化出错";
             }
         }
-                public static string ToPercent(this float value)
+        public static string ToPercent(this float value)
         {
             float value2 = value * 100f;
             return $"{(int)value2}%";

@@ -8,13 +8,11 @@ using KivotosMod.Globals.Methods;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
 {
-    internal class HinaWeaponBullet : KivotosPlayerProjs
+    public class HinaWeaponBullet : KivotosPlayerProjs
     {
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
         public override void SetStaticDefaults()
@@ -40,12 +38,12 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
                 return;
             if (Main.rand.NextBool(6))
             {
-                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4),Projectile.velocity/3f+ Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1f, 2f),
+                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(4), Projectile.velocity / 3f + Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1f, 2f),
                     Color.Lerp(Color.DarkViolet, Color.Violet, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .5f, .2f);
             }
             if (Main.rand.NextBool(3))
             {
-                ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(4),Projectile.velocity/3f+ Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1, 2),
+                ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(4), Projectile.velocity / 3f + Main.rand.NextFloat(TwoPi).ToRotationVector2() * Main.rand.NextFloat(1, 2),
                     Color.Violet.RandLerpColor(Color.DarkViolet), Main.rand.Next(30, 50), 1, Main.rand.NextFloat(TwoPi), Main.rand.NextFloat(.9f, 1.1f) * .6f, 0, Main.rand.NextFloat(-.01f, .01f), .5f);
             }
         }
@@ -85,7 +83,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             for (int i = length - 1; i >= 0; i--)
             {
                 //if (i <=1)
-                    //continue;
+                //continue;
                 Vector2 lerpPos = Vector2.Lerp(Projectile.oldPos[i], Projectile.oldPos[0], .2f);
                 Vector2 oldPos = lerpPos - Main.screenPosition + Projectile.Size / 2f;
                 float oldRot = Projectile.oldRot[i];
@@ -110,8 +108,8 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             float laserLength = 50;
             KivotosShaderAssets.StandardFlowShader.Parameters["LaserTextureSize"].SetValue(useTex.Size());
             KivotosShaderAssets.StandardFlowShader.Parameters["targetSize"].SetValue(new Vector2(laserLength, useTex.Height()));
-            KivotosShaderAssets.StandardFlowShader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly *offsetHeight);
-            KivotosShaderAssets.StandardFlowShader.Parameters["uColor"].SetValue(drawColor.ToVector4()*alphaValue);
+            KivotosShaderAssets.StandardFlowShader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * offsetHeight);
+            KivotosShaderAssets.StandardFlowShader.Parameters["uColor"].SetValue(drawColor.ToVector4() * alphaValue);
             KivotosShaderAssets.StandardFlowShader.Parameters["uFadeoutLength"].SetValue(0.91f);
             KivotosShaderAssets.StandardFlowShader.Parameters["uFadeinLength"].SetValue(0.05f);
             KivotosShaderAssets.StandardFlowShader.CurrentTechnique.Passes[0].Apply();

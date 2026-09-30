@@ -53,6 +53,7 @@ namespace KivotosMod.Globals.Methods
             ProjectileID.Sets.TrailingMode[proj.type] = mode;
             ProjectileID.Sets.TrailCacheLength[proj.type] = length;
         }
+        public static Vector2 SafeDir(this Projectile proj) => proj.velocity.ToSafeNormalize();
 
     }
 }

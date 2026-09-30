@@ -28,14 +28,14 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
                 Owner.ChangeDir(Projectile.direction);
                 Owner.heldProj = Projectile.whoAmI;
                 float offset = Owner.direction > 0 ? PiOver4 : -PiOver4;
-                Owner.ControlPlayerArm(Projectile.rotation+offset);
+                Owner.ControlPlayerArm(Projectile.rotation + offset);
                 Projectile.Center = Owner.MountedCenter;
                 Projectile.position.Y += Owner.gfxOffY;
             }
         }
         protected override void UpdateWeaponUsing()
         {
-            Projectile.Center += Main.rand.NextVector2Circular(2f,2);
+            Projectile.Center += Main.rand.NextVector2Circular(2f, 2);
         }
         protected override void OnAttack()
         {
@@ -57,7 +57,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
                 int timeLeft = Main.rand.Next(30, 45);
                 ECSParticle.ShinyCrossStarECS(pos2, vel, Color.Lerp(Color.Violet, Color.DarkViolet, Main.rand.NextFloat()), timeLeft, 1, scale, .2f);
             }
-            for (int i =0;i<12;i++)
+            for (int i = 0; i < 12; i++)
             {
                 Vector2 pos2 = pos.ToRandCirclePos(8);
                 Vector2 vel = Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(15), .1f, 14.6f);
@@ -71,26 +71,25 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
                 BlendState bs = alt ? BlendState.NonPremultiplied : BlendState.AlphaBlend;
                 ECSParticle.SmokeParticle(pos, dir.ToRandVelocity(ToRadians(10), 0.1f, 13.4f), Color.Lerp(Color.Violet, Color.DarkViolet, Main.rand.NextFloat()), Main.rand.Next(45, 65), Main.rand.NextFloat(TwoPi), 1, 0.13f * Main.rand.NextFloat(.95f, 1.25f), alt, bs);
             }
-                Vector2 dir2 = Projectile.rotation.ToRotationVector2() * -1;
-                for (int i = 0; i < 8; i++)
-                {
+            Vector2 dir2 = Projectile.rotation.ToRotationVector2() * -1;
+            for (int i = 0; i < 8; i++)
+            {
                 Vector2 firePos = Projectile.Center + particleOffset + dir2 * 1f;
-                    Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 16.8f);
-                    Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
-                    Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;
-                    ECSParticle.ShinyCrossStarECS(firePos.ToRandCirclePos(20f) + posOffset, vel, Color.Violet.RandLerpColor(Color.DarkViolet), 40, 1f, Main.rand.NextFloat(0.5f, 0.8f) * .7f, .2f);
-                }
-                for (int i = 0; i < 12; i++)
-                {
+                Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 16.8f);
+                Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
+                Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;
+                ECSParticle.ShinyCrossStarECS(firePos.ToRandCirclePos(20f) + posOffset, vel, Color.Violet.RandLerpColor(Color.DarkViolet), 40, 1f, Main.rand.NextFloat(0.5f, 0.8f) * .7f, .2f);
+            }
+            for (int i = 0; i < 12; i++)
+            {
                 Vector2 firePos = Projectile.Center + particleOffset + dir2 * 1f;
-                    Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 10.8f);
-                    Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
-                    Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;
+                Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 10.8f);
+                Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
+                Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;
                 bool alt = Main.rand.NextBool();
-                BlendState bs = alt ? BlendState.NonPremultiplied: BlendState.AlphaBlend;
+                BlendState bs = alt ? BlendState.NonPremultiplied : BlendState.AlphaBlend;
                 ECSParticle.SmokeParticle(firePos, vel, Color.Lerp(Color.Violet, Color.Black, Main.rand.NextFloat()), Main.rand.Next(45, 65), Main.rand.NextFloat(TwoPi), 1, 0.13f * Main.rand.NextFloat(.95f, 1.25f), alt, bs);
-                }
-
+            }
         }
         protected override void PreAttack()
         {

@@ -1,4 +1,5 @@
-﻿using KivotosMod.Globals.Classes;
+﻿using KivotosMod.Content.Projs.StudentWeapons.MillenniumScienceSchool;
+using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
 
@@ -20,7 +21,7 @@ namespace KivotosMod.Content.Items.StudentWeapons.MillenniumScienceSchool
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            //Item.shoot = ProjectileType<EyeofHorusHeldProj>();
+            Item.shoot = ProjectileType<MidoriWeaponHeldProj>();
         }
     }
 

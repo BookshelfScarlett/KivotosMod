@@ -1,3 +1,4 @@
+using KivotosMod.Content.Projs.StudentWeapons.MillenniumScienceSchool;
 using KivotosMod.Globals.Database.Paths;
 using Terraria;
 using Terraria.ID;
@@ -21,6 +22,8 @@ namespace KivotosMod.Content.Items
             Item.value = Item.buyPrice(silver: 1);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
+            Item.shoot = ProjectileType<MidoriWeaponBullet>();
+            Item.shootSpeed = 16;
             Item.autoReuse = true;
         }
 
