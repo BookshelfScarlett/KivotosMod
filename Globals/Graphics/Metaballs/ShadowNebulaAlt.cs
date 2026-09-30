@@ -80,7 +80,7 @@ namespace KivotosMod.Globals.Graphics.Metaballs
             }
 
         }
-        public override Color EdgeColor => Color.Lerp(Color.DarkViolet, Color.GhostWhite, 0.35f);
+        public override Color EdgeColor => Color.Lerp(Color.DarkViolet, Color.GhostWhite, 0.25f);
         public override bool SetPority => false;
         public static List<SharpTearCleanParticle> SharpTearsList = [];
         public static List<SharpCrossStarParticle> SharpCrossStarList = [];

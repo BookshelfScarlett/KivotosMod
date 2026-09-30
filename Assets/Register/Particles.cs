@@ -34,6 +34,16 @@ namespace KivotosMod.Assets.Register
         public static Tex2DWithPath Particle_RingShiny { get; set; }
         public static Tex2DWithPath Particle_SharpTearClean { get; set; }
         public static Tex2DWithPath Particle_ThunderBolt { get; set; }
+        public static Tex2DWithPath Particle_ExpressionAngry { get; set; }
+        public static Tex2DWithPath Particle_ExpressionShock { get; set; }
+        public static Tex2DWithPath Particle_ExpressionQuestion { get; set; }
+        public static Tex2DWithPath Particle_ExpressionQuestionShock { get; set; }
+        public static Tex2DWithPath Particle_ExpressionTired { get; set; }
+        public static Tex2DWithPath Particle_ExpressionDrop { get; set; }
+        public static Tex2DWithPath Particle_BlueNumberOne { get; set; }
+        public static Tex2DWithPath Particle_BlueNumberZero { get; set; }
+        public static Tex2DWithPath Particle_TinyNumberOne { get; set; }
+        public static Tex2DWithPath Particle_TinyNumberZero { get; set; }
         public static Texture2D Particle_SharpTear => TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
         public void LoadParticles()
@@ -64,6 +74,16 @@ namespace KivotosMod.Assets.Register
             Particle_RingShiny = new Tex2DWithPath(ParticlePath + "RingShiny");
             Particle_SharpTearClean = new Tex2DWithPath(ParticlePath + "SharpTearClean");
             Particle_ThunderBolt = new Tex2DWithPath(ParticlePath + "ThunderBolt");
+            Particle_ExpressionAngry = new Tex2DWithPath(ParticlePath + "ExpressionAngry");
+            Particle_ExpressionDrop = new Tex2DWithPath(ParticlePath + "ExpressionDrop");
+            Particle_ExpressionQuestion = new Tex2DWithPath(ParticlePath + "ExpressionQuestion");
+            Particle_ExpressionQuestionShock = new Tex2DWithPath(ParticlePath + "ExpressionQuestionShock");
+            Particle_ExpressionAngry = new Tex2DWithPath(ParticlePath + "ExpressionAngry");
+            Particle_ExpressionTired = new Tex2DWithPath(ParticlePath + "ExpressionTired");
+            Particle_BlueNumberZero = new Tex2DWithPath(ParticlePath + "BlueNumberZero");
+            Particle_BlueNumberOne = new Tex2DWithPath(ParticlePath + "BlueNumberOne");
+            Particle_TinyNumberZero = new Tex2DWithPath(ParticlePath + "TinyNumberZero");
+            Particle_TinyNumberOne = new Tex2DWithPath(ParticlePath + "TinyNumberOne");
         }
 
         public void UnloadParticles()
@@ -94,6 +114,15 @@ namespace KivotosMod.Assets.Register
             Particle_RingShiny = null;
             Particle_SharpTearClean = null;
             Particle_ThunderBolt = null;
+            Particle_ExpressionTired = null;
+            Particle_ExpressionQuestionShock = null;
+            Particle_ExpressionQuestion = null;
+            Particle_ExpressionDrop = null;
+            Particle_ExpressionAngry = null;
+            Particle_TinyNumberOne = null;
+            Particle_BlueNumberZero = null;
+            Particle_BlueNumberOne = null;
+            Particle_TinyNumberZero = null;
         }
     }
 }

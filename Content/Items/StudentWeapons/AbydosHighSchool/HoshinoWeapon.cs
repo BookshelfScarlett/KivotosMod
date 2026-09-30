@@ -50,7 +50,7 @@ namespace KivotosMod.Content.Items.StudentWeapons.AbydosHighSchool
             TextboxSettings sets = new TextboxSettings
                 (
                 hasTitle: false,
-                backgroundColor: Color.Lerp(Color.Black,Color.Pink,.4f) * .44f,
+                backgroundColor: Color.Lerp(Color.Black, Color.Pink, .4f) * .44f,
                 backgroundEdgeColor: Color.Lerp(Color.Pink, Color.White, .5f),
                 textColor: Color.White,
                 textEdgeColor: Color.Lerp(Color.HotPink, Color.Black, .35f),

@@ -109,6 +109,16 @@ namespace KivotosMod.Globals.Methods
             SB.End();
             SB.BeginDefault();
         }
+        public static void EndShaderAreaPixel()
+        {
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null);
+        }
+        public static void EnterShaderAreaPixel(BlendState blendState)
+        {
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null);
+        }
         public static void BeginDefault(this SpriteBatch SB) =>
           SB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         public static Color RandLerpColor(this Color c1, Color c2) => Color.Lerp(c1, c2, Main.rand.NextFloat());

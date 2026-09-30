@@ -43,9 +43,9 @@ namespace KivotosMod.Content.Items.StudentWeapons.GehennaAcademy
                 (
                 hasTitle: false,
                 backgroundColor: Color.Black * .44f,
-                backgroundEdgeColor: Color.Lerp(Color.DarkViolet,Color.Black,.5f),
+                backgroundEdgeColor: Color.Lerp(Color.DarkViolet, Color.Black, .5f),
                 textColor: Color.White,
-                textEdgeColor: Color.Lerp(Color.DarkViolet,Color.Black,.5f),
+                textEdgeColor: Color.Lerp(Color.DarkViolet, Color.Black, .5f),
                 mainText: text
                 );
             TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);

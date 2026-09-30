@@ -183,7 +183,7 @@ namespace KivotosMod.Globals.Methods.Textbox
                 //标题文本
                 string titleText = "「" + textboxSettings.TitleText + "」";
                 //实际描述文本的大小
-                Vector2 mainTextSize = ChatManager.GetStringSize(font, textboxSettings.MainText, scale * textboxSettings.BoxSize * KivotosClientConfig  .Instance.TextboxSize);
+                Vector2 mainTextSize = ChatManager.GetStringSize(font, textboxSettings.MainText, scale * textboxSettings.BoxSize * KivotosClientConfig.Instance.TextboxSize);
                 //标题文本的大小
                 Vector2 titleTextSize = ChatManager.GetStringSize(font, titleText, titleScale);
                 //spacing用于和原本的文本框之间的间隔

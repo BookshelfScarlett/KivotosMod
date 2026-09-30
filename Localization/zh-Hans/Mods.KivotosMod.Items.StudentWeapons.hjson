@@ -69,7 +69,12 @@ MomoiWeapon: {
 MutsukiWeapon: {
 	DisplayName: 给不给糖都捣蛋
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		睦月随身携带的机关枪
+		据睦月所说，为了更有趣的恶
+		作剧，火力也很重要呢
+		'''
 }
 
 SerikaWeapon: {
@@ -81,7 +86,13 @@ SerikaWeapon: {
 AruWeapon: {
 	DisplayName: 猩红仰慕
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		阿露平时十分重视，古风设计
+		的狙击步枪
+		仅仅是拿着它，好像...冷硬
+		的程度就提升了
+		'''
 }
 
 IrohaWeapon: {
@@ -97,7 +108,15 @@ KasumiWeapon: {
 }
 
 NoaWeapon: {
-	DisplayName: Noa Weapon
-	Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 书记的表决
+	Tooltip:
+		'''
+		右键可进行点射
+		点射命中降低敌人{0}的防御力
+		'''
+	FlavorTooltip:
+		'''
+		诺亚使用的带有改装附件的手枪
+		拉开枪托就可以像冲锋枪一样连射
+		'''
 }
