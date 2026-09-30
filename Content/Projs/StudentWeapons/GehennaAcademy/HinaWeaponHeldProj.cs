@@ -13,7 +13,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
     {
         public override int OriginalItemID => ItemType<HinaWeapon>();
         public override string Texture => GetInstance<HinaWeapon>().Texture;
-        public override float HoldoutDrawScale => .98f;
+        public override float HoldoutDrawScale => .9f;
         public override Color HoldoutEdgeColor => Color.DarkViolet;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
         public override Vector2 HoldoutOffset => new Vector2(15f, 5f);
@@ -41,7 +41,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
         {
             Vector2 particleOffset = ((HoldoutOffset + new Vector2(0, -0.5f)) * new Vector2(1, Owner.direction)).RotatedBy(Projectile.rotation);
             Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Vector2 pos = Projectile.Center + particleOffset + dir * 15;
+            Vector2 pos = Projectile.Center + particleOffset + dir * 5;
             float randRot = ToRadians(12.5f);
             ScreenShakeSystem.AddScreenShakes(Projectile.Center, 4, 4, Main.rand.NextFloat(TwoPi));
             for (int i = 0; i < 3; i++)
@@ -51,7 +51,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             }
             for (int i = 0; i < 14; i++)
             {
-                Vector2 pos2 = pos.ToRandCirclePos(8);
+                Vector2 pos2 = pos.ToRandCirclePos(8)+dir*30f;
                 Vector2 vel = Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(15), .1f, 14.6f);
                 float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.48f;
                 int timeLeft = Main.rand.Next(30, 45);
@@ -59,7 +59,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             }
             for (int i = 0; i < 12; i++)
             {
-                Vector2 pos2 = pos.ToRandCirclePos(8);
+                Vector2 pos2 = pos.ToRandCirclePos(8)+dir*30f;
                 Vector2 vel = Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(15), .1f, 14.6f);
                 float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.48f;
                 int timeLeft = Main.rand.Next(30, 45);
@@ -74,7 +74,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             Vector2 dir2 = Projectile.rotation.ToRotationVector2() * -1;
             for (int i = 0; i < 8; i++)
             {
-                Vector2 firePos = Projectile.Center + particleOffset + dir2 * 1f;
+                Vector2 firePos = Projectile.Center + particleOffset + dir2 * 30f;
                 Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 16.8f);
                 Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
                 Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;
@@ -82,7 +82,7 @@ namespace KivotosMod.Content.Projs.StudentWeapons.GehennaAcademy
             }
             for (int i = 0; i < 12; i++)
             {
-                Vector2 firePos = Projectile.Center + particleOffset + dir2 * 1f;
+                Vector2 firePos = Projectile.Center + particleOffset + dir2 * 51f;
                 Vector2 vel = dir2.ToRandVelocity(ToRadians(10f), 1.8f, 10.8f);
                 Vector2 offset = dir2.ToRandVelocity(ToRadians(0), 6f, 9f);
                 Vector2 posOffset = offset + Main.rand.NextVector2Circular(10f, 5f) + dir2 * 0f;

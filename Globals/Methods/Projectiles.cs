@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using KivotosMod.Assets.Register;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -55,5 +56,32 @@ namespace KivotosMod.Globals.Methods
         }
         public static Vector2 SafeDir(this Projectile proj) => proj.velocity.ToSafeNormalize();
 
+                public static void BounceOnTile(this Projectile proj, Vector2 oldVelocity, float xMult = 1f, float yMult = 1f)
+        {
+            if (proj.velocity.X != oldVelocity.X)
+                proj.velocity.X = -oldVelocity.X * xMult;
+            if (proj.velocity.Y != oldVelocity.Y)
+                proj.velocity.Y = -oldVelocity.Y * yMult;
+        }
+                public static void SetCrossStar(this Projectile proj, float scale, float rot, Color mainColor, float xScale = .45f, float yScale = 1f)
+        {
+            Texture2D star = KivotosTextureAssets.Particle_SharpTear;
+            Vector2 pos = proj.Center - Main.screenPosition;
+            Vector2 starScale = new Vector2(xScale, yScale);
+            Main.spriteBatch.Draw(star, pos, null, mainColor, rot, star.Size() / 2, starScale * proj.scale * scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, Color.White, rot, star.Size() / 2, starScale * proj.scale * scale * .5f, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, mainColor, rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, Color.White, rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale * .5f, SpriteEffects.None, 0);
+        }
+        public static void SetCrossStar(this Projectile proj, Vector2 pos, float scale, float rot, Color mainColor, float xScale = .45f, float yScale = 1f)
+        {
+            Texture2D star = KivotosTextureAssets.Particle_SharpTear;
+            pos = pos - Main.screenPosition;
+            Vector2 starScale = new Vector2(xScale, yScale);
+            Main.spriteBatch.Draw(star, pos, null, mainColor, rot, star.Size() / 2, starScale * proj.scale * scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, Color.White, rot, star.Size() / 2, starScale * proj.scale * scale * .5f, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, mainColor, rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(star, pos, null, Color.White, rot + PiOver2, star.Size() / 2, starScale * proj.scale * scale * .5f, SpriteEffects.None, 0);
+        }
     }
 }

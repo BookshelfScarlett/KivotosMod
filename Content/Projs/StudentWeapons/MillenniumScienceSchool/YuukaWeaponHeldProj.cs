@@ -39,7 +39,6 @@ namespace KivotosMod.Content.Projs.StudentWeapons.MillenniumScienceSchool
                 ECSParticle.GlowSquare(pos, Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(5), .1f, 16f), RandLerpColor(Color.SkyBlue, Color.LightSkyBlue), 40, 1,
                     RandRotTwoPi, Main.rand.NextFloat(.8f, 1.1f) * 1, rotSpeed: Main.rand.NextFloat(-.05f, .05f));
             }
-
         }
         protected override void PreAttack()
         {

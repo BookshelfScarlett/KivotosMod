@@ -17,11 +17,11 @@ namespace KivotosMod.Content.Items.StudentWeapons.MillenniumScienceSchool
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.useTime = Item.useAnimation = 35;
+            Item.useTime = Item.useAnimation = 7;
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<MidoriWeaponHeldProj>();
+            Item.shoot = ProjectileType<MomoiWeaponHeldProj>();
         }
     }
 
