@@ -1,0 +1,24 @@
+GeneralAssaultRifle1: {
+	DisplayName: 通用突击步枪I型
+	Tooltip: ""
+}
+
+GeneralAssaultRifle2: {
+	DisplayName: 通用突击步枪II型
+	Tooltip: ""
+}
+
+GeneralAssaultRifle3: {
+	DisplayName: 通用突击步枪III型
+	Tooltip: ""
+}
+
+GeneralAssaultRifle4: {
+	DisplayName: 通用突击步枪IV型
+	Tooltip: ""
+}
+
+GeneralAssaultRifle5: {
+	DisplayName: 通用突击步枪V型
+	Tooltip: ""
+}

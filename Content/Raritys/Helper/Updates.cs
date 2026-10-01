@@ -31,6 +31,21 @@ namespace KivotosMod.Content.Raritys.Helper
                 case KivotosRarityType.MutsukiBrown:
                     MutsukiBrown.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
                     break;
+                case KivotosRarityType.AzusaWhite:
+                    AzusaWhite.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
+                case KivotosRarityType.IbukiYellow:
+                    IbukiYellow.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
+                case KivotosRarityType.ArisuSkyBlue:
+                    ArisuSkyBlue.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
+                case KivotosRarityType.KeiLightPink:
+                    KeiLightPink.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
+                case KivotosRarityType.ShupogakiLightGreen:
+                    ShupogakiLightGreen.DrawItemNameParticle(tooltipLine, ref RaritySparklesList);
+                    break;
                 default:
                     break;
             }
@@ -65,6 +80,21 @@ namespace KivotosMod.Content.Raritys.Helper
                     break;
                 case KivotosRarityType.MutsukiBrown:
                     MutsukiBrown.DrawItemName(tooltipLine);
+                    break;
+                case KivotosRarityType.AzusaWhite:
+                    AzusaWhite.DrawItemName(tooltipLine);
+                    break;
+                case KivotosRarityType.IbukiYellow:
+                    IbukiYellow.DrawItemName(tooltipLine);
+                    break;
+                case KivotosRarityType.ArisuSkyBlue:
+                    ArisuSkyBlue.DrawItemName(tooltipLine);
+                    break;
+                case KivotosRarityType.KeiLightPink:
+                    KeiLightPink.DrawItemName(tooltipLine);
+                    break;
+                case KivotosRarityType.ShupogakiLightGreen:
+                    ShupogakiLightGreen.DrawItemName(tooltipLine);
                     break;
                 default:
                     break;

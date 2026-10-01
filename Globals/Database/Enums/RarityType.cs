@@ -8,7 +8,12 @@
         MidoriGreen,
         YuukaBlue,
         MeguOrange,
-        MutsukiBrown
+        MutsukiBrown,
+        AzusaWhite,
+        IbukiYellow,
+        ArisuSkyBlue,
+        KeiLightPink,
+        ShupogakiLightGreen
 
     }
 }

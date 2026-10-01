@@ -20,7 +20,7 @@ namespace KivotosMod.Globals.Classes
         /// <br>用于处理处死</br>
         /// </summary>
         public virtual int OriginalItemID => -1;
-        public override string Texture => $"HJScarletRework/Assets/Texture/Projs/" + GetType().Name;
+        public override string Texture => $"KivotosMod/Assets/Texture/Projs/" + GetType().Name;
         /// <summary>
         /// 最低攻击频率，用于<see cref="AttackSpeed"/>
         /// </summary>
@@ -99,9 +99,18 @@ namespace KivotosMod.Globals.Classes
                 UpdateWeaponUsing();
                 if (Timer >= AttackSpeed && Projectile.IsMe())
                 {
-                    PreAttack();
-                    OnAttack();
-                    PostAttack();
+                    if (Owner.channel)
+                    {
+                        PreAttack();
+                        OnAttack();
+                        PostAttack();
+                    }
+                    if (Owner.controlUseTile)
+                    {
+                        PreRightAttack();
+                        OnRightAttack();
+                        PostRightAttack();
+                    }
                 }
             }
             else
@@ -111,12 +120,37 @@ namespace KivotosMod.Globals.Classes
             UpdateGlobalReset();
 
         }
+        /// <summary>
+        /// 在执行<see cref="OnRightAttack"/>前执行
+        /// <br>可用于一些发起攻击前的准备</br>
+        /// <br>仅限右键逻辑</br>
+        /// </summary>
+        protected virtual void PreRightAttack()
+        {
+        }
+        /// <summary>
+        /// 在执行<see cref="OnRightAttack"/>后执行
+        /// <br>可用于一些攻击后的处理</br>
+        /// <br>仅限右键逻辑</br>
+        ///<br>需注意的是，该钩子默认情况下并不处理任何东西</br>
+        /// </summary>
+        protected virtual void PostRightAttack()
+        {
+        }
+        /// <summary>
+        /// 武器的实际攻击效果
+        /// <br>仅限右键逻辑</br>
+        /// </summary>
+
+        protected virtual void OnRightAttack()
+        {
+        }
 
         protected virtual void OnFirstFrame()
         {
             Timer = (int)(AttackSpeed * .9f);
         }
-        public virtual bool IsUsing => (Owner.channel) && !Owner.noItems && !Owner.CCed;
+        public virtual bool IsUsing => (Owner.channel || Owner.controlUseTile) && !Owner.noItems && !Owner.CCed;
         public override bool ShouldUpdatePosition()
         {
             return false;

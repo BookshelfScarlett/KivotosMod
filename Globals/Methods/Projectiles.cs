@@ -56,14 +56,14 @@ namespace KivotosMod.Globals.Methods
         }
         public static Vector2 SafeDir(this Projectile proj) => proj.velocity.ToSafeNormalize();
 
-                public static void BounceOnTile(this Projectile proj, Vector2 oldVelocity, float xMult = 1f, float yMult = 1f)
+        public static void BounceOnTile(this Projectile proj, Vector2 oldVelocity, float xMult = 1f, float yMult = 1f)
         {
             if (proj.velocity.X != oldVelocity.X)
                 proj.velocity.X = -oldVelocity.X * xMult;
             if (proj.velocity.Y != oldVelocity.Y)
                 proj.velocity.Y = -oldVelocity.Y * yMult;
         }
-                public static void SetCrossStar(this Projectile proj, float scale, float rot, Color mainColor, float xScale = .45f, float yScale = 1f)
+        public static void SetCrossStar(this Projectile proj, float scale, float rot, Color mainColor, float xScale = .45f, float yScale = 1f)
         {
             Texture2D star = KivotosTextureAssets.Particle_SharpTear;
             Vector2 pos = proj.Center - Main.screenPosition;

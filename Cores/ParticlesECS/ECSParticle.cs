@@ -131,8 +131,25 @@ namespace KivotosMod.Cores.ParticlesECS
         {
             BlendState bs = blendState ?? BlendState.Additive;
             float aifloat2 = alterTexture.ToInt();
-            return ECSMethod.NewParticle(GetInstance<LiliesPetal>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, ai0: floatSpeed, ai1: scale, ai2: aifloat2, aibool1: noCollision, aibool2: fullBright, aiint2: glowMult);
+            return ECSMethod.NewParticle(GetInstance<LiliesPetal>().Type, timeLeft, pos, vel, color, opacity,
+                rotation, scale, bs, ai0: floatSpeed, ai1: scale, ai2: aifloat2, aibool1: noCollision, aibool2: fullBright, aiint2: glowMult);
         }
+        /// <summary>
+        /// <para>超级复杂的传参</para>
+        /// <para><paramref name="floatSpeed"/>为花瓣/落叶的漂浮速度大小，一般值越大，代表其速度越快</para>
+        /// <para><paramref name="alterTexture"/>True时启用另一个不同的贴图</para>
+        /// <para><paramref name="fullBright"/>是否无视光照，默认为false，即受环境光影响</para>
+        /// <para><paramref name="noCollision"/>是否无视物块，在原AI中，花瓣会有物块碰撞判定</para>
+        /// <para><paramref name="glowMult"/>是否绘制描边且重复多少次绘制，默认为0，即不描边，取1时，绘制8次</para>
+        /// </summary>
+        /// <returns></returns>
+        public static int BlossomPetal(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, float floatSpeed, bool noCollision = false, int glowMult = 0, bool fullBright = false, BlendState blendState = null)
+        {
+            BlendState bs = blendState ?? BlendState.Additive;
+            return ECSMethod.NewParticle(GetInstance<BlossomPetal>().Type, timeLeft, pos, vel, color, opacity,
+                rotation, scale, bs, ai0: floatSpeed, ai1: scale, aibool1: noCollision, aibool2: fullBright, aiint2: glowMult);
+        }
+
         /// <summary>
         /// <para><paramref name="thunderType"/>闪电种类，1：无帧图，2：有帧图 3：四散类</para> 
         /// </summary>
@@ -140,13 +157,9 @@ namespace KivotosMod.Cores.ParticlesECS
         public static int HighResolutionThunder(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, int thunderType = 1, BlendState blendState = null)
         {
             BlendState bs = blendState ?? BlendState.Additive;
-            return ECSMethod.NewParticle(GetInstance<HighResolutionThunder>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, aiint0: thunderType);
+            return ECSMethod.NewParticle(GetInstance<HighResolutionThunder>().Type, timeLeft, pos, vel, color,
+                opacity, rotation, scale, bs, aiint0: thunderType);
         }
-        //public static int ShinyCrossStarSmall(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float scale, float rotSpeed = 0.1f, BlendState blendstate = null)
-        //{
-        //    BlendState bs = blendstate ?? BlendState.Additive;
-        //    return ECSMethod.NewParticle(GetInstance<ShinyCrossStarSmalle>().Type, timeLeft, pos, vel, color, opacity, scale: scale, blendstate: bs, ai0: rotSpeed);
-        //}
         /// <summary>
         /// <paramref name="type"/>为数字种类。1：小型0，2：小型1，3：大型细致0，其他：大型细致1<br></br>
         /// <paramref name="fadinTime"/> 为淡入时间（归一化比率），如果设置为0则无淡入
@@ -205,6 +218,20 @@ namespace KivotosMod.Cores.ParticlesECS
         {
             BlendState bs = blendstate ?? BlendState.Additive;
             return ECSMethod.NewParticle(GetInstance<GlowSquare>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, ai1: glowMult, aiint0: type, ai0: rotSpeed);
+        }
+        public static int ShinyCrossStarSmall(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float scale, float rotSpeed = 0.1f, BlendState blendstate = null)
+        {
+            BlendState bs = blendstate ?? BlendState.Additive;
+            return ECSMethod.NewParticle(GetInstance<ShinyCrossStareSmall>().Type, timeLeft, pos, vel, color, opacity, scale: scale, blendstate: bs, ai0: rotSpeed);
+        }
+        /// <summary>
+        /// <paramref name="type"/>为圆环种类。1：普通圆环，2：硬边圆环，3：模糊空圆环，其他：发光圆环<br></br>
+        /// <paramref name="fadinTime"/> 为这个十字辉光的淡入时间（归一化比率），如果设置为0则无淡入
+        /// </summary>
+        public static int PixelTriangle(Vector2 pos, Vector2 vel, Color color, int timeLeft, float opacity, float rotation, float scale, float fadinTime = 0.4f, int type = 0, BlendState blendState = null)
+        {
+            BlendState bs = blendState ?? BlendState.Additive;
+            return ECSMethod.NewParticle(GetInstance<PixelTriangle>().Type, timeLeft, pos, vel, color, opacity, rotation, scale, bs, ai0: fadinTime, aiint0: type);
         }
 
     }

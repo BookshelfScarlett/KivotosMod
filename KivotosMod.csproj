@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<!-- Import tModLoader mod properties -->
 	<Import Project="..\tModLoader.targets" />
@@ -10,6 +10,14 @@
 
 	<!-- References -->
 	<ItemGroup>
+	  <Folder Include="Assets\Texture\Items\Weapons\Misc\" />
+	  <Folder Include="Assets\Texture\Items\Accessories\" />
+	  <Folder Include="Assets\Texture\Items\Materials\" />
+	  <Folder Include="Assets\Texture\Items\Tools\" />
+	  <Folder Include="Assets\Texture\Items\Vanity\" />
+	  <Folder Include="Content\Buffs\" />
+	  <Folder Include="Content\Items\Melee\" />
+	  <Folder Include="Content\Projs\Melee\" />
 	  <Folder Include="Globals\Graphics\ModDusts\" />
 	  <Folder Include="Globals\Instances\Tiles\" />
 	</ItemGroup>

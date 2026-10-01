@@ -1,9 +1,12 @@
 ﻿using KivotosMod.Globals.Database.Lists;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Methods;
+using KivotosMod.Globals.Methods.Textbox;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace KivotosMod.Globals.Classes
@@ -21,6 +24,17 @@ namespace KivotosMod.Globals.Classes
         /// <br>需要与本地化文件的名字对应，且只考虑名字（不考虑姓氏）</br>
         /// </summary>
         protected virtual string Owner => "None";
+        /// <summary>
+        /// 设置文本框的样式
+        /// <br>这个才是你应该复写的东西</br>
+        /// </summary>
+        protected virtual void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
+        {
+            backgroundColor = Color.Black * .44f;
+            backgroundEdgeColor = Color.Lerp(Color.DarkViolet, Color.Black, .5f);
+            textColor = Color.White;
+            textEdgeColor = Color.Lerp(Color.DarkViolet, Color.Black, .5f);
+        }
         public override void SetStaticDefaults()
         {
             if (Owner != "None")
@@ -54,6 +68,38 @@ namespace KivotosMod.Globals.Classes
 
             }
             return false;
+        }
+        public Color BackgroundColor;
+        public Color BackgroundEdgeColor;
+        public Color TextColor;
+        public Color TextEdgeColor;
+        public IReadOnlyList<TooltipLine> CacheTooltipList = null;
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            CacheTooltipList = tooltips;
+        }
+        public override void PostDrawTooltipLine(DrawableTooltipLine line)
+        {
+            if (line.IsItemName())
+            {
+                TextboxManager.FirstLineY = line.Y;
+            }
+            //string text = this.GetLocalizationKey("FlavorTooltip").ToLangValue();
+            string text = Language.GetOrRegister(this.GetLocalizationKey("FlavorTooltip"), () => "ThisIsFlavorTooltip").Value;
+            SetUpTextboxSettings(ref BackgroundColor, ref BackgroundEdgeColor, ref TextColor, ref TextEdgeColor);
+            TextboxSettings sets = new TextboxSettings
+                (
+                hasTitle: false,
+                backgroundColor: BackgroundColor,
+                backgroundEdgeColor: BackgroundEdgeColor,
+                textColor: TextColor,
+                textEdgeColor: TextEdgeColor,
+                mainText: text
+                );
+            TextboxMethods.DrawTextboxTooltipWithBackground(line, CacheTooltipList, ref sets);
+            base.PostDrawTooltipLine(line);
+
+            base.PostDrawTooltipLine(line);
         }
         public override void HoldItem(Player player)
         {

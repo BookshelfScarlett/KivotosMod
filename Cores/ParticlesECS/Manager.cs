@@ -24,7 +24,6 @@ namespace KivotosMod.Cores.ParticlesECS
         public static int activePoint_Nonmult;
         public override void Load()
         {
-            // On_Main.DrawDust += DrawParticle;
             activePoint_alpha = 0;
             activePoint_add = 0;
             activePoint_Nonmult = 0;
@@ -34,7 +33,7 @@ namespace KivotosMod.Cores.ParticlesECS
         }
         public override void Unload()
         {
-            // On_Main.DrawDust -= DrawParticle;
+            //On_Main.DrawDust -= DrawParticle;
             activePoint_alpha = 0;
             activePoint_add = 0;
             activePoint_Nonmult = 0;

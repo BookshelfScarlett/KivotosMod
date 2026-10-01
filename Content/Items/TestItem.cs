@@ -1,4 +1,4 @@
-using KivotosMod.Content.Projs.StudentWeapons.MillenniumScienceSchool;
+using KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium;
 using KivotosMod.Globals.Database.Paths;
 using Terraria;
 using Terraria.ID;
