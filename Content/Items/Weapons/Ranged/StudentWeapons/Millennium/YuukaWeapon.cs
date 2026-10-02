@@ -12,7 +12,11 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Millennium
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            backgroundColor = Color.DarkRed * .3f;
+            backgroundEdgeColor = Color.DarkRed;
+            textColor = Color.White;
+            textEdgeColor = Color.Lerp(Color.Red, Color.DarkRed, .5f);
+            //base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
         }
 
         protected override string Owner => "Yuuka";

@@ -47,7 +47,8 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
             if (Main.rand.NextBool(3))
             {
                 Color c = Main.rand.NextBool() ? RandLerpColor(Color.MidnightBlue, Color.DodgerBlue) : RandLerpColor(Color.LightGreen, Color.Green);
-                ECSParticle.TurbulenceShinyOrb(Projectile.Center.ToRandCirclePos(5), 2.4f*Main.rand.NextFloat(.5f,1.1f), c, 40, 1, Main.rand.NextFloat(.8f, 1.15f) * .3f, glowMult: .4f);
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(5), 12.4f * Projectile.velocity.ToRandVelocity(Main.rand.NextFloat(ToRadians(5), ToRadians(15))*Main.rand.NextFloat(.5f,1.2f)), c,
+                    40, 1, Main.rand.NextFloat(.8f, 1.15f) * .23f, glowMult: .4f);
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -56,23 +57,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                ECSParticle.PixelTriangle(Projectile.Center.ToRandCirclePosEdge(8), RandVelTwoPi(1f, 5f), RandLerpColor(Color.LightPink, Color.Violet), 40,
-                    1, RandRotTwoPi, 0.4f, 0);
-                //ECSParticle.BlossomPetal(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(5,16), RandLerpColor(Color.Pink, Color.Violet), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .35f,
-                //    1.5f, true, 0, true,BlendState.Additive);
-                //ECSParticle.SmokeParticle(Projectile.Center, RandVelTwoPi(1, 7), RandLerpColor(Color.LightPink, Color.Violet), 
-                //    Main.rand.Next(30, 51), RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .145f, Main.rand.NextBool(),BlendState.Additive);
-            }
-            for (int i = 0; i < 16; i++)
-            {
-                ECSParticle.TurbulenceShinyOrb(Projectile.Center.ToRandCirclePos(60), Main.rand.NextFloat(.9f, 1.1f) * 1f,
-                    RandLerpColor(Color.DeepPink, Color.Violet), Main.rand.Next(30, 41), 1, Main.rand.NextFloat(.8f, 1.12f) * .1f, glowMult: .6f);
-
-            }
-            for (int i = 0; i < 6; i++)
-                ECSParticle.ShrinkParticle(Projectile.Center.ToRandCirclePos(3), RandVelTwoPi(1, 9), RandLerpColor(Color.Violet, Color.Pink), 60, 1, RandRotTwoPi, 0.32f, 1);
 
             base.OnHitNPC(target, hit, damageDone);
         }
@@ -121,7 +105,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
             if (!Projectile.Kivotos().FirstFrame)
                 return false;
             PixelatedRenderManager.BeginDrawProj = true;
-
             return false;
         }
     }

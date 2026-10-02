@@ -48,7 +48,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
                 Color c = Main.rand.NextBool() ? RandLerpColor(Color.LightGreen, Color.Green) : RandLerpColor(Color.SkyBlue, Color.MidnightBlue);
                 ECSParticle.LightntingGlow(pos.ToRandCirclePos(2), vel, c, 40, 1, Main.rand.NextFloat(.85f, 1.16f) * .4f);
             }
-
         }
         protected override void PreAttack()
         {

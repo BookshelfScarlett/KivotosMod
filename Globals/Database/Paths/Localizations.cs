@@ -18,6 +18,7 @@
             public static string StudentWeapons => $"{ProjLocalization}.Ranged.StudentWeapons";
             public static string MeleeProj => $"{ProjLocalization}.Melee";
             public static string RangedProj => $"{ProjLocalization}.Ranged";
+            public static string TypelessProj => $"{ProjLocalization}.Typeless";
         }
     }
 }

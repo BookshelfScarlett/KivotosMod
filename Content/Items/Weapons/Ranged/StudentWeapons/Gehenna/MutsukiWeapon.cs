@@ -9,7 +9,11 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            textEdgeColor = Color.Lerp(Color.DarkRed, Color.DarkViolet, .35f);
+            textColor = Color.White;
+            backgroundColor = Color.Black * .2f;
+            backgroundEdgeColor = Color.White;
+            //base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
         }
 
         protected override string Owner => "Mutsuki";
@@ -26,7 +30,7 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<HoshinoWeaponHeldProj>();
+            //Item.shoot = ProjectileType<mutsuki>();
         }
     }
 }

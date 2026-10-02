@@ -10,7 +10,10 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Highlander
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            backgroundColor = Color.Lerp(Color.LightGreen,Color.White,.5f)*.2f;
+            backgroundEdgeColor = Color.Lerp(Color.White, Color.DodgerBlue, .14f);
+            textColor = Color.Lerp(Color.LightGreen,Color.White,.5f);
+            textEdgeColor = Color.Lerp(Color.DodgerBlue,Color.MidnightBlue,.85f);
         }
 
         protected override string Owner => "Hikari";

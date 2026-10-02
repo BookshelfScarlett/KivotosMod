@@ -22,7 +22,7 @@ namespace KivotosMod.Content.Items
             Item.value = Item.buyPrice(silver: 1);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
-            Item.shoot = ProjectileType<MidoriWeaponBullet>();
+            Item.shoot = ProjectileType<YuzuWeaponBullet>();
             Item.shootSpeed = 16;
             Item.autoReuse = true;
         }

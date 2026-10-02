@@ -9,10 +9,14 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Millennium
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            textEdgeColor = Color.Lerp(Color.DarkRed, Color.DarkViolet, .35f);
+            textColor = Color.White;
+            backgroundColor = Color.Black * .32f;
+            backgroundEdgeColor = Color.DarkRed;
+
         }
 
-        protected override string Owner => "YuzuWeapon";
+        protected override string Owner => "Yuzu";
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -22,11 +26,11 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Millennium
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.useTime = Item.useAnimation = 7;
+            Item.useTime = Item.useAnimation = 57;
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<MidoriWeaponHeldProj>();
+            Item.shoot = ProjectileType<YuzuWeaponHeldProj>();
         }
     }
 

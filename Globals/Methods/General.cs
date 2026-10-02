@@ -22,6 +22,8 @@ namespace KivotosMod.Globals.Methods
         public static bool IsLegal(this Item item)
         {
             return !item.IsAir && item is not null;
+
         }
+        public static bool IsLegal(this NPC target) => target != null && target.CanBeChasedBy();
     }
 }

@@ -59,7 +59,7 @@ namespace KivotosMod.Globals.Classes
         /// <summary>
         /// Shoot管理方案用于控制一些与武器有关的逻辑
         /// <br>实际上我们不会真的让他发射任何子弹</br>
-        /// <br></br>
+        /// <br>目前暂时什么都不干</br>
         /// </summary>
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
@@ -84,7 +84,6 @@ namespace KivotosMod.Globals.Classes
             {
                 TextboxManager.FirstLineY = line.Y;
             }
-            //string text = this.GetLocalizationKey("FlavorTooltip").ToLangValue();
             string text = Language.GetOrRegister(this.GetLocalizationKey("FlavorTooltip"), () => "ThisIsFlavorTooltip").Value;
             SetUpTextboxSettings(ref BackgroundColor, ref BackgroundEdgeColor, ref TextColor, ref TextEdgeColor);
             TextboxSettings sets = new TextboxSettings

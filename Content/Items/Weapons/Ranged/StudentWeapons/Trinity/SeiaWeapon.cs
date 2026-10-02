@@ -1,4 +1,5 @@
 ﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
+using KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
@@ -26,7 +27,7 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Trinity
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<IrohaWeaponHeldProj>();
+            Item.shoot = ProjectileType<SeiaWeaponHeldProj>();
         }
     }
 }
