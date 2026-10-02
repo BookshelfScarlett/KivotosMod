@@ -33,7 +33,21 @@ namespace KivotosMod.Globals.Methods
             proj.penetrate = -1;
             proj.extraUpdates = eu;
             proj.noEnchantmentVisuals = true;
+            proj.ownerHitCheck = true;
             proj.timeLeft = 10000;
+        }
+        public static void ControlHoldout(this Projectile proj, Player Owner, bool SetHeldProj = true, bool SetOwnerDir = true)
+        {
+            proj.Center = Owner.MountedCenter;
+            proj.position.Y += Owner.gfxOffY;
+            Owner.itemTime = 2;
+            Owner.itemAnimation = 2;
+            if (SetOwnerDir)
+                Owner.ChangeDir(Main.MouseWorld.X > Owner.Center.X ? 1 : -1);
+            if (SetHeldProj)
+                Owner.heldProj = proj.whoAmI;
+            if (Owner.dead)
+                proj.Kill();
         }
         /// <summary>
         /// 判断该射弹是否属于本地玩家
@@ -107,6 +121,31 @@ namespace KivotosMod.Globals.Methods
             projectile.Resize((int)((float)projectile.width * expandRatio), (int)((float)projectile.height * expandRatio));
         }
         public static bool IsFinalHit(this Projectile proj) => proj.penetrate == 0;
+        public static void SetupImmnuity(this Projectile proj, int hitCooldown, bool useIDStatic = false)
+        {
+            if (useIDStatic)
+            {
+                proj.usesIDStaticNPCImmunity = true;
+                proj.idStaticNPCHitCooldown = hitCooldown;
+
+            }
+            else
+            {
+                proj.usesLocalNPCImmunity = true;
+                proj.localNPCHitCooldown = hitCooldown;
+            }
+        }
+                /// <summary>
+        /// 用于手持弹幕，获取斜45°近战武器的挥舞
+        /// </summary>
+        public static void GetDrawDataMelee(this Projectile proj, out Texture2D texture, out Vector2 drawPosition, out float drawRotation, out Vector2 rotationPoint, out SpriteEffects flipSprite)
+        {
+            texture = TextureAssets.Projectile[proj.type].Value;
+            drawPosition = proj.Center - Main.screenPosition;
+            drawRotation = proj.rotation + (proj.spriteDirection == -1 ? PiOver2 + PiOver4 : PiOver4);
+            rotationPoint = proj.spriteDirection == -1 ? new Vector2(texture.Width, texture.Height) : new Vector2(0, texture.Height);
+            flipSprite = proj.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        }
         #region 隐形爆炸生成
         /// <summary>
         /// 不可见爆炸射弹的生成参数

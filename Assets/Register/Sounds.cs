@@ -17,5 +17,7 @@ namespace KivotosMod.Assets.Register
         public static SoundStyle YuzuShot => new SoundStyle($"{SoundsPath}YuzuShot", 3);
         public static SoundStyle SharpBoom => new SoundStyle($"{SoundsPath}SharpBoom");
         public static SoundStyle SharpBoomHeavy => new SoundStyle($"{SoundsPath}SharpBoomHeavy");
+        public static SoundStyle BaseballBatSwing => new SoundStyle($"{SoundsPath}BaseballBatSwing", 2);
+        public static SoundStyle BaseballBatHit => new SoundStyle($"{SoundsPath}BaseballBatHit", 2);
     }
 }

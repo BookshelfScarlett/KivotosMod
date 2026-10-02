@@ -1,1 +1,31 @@
+BaseballBat: {
+	DisplayName: 普通棒球棍
+	Tooltip:
+		'''
+		基础的通用棒球棍
+		可以强制击退你的敌人
+		'''
+}
 
+MetalBaseballBat: {
+	DisplayName: 金属棒球棍
+	Tooltip:
+		'''
+		挥舞速度略慢，但范围更大
+		可以强制击退你的敌人
+		'''
+}
+
+PracticeCricketBat: {
+	DisplayName: 练习用棒球棍
+	Tooltip:
+		'''
+		挥舞速度略快，但范围更小
+		可以强制击退你的敌人
+		'''
+}
+
+PracticeHockeyClub: {
+	// DisplayName: Practice Hockey Club
+	// Tooltip: ""
+}

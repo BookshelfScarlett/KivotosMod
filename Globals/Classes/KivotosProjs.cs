@@ -7,8 +7,18 @@ namespace KivotosMod.Globals.Classes
 {
     public abstract class KivotosPlayerProjs : ModProjectile, ILocalizedModType
     {
+        protected virtual DamageClass SetDamageClass => DamageClass.Generic;
         public Player Owner => Main.player[Projectile.owner];
-        public override string LocalizationCategory => LocalizationsDatabase.ProjLocalization;
+        private string GetLocalizationCategory()
+        {
+            if (SetDamageClass.CountsAsClass<MeleeDamageClass>())
+                return (string)LocalizationsDatabase.Projs.MeleeProj;
+            else if (SetDamageClass.CountsAsClass<RangedDamageClass>())
+                return (string)LocalizationsDatabase.Projs.RangedProj;
+            else
+                return LocalizationsDatabase.ProjLocalization;
+        }
+        public override string LocalizationCategory => GetLocalizationCategory();
         public override string Texture => KivotosContent.GetAsset(KivotosContent.Projs, GetType().Name);
         public SpriteBatch SB { get => Main.spriteBatch; }
         public GraphicsDevice GD { get => Main.graphics.GraphicsDevice; }
@@ -17,6 +27,7 @@ namespace KivotosMod.Globals.Classes
         public override void SetDefaults()
         {
             Projectile.friendly = true;
+            Projectile.DamageType = SetDamageClass;
         }
         public override void AI()
         {

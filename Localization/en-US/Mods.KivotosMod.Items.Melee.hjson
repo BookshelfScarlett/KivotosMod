@@ -1,1 +1,19 @@
+BaseballBat: {
+	DisplayName: Baseball Bat
+	Tooltip: ""
+}
 
+MetalBaseballBat: {
+	DisplayName: Metal Baseball Bat
+	Tooltip: ""
+}
+
+PracticeCricketBat: {
+	DisplayName: Practice Cricket Bat
+	Tooltip: ""
+}
+
+PracticeHockeyClub: {
+	DisplayName: Practice Hockey Club
+	Tooltip: ""
+}

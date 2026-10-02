@@ -7,17 +7,20 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <AdditionalFiles Remove="Assets\Texture\Items\Weapons\Misc\**" />
+	  <Compile Remove="Assets\Texture\Items\Weapons\Misc\**" />
+	  <EmbeddedResource Remove="Assets\Texture\Items\Weapons\Misc\**" />
+	  <None Remove="Assets\Texture\Items\Weapons\Misc\**" />
+	</ItemGroup>
 
 	<!-- References -->
 	<ItemGroup>
-	  <Folder Include="Assets\Texture\Items\Weapons\Misc\" />
 	  <Folder Include="Assets\Texture\Items\Accessories\" />
 	  <Folder Include="Assets\Texture\Items\Materials\" />
 	  <Folder Include="Assets\Texture\Items\Tools\" />
 	  <Folder Include="Assets\Texture\Items\Vanity\" />
 	  <Folder Include="Content\Buffs\" />
-	  <Folder Include="Content\Items\Weapons\Melee\" />
-	  <Folder Include="Content\Projs\Melee\" />
 	  <Folder Include="Globals\Graphics\ModDusts\" />
 	  <Folder Include="Globals\Instances\Tiles\" />
 	</ItemGroup>
