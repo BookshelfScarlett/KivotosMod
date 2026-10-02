@@ -27,43 +27,87 @@ HinaWeapon: {
 HarukaWeapon: {
 	DisplayName: 驱散者
 	Tooltip: ""
-	FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		遥香用来驱虫的霰弹枪
+		也可以用来处理“跟虫子一样的
+		东西”
+		'''
 }
 
 KayokoWeapon: {
 	DisplayName: 恶魔咆哮
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		佳代子经常携带的手枪
+		和它的名字一样，在射击时会
+		发出惊人的轰响，因此在室内
+		必须装备消音器
+		'''
 }
 
 MidoriWeapon: {
-	DisplayName: 清爽灵感
+	DisplayName: 新鲜灵感
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		绿使用的步枪 
+		枪上挂着心爱的姐姐送给她的
+		装饰吊坠，遇到难关时，摸一
+		摸这个吊坠好像就能突发灵感
+		'''
 }
 
 KoharuWeapon: {
 	DisplayName: 黑色正义
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		小春使用的狙击步枪
+		枪名是小春还在正义实现部
+		时起的
+		'''
 }
 
 YuukaWeapon: {
 	DisplayName: 逻辑与理性
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		优香使用的两挺冲锋枪
+		它能在重要的时刻帮助优香
+		做出符合逻辑和理性的判断
+		'''
 }
 
 MeguWeapon: {
 	DisplayName: 天惠神力！
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		在开发现场与惠融为一体的
+		火焰喷射器
+		由于其本身释放出的庞大热
+		量，其他人都驾驭不了这把
+		武器，至于武器的名字，来
+		自有人曾说过的一句玩笑，
+		惠很喜欢，于是就用它为武
+		器命名
+		'''
 }
 
 MomoiWeapon: {
 	DisplayName: 独特创意
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		桃使用的步枪
+		枪上挂着心爱的妹妹送给她
+		的装饰吊坠，当遇到难关时，
+		摸一摸这个吊坠好像就能想
+		出好主意
+		'''
 }
 
 MutsukiWeapon: {
@@ -78,13 +122,19 @@ MutsukiWeapon: {
 }
 
 SerikaWeapon: {
-	DisplayName: 真挚
+	DisplayName: 诚意
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		芹香出去兼职时经常携带的
+		突击步枪
+		诚实勤奋的芹香总是把它保
+		养得干净漂亮
+		'''
 }
 
 AruWeapon: {
-	DisplayName: 猩红仰慕
+	DisplayName: 酒红色赞赏
 	Tooltip: ""
 	FlavorTooltip:
 		'''
@@ -98,17 +148,31 @@ AruWeapon: {
 IrohaWeapon: {
 	DisplayName: 万魔殿制式手枪
 	Tooltip: ""
-	FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		伊吕波随身携带的手枪
+		伊吕波说因为自己是战车长
+		所以没什么使用机会，但她
+		的射击姿势优美到足以成为
+		教科书上的示例
+		'''
 }
 
 KasumiWeapon: {
-	DisplayName: Kasumi Weapon
+	DisplayName: 红色莱克特
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip:
+		'''
+		霞随身携带的手枪
+		虽然大部分的情况都是为了
+		活跃气氛而向空中开枪，但
+		与小巧可爱的外观相反，它
+		的威力十分强劲
+		'''
 }
 
 NoaWeapon: {
-	DisplayName: 书记的表决
+	DisplayName: 秘书的裁断
 	Tooltip:
 		'''
 		右键可进行点射
@@ -136,25 +200,32 @@ MikaWeapon: {
 }
 
 ShirokoWeapon: {
-	// DisplayName: Shiroko Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
-}
-
-IbukiWeapon: {
-	DisplayName: 邦邦—！酱
+	DisplayName: 白牙465
 	Tooltip: ""
 	FlavorTooltip:
 		'''
-		伊吹十分珍视的枪。
-		伊吹在从「万魔殿」的前辈那里继承来的制式步枪上
-		贴上了喜欢的贴纸、挂上了喜欢的挂件。
-		据说是伊吹不可替代的重要的宝物。
+		白子喜欢用的突击步枪
+		因为白子平时会精心保养
+		所以无论发生任何状况
+		都能够立刻投入使用
+		'''
+}
+
+IbukiWeapon: {
+	DisplayName: 邦邦——！酱
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		伊吹十分珍视的枪
+		伊吹在从「万魔殿」的前辈那里继承来
+		的制式步枪上贴上了喜欢的贴纸、挂上
+		了喜欢的挂件，据说是伊吹不可替代的
+		重要的宝物
 		'''
 }
 
 HikariWeapon: {
-	DisplayName: 车票・拳
+	DisplayName: 检票钳
 	Tooltip: ""
 	FlavorTooltip:
 		'''
@@ -176,19 +247,36 @@ NozomiWeapon: {
 }
 
 YuzuWeapon: {
-	// DisplayName: Yuzu Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 喵喵冲击
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		柚子一直随身携带的榴弹发射器
+		枪身侧面会显示可爱的猫咪奔跑的画面
+		'''
 }
 
 NagisaWeapon: {
-	// DisplayName: Nagisa Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 皇家红茶
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		渚爱用的小型手枪
+		设计古典，能自然地与持有者融为一体
+		即使在高雅的茶会中也不显得突兀，在
+		驱逐一些有辱茶会品味的不速之客时会
+		派上用场
+		'''
 }
 
 SeiaWeapon: {
-	// DisplayName: Seia Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 锐利光芒
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		圣娅惯用的手枪
+		设计尽显茶话会成员应有的典雅与沉稳，
+		如同从不吝啬犀利言辞的圣娅本人，时
+		刻处于子弹上膛的待发状态
+		'''
 }
