@@ -9,7 +9,11 @@ namespace KivotosMod.Content.Items.Ranged.StudentWeapons.Gehenna
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            backgroundColor = Color.White* .3f;
+            backgroundEdgeColor = Color.LightGoldenrodYellow;
+            textColor = Color.White;
+            textEdgeColor = Color.DarkGoldenrod;
+            //base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
         }
 
         protected override string Owner => "Ibuki";
@@ -22,11 +26,11 @@ namespace KivotosMod.Content.Items.Ranged.StudentWeapons.Gehenna
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.useTime = Item.useAnimation = 25;
+            Item.useTime = Item.useAnimation = 12;
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<IrohaWeaponHeldProj>();
+            Item.shoot = ProjectileType<IbukiWeaponHeldProj>();
         }
     }
 }

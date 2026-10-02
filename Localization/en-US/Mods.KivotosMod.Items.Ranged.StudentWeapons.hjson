@@ -93,3 +93,45 @@ MikaWeapon: {
 	Tooltip: ""
 	FlavorTooltip: ""
 }
+
+ShirokoWeapon: {
+	DisplayName: Shiroko Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+IbukiWeapon: {
+	DisplayName: Ibuki Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+HikariWeapon: {
+	DisplayName: Hikari Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+NozomiWeapon: {
+	DisplayName: Nozomi Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+YuzuWeapon: {
+	DisplayName: Yuzu Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+NagisaWeapon: {
+	DisplayName: Nagisa Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}
+
+SeiaWeapon: {
+	DisplayName: Seia Weapon
+	Tooltip: ""
+	FlavorTooltip: ""
+}

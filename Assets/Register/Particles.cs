@@ -46,6 +46,8 @@ namespace KivotosMod.Assets.Register
         public static Tex2DWithPath Particle_TinyNumberZero { get; set; }
         public static Tex2DWithPath Particle_PixelTriangle { get; set; }
         public static Tex2DWithPath Particle_BlossomPetal { get; set; }
+        public static Tex2DWithPath Particle_CuteStar { get; set; }
+        public static Tex2DWithPath Particle_CuteMusic { get; set; }
         public static Texture2D Particle_SharpTear => TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
         public void LoadParticles()
@@ -88,6 +90,8 @@ namespace KivotosMod.Assets.Register
             Particle_TinyNumberOne = new Tex2DWithPath(ParticlePath + "TinyNumberOne");
             Particle_PixelTriangle = new Tex2DWithPath(ParticlePath + "PixelTriangle");
             Particle_BlossomPetal = new Tex2DWithPath(ParticlePath + "BlossomPetal");
+            Particle_CuteStar = new Tex2DWithPath(ParticlePath + "CuteStar");
+            Particle_CuteMusic = new Tex2DWithPath(ParticlePath + "CuteMusic");
 
         }
 
@@ -130,6 +134,8 @@ namespace KivotosMod.Assets.Register
             Particle_TinyNumberZero = null;
             Particle_PixelTriangle = null;
             Particle_BlossomPetal = null;
+            Particle_CuteStar = null;
+            Particle_CuteMusic = null;
         }
     }
 }

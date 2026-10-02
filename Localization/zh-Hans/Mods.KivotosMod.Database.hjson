@@ -16,9 +16,14 @@ StudentNames: {
 	Serika: 黑见芹香
 	Kasumi: 鬼怒川霞
 	Mika: 圣园未花
-	// Ibuki: ""
-	// Kei: ""
-	// Arisu: ""
+	Ibuki: 丹花伊吹
+	Kei: 天童凯伊
+	Arisu: 天童爱丽丝
+	Nozomi: 橘望
+	Hikari: 橘光
+	Seia: 百合园圣娅
+	Nagisa: 桐藤渚
+	Yuzu: 花冈柚子
 }
 
 OwnerPrefix: 武器归属

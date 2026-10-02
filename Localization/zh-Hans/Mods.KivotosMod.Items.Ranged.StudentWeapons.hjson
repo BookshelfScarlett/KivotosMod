@@ -96,9 +96,9 @@ AruWeapon: {
 }
 
 IrohaWeapon: {
-	DisplayName: Iroha Weapon
+	DisplayName: 万魔殿制式手枪
 	Tooltip: ""
-	// FlavorTooltip: ""
+	FlavorTooltip: ""
 }
 
 KasumiWeapon: {
@@ -133,4 +133,52 @@ MikaWeapon: {
 		星光般的闪耀，随时都能为
 		未花献上活跃
 		'''
+}
+
+ShirokoWeapon: {
+	// DisplayName: Shiroko Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
+}
+
+IbukiWeapon: {
+	DisplayName: 邦邦—！酱
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		伊吹十分珍视的枪。
+		伊吹在从「万魔殿」的前辈那里继承来的制式步枪上
+		贴上了喜欢的贴纸、挂上了喜欢的挂件。
+		据说是伊吹不可替代的重要的宝物。
+		'''
+}
+
+HikariWeapon: {
+	// DisplayName: Hikari Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
+}
+
+NozomiWeapon: {
+	// DisplayName: Nozomi Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
+}
+
+YuzuWeapon: {
+	// DisplayName: Yuzu Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
+}
+
+NagisaWeapon: {
+	// DisplayName: Nagisa Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
+}
+
+SeiaWeapon: {
+	// DisplayName: Seia Weapon
+	// Tooltip: ""
+	// FlavorTooltip: ""
 }
