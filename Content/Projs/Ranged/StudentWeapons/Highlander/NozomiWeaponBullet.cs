@@ -6,7 +6,6 @@ using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Graphics;
 using KivotosMod.Globals.Methods;
-using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -47,7 +46,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
             if (Main.rand.NextBool(3))
             {
                 Color c = Main.rand.NextBool() ? RandLerpColor(Color.MidnightBlue, Color.DodgerBlue) : RandLerpColor(Color.LightGreen, Color.Green);
-                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(5), 12.4f * Projectile.velocity.ToRandVelocity(Main.rand.NextFloat(ToRadians(5), ToRadians(15))*Main.rand.NextFloat(.5f,1.2f)), c,
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(5), 12.4f * Projectile.velocity.ToRandVelocity(Main.rand.NextFloat(ToRadians(5), ToRadians(15)) * Main.rand.NextFloat(.5f, 1.2f)), c,
                     40, 1, Main.rand.NextFloat(.8f, 1.15f) * .23f, glowMult: .4f);
             }
         }
@@ -90,7 +89,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
                 Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale * 1.5f;
                 Color c = Color.Lerp(Color.ForestGreen, Color.Lerp(Color.DarkGreen, Color.Blue, .5f), EasingFunction.EaseInOutQuad(progress));
                 float opac = Lerp(1f, .79f, EasingFunction.EaseInOutExpo(progress));
-                Color pixelColor = Color.Lerp(Color.Lerp(Color.MidnightBlue,Color.White,.43f), Color.Lerp(Color.DarkGreen, Color.RoyalBlue, 0.5f), EasingFunction.EaseInOutQuad(progress));
+                Color pixelColor = Color.Lerp(Color.Lerp(Color.MidnightBlue, Color.White, .43f), Color.Lerp(Color.DarkGreen, Color.RoyalBlue, 0.5f), EasingFunction.EaseInOutQuad(progress));
                 int by = (int)Lerp(150, 0, progress);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), pixelColor.ToAddColor((byte)(by - 40)) * opac, oldRot, projTex.Size() / 2f, scale, 0);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f), c.ToAddColor(0) * opac * 0.9f, oldRot, projTex.Size() / 2f, scale * .96f, 0);

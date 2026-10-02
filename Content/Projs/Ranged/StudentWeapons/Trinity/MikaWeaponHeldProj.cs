@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity
 {
-    public class MikaWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class MikaWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<MikaWeapon>();
         public override string Texture => GetInstance<MikaWeapon>().Texture;

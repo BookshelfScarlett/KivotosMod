@@ -1,4 +1,4 @@
-﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos;
+﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
@@ -26,7 +26,7 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            Item.shoot = ProjectileType<HoshinoWeaponHeldProj>();
+            Item.shoot = ProjectileType<KayokoWeaponHeldProj>();
         }
     }
 }

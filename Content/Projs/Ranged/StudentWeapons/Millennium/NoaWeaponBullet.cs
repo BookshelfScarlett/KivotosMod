@@ -31,22 +31,26 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
         }
+        public float OverallScaleAI = 0;
+        public ref float AniTimer => ref Projectile.localAI[0];
         public override void AI()
         {
+            float maxAniProgress = 2f * Projectile.MaxUpdates;
+            AniTimer++;
+            float aniProgress = Utils.GetLerpValue(0, maxAniProgress, AniTimer, true);
+            OverallScaleAI = Lerp(0, Lerp(OverallScaleAI, 1f, 0.2f), aniProgress);
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Projectile.IsOutScreen())
                 return;
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(9))
             {
-                //ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 8f * Main.rand.NextFloat(1f, 2f),
-                //    Color.Lerp(Color.DodgerBlue, Color.RoyalBlue, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .45f, .2f);
-                ECSParticle.DigitalNumber(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 8f * Main.rand.NextFloat(1, 2),
-                    RandLerpColor(Color.CornflowerBlue, Color.LightSkyBlue), 40, 1, 0, 0.85f, 0.16f, Main.rand.Next(1, 3), BlendState.Additive);
+                ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 8f * Main.rand.NextFloat(1f, 2f),
+                    Color.Lerp(Color.LightSkyBlue, Color.RoyalBlue, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .45f, .2f);
             }
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(6))
             {
                 ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(10), Projectile.velocity / 8f * Main.rand.NextFloat(.4f, 1f) * 2f,
-                    RandLerpColor(Color.LightSkyBlue, Color.DodgerBlue), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.54f, 1f) * 0.85f);
+                    RandLerpColor(Color.RoyalBlue, Color.LightSkyBlue), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.54f, 1f) * 0.85f);
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -89,13 +93,11 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
             Texture2D tex = KivotosTextureAssets.Particle_SharpTear;
             Texture2D projTex = tex;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            Vector2 ori = projTex.Size() / 2f;
-            int drawLength = Projectile.oldPos.Length;
-            Texture2D glowTex = KivotosTextureAssets.Particle_HRStarWhite.Value;
+            Texture2D glowTex = KivotosTextureAssets.Particle_OpticalLineGlow.Value;
             SB.EnterShaderArea();
-            float glowScale = Projectile.scale * .20f;
+            float glowScale = Projectile.scale * .25f*OverallScaleAI;
             SB.FastDraw(glowTex, drawPos, Color.RoyalBlue, Projectile.rotation, glowTex.Size() / 2f, glowScale, 0);
-            SB.FastDraw(glowTex, drawPos, Color.LightSkyBlue, Projectile.rotation, glowTex.Size() / 2f, glowScale * .86f, 0);
+            SB.FastDraw(glowTex, drawPos, Color.LightSkyBlue, Projectile.rotation, glowTex.Size() / 2f, glowScale * .6f, 0);
             SB.EndShaderArea();
             int length = Projectile.oldPos.Length;
             for (int i = length - 1; i >= 0; i--)
@@ -107,10 +109,10 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 float progress = i / (float)length;
                 float xMult = Lerp(0.26f, .05f, (progress));
                 float yMult = Lerp(1f, .35f, progress);
-                Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale * 1.5f;
-                Color c = Color.Lerp(Color.DarkBlue, Color.Lerp(Color.Blue, Color.White, .5f), EasingFunction.EaseInOutQuad(progress));
+                Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale * 1.5f*OverallScaleAI;
+                Color c = Color.Lerp(Color.RoyalBlue, Color.Lerp(Color.SkyBlue, Color.White, .5f), EasingFunction.EaseInOutQuad(progress));
                 float opac = Lerp(1f, .79f, EasingFunction.EaseInOutExpo(progress));
-                Color pixelColor = Color.Lerp(Color.LightSkyBlue, Color.Lerp(Color.Blue, Color.DeepSkyBlue, 0.65f), EasingFunction.EaseInOutQuad(progress));
+                Color pixelColor = Color.Lerp(Color.LightSkyBlue, Color.Lerp(Color.SkyBlue, Color.DeepSkyBlue, 0.15f), EasingFunction.EaseInOutQuad(progress));
                 int by = (int)Lerp(150, 0, progress);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), pixelColor.ToAddColor((byte)(by - 40)) * opac, oldRot, projTex.Size() / 2f, scale * .99f, 0);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f), c.ToAddColor(0) * opac * 0.9f, oldRot, projTex.Size() / 2f, scale * .96f, 0);

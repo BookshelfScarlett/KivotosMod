@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
 {
-    public class MidoriWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class MidoriWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<MidoriWeapon>();
         public override string Texture => GetInstance<MidoriWeapon>().Texture;

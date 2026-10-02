@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos
 {
-    public class SerikaWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class SerikaWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<SerikaWeapon>();
         public override string Texture => GetInstance<SerikaWeapon>().Texture;

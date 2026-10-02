@@ -3,7 +3,6 @@ using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Methods;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace KivotosMod.Content.Projs.Typeless

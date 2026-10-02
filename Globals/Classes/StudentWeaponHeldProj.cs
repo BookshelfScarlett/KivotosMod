@@ -11,7 +11,7 @@ namespace KivotosMod.Globals.Classes
     /// <br>这个基类专门用于实现类似荷鲁斯之眼<see langword="EyeofHorus"/>的手持显示效果，已经自动管理了绝大部分从攻击到绘制的内容</br>
     /// <br>一般情况下和大部分武显模组本身冲突。</br>
     /// </summary>
-    public abstract class KivotosRangedWeaponProjectie : ModProjectile, ILocalizedModType
+    public abstract class KivotosRangedWeaponProjectile : ModProjectile, ILocalizedModType
     {
         public Player Owner => Main.player[Projectile.owner];
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
@@ -29,7 +29,7 @@ namespace KivotosMod.Globals.Classes
         /// 攻击速度，使用<see cref="Player.HeldItem"/>作为基础
         /// <br>这里的管理方案会自动将<see cref="Projectile.MaxUpdates"/>纳入计算</br>
         /// </summary>
-        public virtual int AttackSpeed => Owner.ApplyWeaponAttackSpeed(Owner.HeldItem, Owner.HeldItem.useTime * Projectile.MaxUpdates, MinAttackRate * Projectile.MaxUpdates);
+        public virtual int AttackSpeed =>Owner.ApplyWeaponAttackSpeed(Owner.HeldItem, Owner.HeldItem.useTime * Projectile.MaxUpdates, MinAttackRate * Projectile.MaxUpdates);
         /// <summary>
         /// 额外更新，这个额外更新默认为<see langword="1"/>，即提供1额外更新
         /// <br>一般情况下会用于手持射弹本身的粒子特效</br>
@@ -105,6 +105,7 @@ namespace KivotosMod.Globals.Classes
                         OnAttack();
                         PostAttack();
                     }
+                    else
                     if (Owner.controlUseTile)
                     {
                         PreRightAttack();
@@ -161,9 +162,11 @@ namespace KivotosMod.Globals.Classes
         }
         protected virtual void UpdatePlayerState()
         {
-            //手持物品不对，玩家状态不对，处死射弹
+            //手持物品不对
             if (Owner.IsHolding(OriginalItemID) && !Owner.CCed && !Owner.dead)
                 Projectile.timeLeft = 2;
+            else
+                Projectile.Kill();
 
         }
         /// <summary>

@@ -9,15 +9,15 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
 {
-    public class YuzuWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class YuzuWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<YuzuWeapon>();
         public override string Texture => GetInstance<YuzuWeapon>().Texture;
-        public override float HoldoutDrawScale => .75f;
+        public override float HoldoutDrawScale => 1f;
         public override Color HoldoutEdgeColor => Color.OrangeRed;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
-        public override Vector2 HoldoutOffset => new Vector2(0f, -5f);
-        public override float RecoilPower => 20;
+        public override Vector2 HoldoutOffset => new Vector2(1, -5f);
+        public override float RecoilPower => 15;
         public override float RecoilWeaponPullbackRatios => .3f;
         protected override void UpdateRecoil()
         {
@@ -35,7 +35,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 pro = progress / shakeRatios;
             }
 
-            Projectile.Center += Main.rand.NextVector2Circular(2.5f, 2.5f)*pro;
+            Projectile.Center += Main.rand.NextVector2Circular(2.5f, 2.5f) * pro;
         }
         protected override void OnAttack()
         {
@@ -54,7 +54,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.48f;
                 int timeLeft = Main.rand.Next(30, 45);
                 ECSParticle.ShinyCrossStarECS(pos2, vel, Color.Lerp(Color.DarkOrange, Color.Orange, Main.rand.NextFloat()), timeLeft, 1, scale, .2f);
-                    ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(3f), vel.ToRandVelocity(ToRadians(10),1f, 24f), RandLerpColor(Color.Orange, Color.DarkOrange), 30, 1f, Main.rand.NextFloat(.7f, 1.3f) * .1f, 0.45f);
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(3f), vel.ToRandVelocity(ToRadians(10), 1f, 24f), RandLerpColor(Color.Orange, Color.DarkOrange), 30, 1f, Main.rand.NextFloat(.7f, 1.3f) * .1f, 0.45f);
             }
             for (int i = 0; i < 40; i++)
             {

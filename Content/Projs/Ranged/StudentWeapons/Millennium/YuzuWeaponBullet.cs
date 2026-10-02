@@ -1,5 +1,4 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Projs.Typeless;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Cores.PixelatedRender;
 using KivotosMod.Cores.ScreenEffect;
@@ -8,7 +7,6 @@ using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Graphics;
 using KivotosMod.Globals.Methods;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -85,10 +83,10 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Projectile.velocity.ToRandVelocity(ToRadians(10), 2, 9),
                     RandLerpColor(Color.OrangeRed, Color.DarkOrange), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .73f, .2f);
             }
-            if(Main.rand.NextBool(6))
+            if (Main.rand.NextBool(6))
             {
                 ECSParticle.TurbulenceShinyOrb(Projectile.Center.ToRandCirclePos(10), Main.rand.NextFloat(.5f, 1.2f) * 3f, RandLerpColor(Color.Orange, Color.DarkOrange), Main.rand.Next(30, 51),
-                    1, Main.rand.NextFloat(.85f, 1.15f)*.20f, RandRotTwoPi, .4f);
+                    1, Main.rand.NextFloat(.85f, 1.15f) * .20f, RandRotTwoPi, .4f);
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -108,9 +106,9 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
         }
         public void SpawnExplosion()
         {
-            Projectile.SpawnInvisBoom(new KivotosMethods.InvisBoomOptions 
-            { Resize = 400,DamageClass = DamageClass.Ranged, BuffID = BuffID.OnFire, BuffTime = 60, LifeTime = 60, HitCooldown = 5 });
-                        Vector2 safeDir = Projectile.rotation.ToRotationVector2();
+            Projectile.SpawnInvisBoom(new KivotosMethods.InvisBoomOptions
+            { Resize = 400, DamageClass = DamageClass.Ranged, BuffID = BuffID.OnFire, BuffTime = 60, LifeTime = 60, HitCooldown = 5 });
+            Vector2 safeDir = Projectile.rotation.ToRotationVector2();
             for (int i = 0; i < 40; i++)
             {
                 for (int j = 0; j < 4; j++)
@@ -124,7 +122,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
             }
             for (int i = 0; i < 70; i++)
             {
-                ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(5f), RandVelTwoPi(7f, 28), RandLerpColor(Color.DarkOrange, Color.Orange), 40, RandRotTwoPi, .21f, 0.87f * Main.rand.NextFloat(0.8f, 1.1f), false,BlendState.AlphaBlend);
+                ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(5f), RandVelTwoPi(7f, 28), RandLerpColor(Color.DarkOrange, Color.Orange), 40, RandRotTwoPi, .21f, 0.87f * Main.rand.NextFloat(0.8f, 1.1f), false, BlendState.AlphaBlend);
                 ECSParticle.SmokeParticle(Projectile.Center.ToRandCirclePos(5f), RandVelTwoPi(4f, 28f), RandLerpColor(Color.Orange, Color.OrangeRed), 20, RandRotTwoPi, .41f, 1.09f * Main.rand.NextFloat(0.8f, 1.1f), true, BlendState.Additive);
             }
             //float squareSplitScale = .80f;
@@ -151,7 +149,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
 
             float overallAlpha = 1;
             SB.EnterShaderArea();
-            SB.FastDraw(Glow, drawPos, Color.DarkGoldenrod* overallAlpha * 0.82f, rot, Glow.Size() / 2f, totalScale * .33f, SpriteEffects.None);
+            SB.FastDraw(Glow, drawPos, Color.DarkGoldenrod * overallAlpha * 0.82f, rot, Glow.Size() / 2f, totalScale * .33f, SpriteEffects.None);
             SB.EndShaderArea();
             Color outerCol = Color.Orange * 0.4f;
             SB.FastDraw(FireBall, drawPos, outerCol.ToAddColor() * overallAlpha, rot, FireBall.Size() / 2f, totalScale, SpriteEffects.None);
@@ -165,7 +163,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 //根据progress计算出每个位置的颜色，越靠近尾部的点越淡，这里暂时只有progress
                 float colVal = progress;
                 //根据progress计算出每个位置的颜色，越靠近尾部的点越偏紫
-                Color col = Color.Lerp(Color.DarkRed* 3f, betweenGold, EasingFunction.EaseInOutQuad(progress)) * progress * 0.7f;
+                Color col = Color.Lerp(Color.DarkRed * 3f, betweenGold, EasingFunction.EaseInOutQuad(progress)) * progress * 0.7f;
                 //底图的大小，超级复杂的数学计算，这里是反复热重载试的
                 Vector2 size2 = (1f - (progress * 0.15f)) * totalScale;
                 //底图的位置，这里会有一个反复出现的随机偏移，越靠近尾部的点偏移越小。用来表现炮弹的震动动态
@@ -178,10 +176,10 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 Vector2 size = (1f - (progress * 0.9f)) * totalScale * new Vector2(.25f, 1.15f);
                 Vector2 upperLayerFireballPos = pos;
                 Color upperLayerFireballColor = col.ToAddColor() * 1.25f * overallAlpha * colVal;
-                SB.FastDraw(FireBall, upperLayerFireballPos, upperLayerFireballColor,oldRot, FireBall.Size() / 2f, size* 1.5f, SpriteEffects.None);
+                SB.FastDraw(FireBall, upperLayerFireballPos, upperLayerFireballColor, oldRot, FireBall.Size() / 2f, size * 1.5f, SpriteEffects.None);
             }
             Vector2 v2scale = new Vector2(1f, 0.8f);
-            Vector2 upperLayerMainFireballPos = drawPos+Main.rand.NextVector2Circular(5,5);
+            Vector2 upperLayerMainFireballPos = drawPos + Main.rand.NextVector2Circular(5, 5);
             SB.FastDraw(FireBall, upperLayerMainFireballPos, betweenGold.ToAddColor() * overallAlpha * 0.75f, rot, FireBall.Size() / 2f, totalScale * v2scale, SpriteEffects.None);
             SB.FastDraw(FireBall, drawPos, Color.White.ToAddColor() * overallAlpha, rot, FireBall.Size() / 2f, v2scale * totalScale * 0.6f, SpriteEffects.None);
 
@@ -197,7 +195,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
             if (!Projectile.Kivotos().FirstFrame)
                 return false;
             PixelatedRenderManager.BeginDrawProj = true;
-                        return false;
+            return false;
         }
     }
 }

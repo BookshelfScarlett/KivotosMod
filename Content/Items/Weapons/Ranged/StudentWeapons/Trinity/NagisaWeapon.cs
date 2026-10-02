@@ -1,5 +1,4 @@
-﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
-using KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity;
+﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;

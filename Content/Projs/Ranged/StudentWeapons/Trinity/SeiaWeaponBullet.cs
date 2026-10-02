@@ -38,14 +38,12 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity
                 return;
             if (Main.rand.NextBool(4))
             {
-                //ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Projectile.velocity.ToRandVelocity(ToRadians(10),2f,6f),
-                //    Color.Lerp(Color.Pink, Color.Violet, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .75f, .2f);
                 ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(6), Projectile.velocity.ToRandVelocity(ToRadians(10), 2, 6),
-                    RandLerpColor(Color.Violet, Color.DarkViolet), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .43f, 0);
+                    RandLerpColor(Color.LightGoldenrodYellow, Color.Goldenrod), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .43f, 0);
             }
             if (Main.rand.NextBool(8))
             {
-                ECSParticle.PixelTriangle(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 6f, RandLerpColor(Color.Pink, Color.Violet), 40,
+                ECSParticle.PixelTriangle(Projectile.Center.ToRandCirclePosEdge(8), Projectile.velocity / 6f, RandLerpColor(Color.LightGoldenrodYellow, Color.DarkGoldenrod), 40,
                     1f, RandRotTwoPi, 0.4f, 0f, blendState: BlendState.Additive);
             }
         }
@@ -59,10 +57,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity
             {
                 ECSParticle.PixelTriangle(Projectile.Center.ToRandCirclePosEdge(8), RandVelTwoPi(1f, 5f), RandLerpColor(Color.LightPink, Color.Violet), 40,
                     1, RandRotTwoPi, 0.4f, 0);
-                //ECSParticle.BlossomPetal(Projectile.Center.ToRandCirclePos(4), RandVelTwoPi(5,16), RandLerpColor(Color.Pink, Color.Violet), 40, 1, RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .35f,
-                //    1.5f, true, 0, true,BlendState.Additive);
-                //ECSParticle.SmokeParticle(Projectile.Center, RandVelTwoPi(1, 7), RandLerpColor(Color.LightPink, Color.Violet), 
-                //    Main.rand.Next(30, 51), RandRotTwoPi, 1, Main.rand.NextFloat(.9f, 1.1f) * .145f, Main.rand.NextBool(),BlendState.Additive);
             }
             for (int i = 0; i < 16; i++)
             {
@@ -92,8 +86,8 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity
                 Vector2 AfterImagePos = Projectile.oldPos[i] + Projectile.Size / 2f - Main.screenPosition + Main.rand.NextVector2Circular(4.5f, 4.5f); //6f
                 float startScale = 1.1f + sineScale;
                 float rot = Projectile.oldRot[i] + PiOver2;
-                Color between = Color.Lerp(Color.Violet, Color.HotPink, 0.15f);
-                Color col = Color.Lerp(between, Color.Violet, 1f - progress);
+                Color between = Color.Lerp(Color.DarkGoldenrod, Color.Goldenrod, 0.15f);
+                Color col = Color.Lerp(between, Color.LightGoldenrodYellow, 1f - progress);
                 float easedFadeValue = progress * progress * overallAlpha;
                 Vector2 lineScale = new Vector2(0.20f + 0.4f * progress, 1.25f);
                 lineScale.Y *= overallScale;

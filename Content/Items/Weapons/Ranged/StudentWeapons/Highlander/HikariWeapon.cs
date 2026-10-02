@@ -1,5 +1,4 @@
-﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
-using KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander;
+﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
@@ -10,10 +9,10 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Highlander
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            backgroundColor = Color.Lerp(Color.LightGreen,Color.White,.5f)*.2f;
+            backgroundColor = Color.Lerp(Color.LightGreen, Color.White, .5f) * .2f;
             backgroundEdgeColor = Color.Lerp(Color.White, Color.DodgerBlue, .14f);
-            textColor = Color.Lerp(Color.LightGreen,Color.White,.5f);
-            textEdgeColor = Color.Lerp(Color.DodgerBlue,Color.MidnightBlue,.85f);
+            textColor = Color.Lerp(Color.LightGreen, Color.White, .5f);
+            textEdgeColor = Color.Lerp(Color.DodgerBlue, Color.MidnightBlue, .85f);
         }
 
         protected override string Owner => "Hikari";

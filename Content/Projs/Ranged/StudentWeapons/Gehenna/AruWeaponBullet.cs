@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos
+namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
     /// <summary>
     /// 复制的小绿的子弹，改了个色
     /// </summary>
-    public class ShirokoWeaponBullet : KivotosPlayerProjs, IPixelatedRenderer
+    public class AruWeaponBullet : KivotosPlayerProjs, IPixelatedRenderer
     {
         public override string Texture => KivotosTextureAssets.InvisAsset.Path;
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;

@@ -30,17 +30,15 @@ namespace KivotosMod.Content.Items.Weapons.Ranged
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            for (int i = 0; i < 16; i++)
-            {
-                ECSParticle.ShinyCrossStarECS(position.ToRandCirclePos(6), velocity.ToRandVelocity(ToRadians(10), 1, 10), RandLerpColor(Color.Gold, Color.Yellow), 40,
-                    1, Main.rand.NextFloat(.9f, 1.1f) * .4f, .2f);
-            }
+            if (source.AmmoItemIdUsed == ItemID.MusketBall)
+                type = ProjectileType<GeneralAssaultRifleBullet>();
+            Projectile proj2 = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileType<GeneralRecoilWeaponProj>(), 0, 0, player.whoAmI);
             if (proj.ModProjectile is GeneralRecoilWeaponProj holdout)
             {
-                holdout.SetUpHoldoutData(Type, 6f, Item.useAnimation, new Vector2(5, -0f));
+                holdout.SetUpHoldoutData(Type, 7f, Item.useAnimation, new Vector2(10, 0f));
             }
-            return true;
+            return false;
         }
     }
     #region 统一的步枪类，方便后续扩展

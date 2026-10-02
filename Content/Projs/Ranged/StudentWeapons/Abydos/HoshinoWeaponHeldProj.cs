@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos
 {
-    public class HoshinoWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class HoshinoWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<HoshinoWeapon>();
         public override string Texture => GetInstance<HoshinoWeapon>().Texture;

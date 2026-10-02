@@ -55,8 +55,8 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-                ECSParticle.ShinyCrossStarSmall(Projectile.Center, Vector2.Zero,
-                    RandLerpColor(Color.DarkRed, Color.Brown), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * 1.5f, 0);
+            ECSParticle.ShinyCrossStarSmall(Projectile.Center, Vector2.Zero,
+                RandLerpColor(Color.DarkRed, Color.Brown), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * 1.5f, 0);
             for (int i = 0; i < 26; i++)
             {
                 ECSParticle.TurbulenceShinyOrb(Projectile.Center.ToRandCirclePos(10), Main.rand.NextFloat(.9f, 1.1f) * 1.5f,

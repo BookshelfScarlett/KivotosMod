@@ -8,10 +8,10 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
-    public class IrohaWeaponHeldProj : KivotosRangedWeaponProjectile
+    public class MutsukiWeaponHeldProj : KivotosRangedWeaponProjectile
     {
-        public override int OriginalItemID => ItemType<IrohaWeapon>();
-        public override string Texture => GetInstance<IrohaWeapon>().Texture;
+        public override int OriginalItemID => ItemType<MutsukiWeapon>();
+        public override string Texture => GetInstance<MutsukiWeapon>().Texture;
         public override float HoldoutDrawScale => 0.85f;
         public override Color HoldoutEdgeColor => Color.Brown;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
@@ -25,7 +25,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
             Vector2 pos = Projectile.Center + particleOffset + dir * 15;
             float randRot = ToRadians(3.5f);
             Vector2 randomVelocity = dir.RotatedByRandom(randRot) * Main.rand.NextFloat(0.88f, 1.12f);
-            Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, randomVelocity * 16f, ProjectileType<IrohaWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+            Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, randomVelocity * 16f, ProjectileType<MutsukiWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
             for (int i = 0; i < 10; i++)
             {
                 Vector2 pos2 = pos.ToRandCirclePos(8);

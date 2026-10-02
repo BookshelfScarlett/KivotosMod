@@ -6,7 +6,6 @@ using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Paths;
 using KivotosMod.Globals.Graphics;
 using KivotosMod.Globals.Methods;
-using System;
 using Terraria;
 using Terraria.ModLoader;
 

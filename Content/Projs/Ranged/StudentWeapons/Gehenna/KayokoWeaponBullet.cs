@@ -2,7 +2,6 @@
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Paths;
-using KivotosMod.Globals.Graphics.Particles;
 using KivotosMod.Globals.Methods;
 using System;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
-    public class IbukiWeaponBullet : KivotosPlayerProjs
+    public class KayokoWeaponBullet : KivotosPlayerProjs
     {
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
         public override string Texture => KivotosTextureAssets.InvisAsset.Path;
@@ -37,17 +36,17 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
             Projectile.rotation = Projectile.velocity.ToRotation();
             if (Projectile.IsOutScreen())
                 return;
-            if (Main.rand.NextBool(6))
+            if (Main.rand.NextBool())
             {
-                new IbukiCuteSymbol(Projectile.Center.ToRandCirclePos(5), Projectile.velocity.ToRandVelocity(ToRadians(15),2f,6f), Color.White, 
-                    50, Main.rand.NextFloat(-.1f, .1f), 1, Main.rand.NextFloat(.85f, 1.15f) * .25f, false).Spawn();
-                //ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(12), Projectile.velocity / 3f, RandLerpColor(Color.Goldenrod, Color.LightGoldenrodYellow), 40, 1,
-                //    Main.rand.NextFloat(.9f, 1.1f) * .4f, 0.2f);
+                ECSParticle.HRShinyOrb(Projectile.Center.ToRandCirclePos(12), Projectile.velocity / 1f, RandLerpColor(Color.DarkRed, Color.Brown),
+                    40, 1, Main.rand.NextFloat(.9f, 1.1f) * .13f, .4f);
+
             }
-            if (Main.rand.NextBool(4))
+            if (Main.rand.NextBool(3))
             {
-                ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(12), Projectile.velocity / 3f, RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 40, 1,
-                    RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * 0.745f, 3, Main.rand.NextFloat(-.1f, .1f), 0.4f);
+                ECSParticle.ShinyCrossStarSmall(Projectile.Center.ToRandCirclePos(6), Projectile.velocity.ToRandVelocity(ToRadians(10), 2, 6),
+                    RandLerpColor(Color.DarkRed, Color.Brown), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * .3f, 0);
+
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -56,19 +55,13 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 8; i++)
-            {
-                ECSParticle.GlowSquare(Projectile.Center.ToRandCirclePos(12), RandVelTwoPi(2, 9), RandLerpColor(Color.DarkGoldenrod, Color.LightGoldenrodYellow), 40, 1,
-                    RandRotTwoPi, Main.rand.NextFloat(.9f, 1.1f) * .13f, 2, Main.rand.NextFloat(-.1f, .1f), 0.4f);
-            }
-
             ECSParticle.ShinyCrossStarSmall(Projectile.Center, Vector2.Zero,
-                RandLerpColor(Color.DarkGoldenrod, Color.Goldenrod), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * 1.5f, 0);
-            new IbukiCuteSymbol(Projectile.Center.ToRandCirclePos(5), (-Vector2.UnitY).ToRandVelocity(ToRadians(10), 14, 16), Color.White, 50, Main.rand.NextFloat(-.1f, .1f), 1, Main.rand.NextFloat(.85f, 1.15f) * .25f, true).Spawn();
-
-            for (int i = 0; i < 2; i++)
+                RandLerpColor(Color.DarkRed, Color.Brown), 40, 1, Main.rand.NextFloat(.9f, 1.1f) * 1.5f, 0);
+            for (int i = 0; i < 26; i++)
             {
-                new IbukiCuteSymbol(Projectile.Center.ToRandCirclePos(5), RandVelTwoPi(4f, 12f), Color.White, 50, Main.rand.NextFloat(-.1f, .1f), 1, Main.rand.NextFloat(.85f, 1.15f) * .5f, false).Spawn();
+                ECSParticle.TurbulenceShinyOrb(Projectile.Center.ToRandCirclePos(10), Main.rand.NextFloat(.9f, 1.1f) * 1.5f,
+                    RandLerpColor(Color.DarkRed, Color.Brown), Main.rand.Next(30, 41), 1, Main.rand.NextFloat(.8f, 1.12f) * .13f, glowMult: .6f);
+
             }
 
             base.OnHitNPC(target, hit, damageDone);
@@ -82,7 +75,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
             float overallScale = 1f;
             float overallAlpha = 1f;
 
-            //Copy-right:VFX
             for (int i = 0; i < count; i++)
             {
                 float progress = 1 - (float)i / count;
@@ -90,8 +82,8 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
                 Vector2 AfterImagePos = Projectile.oldPos[i] + Projectile.Size / 2f - Main.screenPosition + Main.rand.NextVector2Circular(4.5f, 4.5f); //6f
                 float startScale = 1.1f + sineScale;
                 float rot = Projectile.oldRot[i] + PiOver2;
-                Color between = Color.Lerp(Color.DarkGoldenrod, Color.Gold, 0.15f);
-                Color col = Color.Lerp(between, Color.LightGoldenrodYellow, 1f - progress);
+                Color between = Color.Lerp(Color.DarkRed, Color.Brown, 0.15f);
+                Color col = Color.Lerp(between, Color.RosyBrown, 1f - progress);
                 float easedFadeValue = progress * progress * overallAlpha;
                 Vector2 lineScale = new Vector2(0.20f + 0.4f * progress, 1.25f);
                 lineScale.Y *= overallScale;

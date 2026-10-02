@@ -9,11 +9,10 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            backgroundColor = Color.White* .3f;
+            backgroundColor = Color.White * .3f;
             backgroundEdgeColor = Color.LightGoldenrodYellow;
             textColor = Color.White;
             textEdgeColor = Color.DarkGoldenrod;
-            //base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
         }
 
         protected override string Owner => "Ibuki";

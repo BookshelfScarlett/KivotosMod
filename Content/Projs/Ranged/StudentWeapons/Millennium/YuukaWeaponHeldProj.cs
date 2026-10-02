@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
 {
-    public class YuukaWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class YuukaWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<YuukaWeapon>();
         public override string Texture => GetInstance<YuukaWeapon>().Texture;

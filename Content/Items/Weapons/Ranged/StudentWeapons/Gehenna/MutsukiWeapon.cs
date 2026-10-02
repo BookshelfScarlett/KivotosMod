@@ -1,4 +1,4 @@
-﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos;
+﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
@@ -13,7 +13,6 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
             textColor = Color.White;
             backgroundColor = Color.Black * .2f;
             backgroundEdgeColor = Color.White;
-            //base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
         }
 
         protected override string Owner => "Mutsuki";
@@ -30,7 +29,7 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna
             Item.damage = 45;
             Item.knockBack = 1;
             Item.shootSpeed = 10f;
-            //Item.shoot = ProjectileType<mutsuki>();
+            Item.shoot = ProjectileType<MutsukiWeaponHeldProj>();
         }
     }
 }

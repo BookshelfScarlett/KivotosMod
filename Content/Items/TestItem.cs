@@ -1,3 +1,4 @@
+using KivotosMod.Content.Projs.Ranged;
 using KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium;
 using KivotosMod.Globals.Database.Paths;
 using Terraria;
@@ -22,7 +23,7 @@ namespace KivotosMod.Content.Items
             Item.value = Item.buyPrice(silver: 1);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item1;
-            Item.shoot = ProjectileType<YuzuWeaponBullet>();
+            Item.shoot = ProjectileType<GeneralAssaultRifleBullet>();
             Item.shootSpeed = 16;
             Item.autoReuse = true;
         }

@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
 {
-    public class HikariWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class HikariWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<HikariWeapon>();
         public override string Texture => GetInstance<HikariWeapon>().Texture;

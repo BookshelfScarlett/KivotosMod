@@ -3,13 +3,12 @@ using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Highlander;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;
-using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
 {
-    public class NozomiWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class NozomiWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<NozomiWeapon>();
         public override string Texture => GetInstance<NozomiWeapon>().Texture;
@@ -51,7 +50,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
         }
         protected override void PreAttack()
         {
-            SoundEngine.PlaySound(KivotosSoundsAssets.Pistol with { Volume = .3f}, Projectile.Center);
+            SoundEngine.PlaySound(KivotosSoundsAssets.Pistol with { Volume = .3f }, Projectile.Center);
             base.PreAttack();
         }
     }

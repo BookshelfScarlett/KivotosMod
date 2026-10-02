@@ -10,7 +10,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
-    public class HarukaWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class HarukaWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<HarukaWeapon>();
         public override string Texture => GetInstance<HarukaWeapon>().Texture;

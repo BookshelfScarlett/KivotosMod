@@ -9,11 +9,11 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
-    public class IbukiWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class IbukiWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<IbukiWeapon>();
         public override string Texture => GetInstance<IbukiWeapon>().Texture;
-        public override float HoldoutDrawScale => .50f;
+        public override float HoldoutDrawScale => .60f;
         public override Color HoldoutEdgeColor => Color.Yellow;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
         public override Vector2 HoldoutOffset => new Vector2(25f, -0f);
@@ -31,23 +31,15 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
             Vector2 randomVelocity = dir.RotatedByRandom(randRot) * Main.rand.NextFloat(0.88f, 1.12f);
             Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), bulletPos, randomVelocity * 16f, ProjectileType<IbukiWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
             Vector2 pos = Projectile.Center + particleOffset + dir * 15;
-            for (int i = 0; i < 10; i++)
-            {
-                Vector2 pos2 = pos.ToRandCirclePos(8);
-                Vector2 vel = Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(15), .1f, 14.6f);
-                float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.48f;
-                int timeLeft = Main.rand.Next(30, 45);
-                ECSParticle.ShinyCrossStarECS(pos2, vel, Color.Lerp(Color.DarkGoldenrod, Color.LightGoldenrodYellow, Main.rand.NextFloat()), timeLeft, 1, scale, .2f);
-            }
             for (int i = 0; i < 5; i++)
             {
                 Vector2 pos2 = pos.ToRandCirclePos(8);
                 Vector2 vel = Projectile.rotation.ToRotationVector2().ToRandVelocity(ToRadians(15), 4f, 14.6f);
                 float scale = Projectile.scale * Main.rand.NextFloat(.95f, 1.15f) * 0.48f;
                 int timeLeft = Main.rand.Next(30, 45);
-                new IbukiCuteSymbol(pos2, vel, Color.White, timeLeft, Main.rand.NextFloat(-.1f, .1f), 1, Main.rand.NextFloat(.85f,1.15f)*.35f, false).Spawn();
+                new IbukiCuteSymbol(pos2, vel, Color.White, timeLeft, Main.rand.NextFloat(-.1f, .1f), 1, Main.rand.NextFloat(.85f, 1.15f) * .15f, false).Spawn();
             }
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 3; i++)
             {
                 bool alt = Main.rand.NextBool();
                 BlendState bs = alt ? BlendState.Additive : BlendState.AlphaBlend;

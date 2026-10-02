@@ -1,5 +1,4 @@
-﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna;
-using KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity;
+﻿using KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Lists;
@@ -10,7 +9,10 @@ namespace KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Trinity
     {
         protected override void SetUpTextboxSettings(ref Color backgroundColor, ref Color backgroundEdgeColor, ref Color textColor, ref Color textEdgeColor)
         {
-            base.SetUpTextboxSettings(ref backgroundColor, ref backgroundEdgeColor, ref textColor, ref textEdgeColor);
+            backgroundColor = Color.White * .3f;
+            backgroundEdgeColor = Color.LightGoldenrodYellow;
+            textColor = Color.White;
+            textEdgeColor = Color.DarkGoldenrod;
         }
 
         protected override string Owner => "Seia";

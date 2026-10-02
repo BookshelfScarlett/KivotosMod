@@ -1,17 +1,17 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Abydos;
+using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;
 using Terraria;
 using Terraria.Audio;
 
-namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos
+namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
 {
-    public class ShirokoWeaponHeldProj : KivotosRangedWeaponProjectile
+    public class AruWeaponHeldProj : KivotosRangedWeaponProjectile
     {
-        public override int OriginalItemID => ItemType<ShirokoWeapon>();
-        public override string Texture => GetInstance<ShirokoWeapon>().Texture;
+        public override int OriginalItemID => ItemType<AruWeapon>();
+        public override string Texture => GetInstance<AruWeapon>().Texture;
         public override float HoldoutDrawScale => .65f;
         public override Color HoldoutEdgeColor => Color.LightSkyBlue;
         public override bool HoldoutEdgeEnable => base.HoldoutEdgeEnable;
@@ -28,7 +28,7 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Abydos
             Vector2 particleOffset = ((HoldoutOffset + new Vector2(0, -5.5f)) * new Vector2(1, Owner.direction)).RotatedBy(Projectile.rotation);
             Vector2 dir = Projectile.rotation.ToRotationVector2();
             Vector2 pos = Projectile.Center + particleOffset + dir * 5;
-            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, (Projectile.rotation + Main.rand.NextFloat(ToRadians(-5), ToRadians(5))).ToRotationVector2() * 16f, ProjectileType<ShirokoWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, (Projectile.rotation + Main.rand.NextFloat(ToRadians(-5), ToRadians(5))).ToRotationVector2() * 16f, ProjectileType<AruWeaponBullet>(), Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
             Vector2 particlePos = pos + dir * 40f;
             for (int i = 0; i < 15; i++)
             {

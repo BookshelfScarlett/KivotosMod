@@ -8,7 +8,7 @@ using Terraria.Audio;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Trinity
 {
-    public class KoharuWeaponHeldProj : KivotosRangedWeaponProjectie
+    public class KoharuWeaponHeldProj : KivotosRangedWeaponProjectile
     {
         public override int OriginalItemID => ItemType<KoharuWeapon>();
         public override string Texture => GetInstance<KoharuWeapon>().Texture;

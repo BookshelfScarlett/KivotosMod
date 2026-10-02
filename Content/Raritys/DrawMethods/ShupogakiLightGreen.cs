@@ -11,7 +11,7 @@ namespace KivotosMod.Content.Raritys.DrawMethods
     {
         public static void DrawItemName(DrawableTooltipLine line)
         {
-            RarityDrawHelper.DrawCustomTooltipLine(line, Color.LightGreen, Color.Lerp(Color.DodgerBlue,Color.MidnightBlue,.64f), Color.Lerp(Color.LightGreen,Color.White,0.5f), 1f);
+            RarityDrawHelper.DrawCustomTooltipLine(line, Color.LightGreen, Color.Lerp(Color.DodgerBlue, Color.MidnightBlue, .64f), Color.Lerp(Color.LightGreen, Color.White, 0.5f), 1f);
         }
         public static void DrawFlavorNameRarity(DrawableTooltipLine drawableTooltipLine, ref List<RaritySparkle> flavorSparkles)
         {
