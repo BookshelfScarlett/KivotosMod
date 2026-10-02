@@ -154,15 +154,25 @@ IbukiWeapon: {
 }
 
 HikariWeapon: {
-	// DisplayName: Hikari Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 车票・拳
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		光最爱用的手枪。
+		对暴躁的「麻烦——」乘客效果拔群
+		不管怎么说，似乎很用心地保养着
+		'''
 }
 
 NozomiWeapon: {
-	// DisplayName: Nozomi Weapon
-	// Tooltip: ""
-	// FlavorTooltip: ""
+	DisplayName: 致命·扳机
+	Tooltip: ""
+	FlavorTooltip:
+		'''
+		望爱用的手枪
+		虽然平时不怎么用，但为了随时排除扰
+		乱列车时刻表的因素，始终维护得很好
+		'''
 }
 
 YuzuWeapon: {

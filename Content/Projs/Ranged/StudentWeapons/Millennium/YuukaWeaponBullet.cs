@@ -38,8 +38,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 return;
             if (Main.rand.NextBool(4))
             {
-                //ECSParticle.ShinyCrossStarECS(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 8f * Main.rand.NextFloat(1f, 2f),
-                //    Color.Lerp(Color.DodgerBlue, Color.RoyalBlue, Main.rand.NextFloat()), Main.rand.Next(30, 45), 1, Main.rand.NextFloat(.9f, 1.1f) * .45f, .2f);
                 ECSParticle.DigitalNumber(Projectile.Center.ToRandCirclePos(6), Projectile.velocity / 8f * Main.rand.NextFloat(1, 2),
                     RandLerpColor(Color.CornflowerBlue, Color.LightSkyBlue), 40, 1, 0, 0.85f, 0.16f, Main.rand.Next(1, 3), BlendState.Additive);
             }
@@ -115,7 +113,6 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), pixelColor.ToAddColor((byte)(by - 40)) * opac, oldRot, projTex.Size() / 2f, scale * .99f, 0);
                 SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f), c.ToAddColor(0) * opac * 0.9f, oldRot, projTex.Size() / 2f, scale * .96f, 0);
             }
-
             KivotosMethods.EndShaderAreaPixel();
         }
 

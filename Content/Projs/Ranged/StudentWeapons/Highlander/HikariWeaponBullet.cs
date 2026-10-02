@@ -1,7 +1,10 @@
 ﻿using KivotosMod.Assets.Register;
 using KivotosMod.Cores.ParticlesECS;
+using KivotosMod.Cores.PixelatedRender;
 using KivotosMod.Globals.Classes;
+using KivotosMod.Globals.Database.Enums;
 using KivotosMod.Globals.Database.Paths;
+using KivotosMod.Globals.Graphics;
 using KivotosMod.Globals.Methods;
 using System;
 using Terraria;
@@ -9,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
 {
-    public class HikariWeaponBullet : KivotosPlayerProjs
+    public class HikariWeaponBullet : KivotosPlayerProjs,IPixelatedRenderer
     {
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
         public override string Texture => KivotosTextureAssets.InvisAsset.Path;
@@ -75,35 +78,55 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Highlander
 
             base.OnHitNPC(target, hit, damageDone);
         }
+        
+        public BlendState BlendState => BlendState.AlphaBlend;
+        public KivotosDrawLayer LayerToRenderTo => KivotosDrawLayer.BeforeDusts;
+        public void RenderPixelated(SpriteBatch spriteBatch)
+        {
+            KivotosMethods.EnterShaderAreaPixel(BlendState.Additive);
+            ////这里是强行使用ex98拼凑出来的子弹效果
+            Texture2D tex = KivotosTextureAssets.Particle_SharpTear;
+            Texture2D projTex = tex;
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            Vector2 ori = projTex.Size() / 2f;
+            int drawLength = Projectile.oldPos.Length;
+            Texture2D glowTex = KivotosTextureAssets.Particle_HRStarWhite.Value;
+            SB.EnterShaderArea();
+            float glowScale = Projectile.scale * .20f;
+            SB.FastDraw(glowTex, drawPos, Color.RoyalBlue, Projectile.rotation, glowTex.Size() / 2f, glowScale, 0);
+            SB.FastDraw(glowTex, drawPos, Color.LightSkyBlue, Projectile.rotation, glowTex.Size() / 2f, glowScale * .86f, 0);
+            SB.EndShaderArea();
+            int length = Projectile.oldPos.Length;
+            for (int i = length - 1; i >= 0; i--)
+            {
+                Vector2 lerpPos = Vector2.Lerp(Projectile.oldPos[i], Projectile.oldPos[0], .2f);
+                Vector2 oldPos = lerpPos - Main.screenPosition + Projectile.Size / 2f;
+                float oldRot = Projectile.oldRot[i] + PiOver2;
+                //图竖直
+                float progress = i / (float)length;
+                float xMult = Lerp(0.26f, .05f, (progress));
+                float yMult = Lerp(1f, .35f, progress);
+                Vector2 scale = new Vector2(xMult, yMult) * Projectile.scale * 1.5f;
+                Color c = Color.Lerp(Color.DarkBlue, Color.Lerp(Color.Blue, Color.White, .5f), EasingFunction.EaseInOutQuad(progress));
+                float opac = Lerp(1f, .79f, EasingFunction.EaseInOutExpo(progress));
+                Color pixelColor = Color.Lerp(Color.LightSkyBlue, Color.Lerp(Color.Blue, Color.DeepSkyBlue, 0.65f), EasingFunction.EaseInOutQuad(progress));
+                int by = (int)Lerp(150, 0, progress);
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(1.5f, 1.5f), pixelColor.ToAddColor((byte)(by - 40)) * opac, oldRot, projTex.Size() / 2f, scale * .99f, 0);
+                SB.FastDraw(projTex, oldPos + Main.rand.NextVector2Circular(0.5f, 0.5f), c.ToAddColor(0) * opac * 0.9f, oldRot, projTex.Size() / 2f, scale * .96f, 0);
+            }
+            KivotosMethods.EndShaderAreaPixel();
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             if (Projectile.IsOutScreen())
                 return false;
-            Texture2D line = KivotosTextureAssets.Particle_SharpTear;
-            int count = Projectile.oldPos.Length;
-            float overallScale = 1f;
-            float overallAlpha = 1f;
+            if (!Projectile.Kivotos().FirstFrame)
+                return false;
+            PixelatedRenderManager.BeginDrawProj = true;
 
-            //Copy-right:VFX
-            for (int i = 0; i < count; i++)
-            {
-                float progress = 1 - (float)i / count;
-                float sineScale = MathF.Sin((float)Main.timeForVisualEffects * 0.45f) * 0.1f;
-                Vector2 AfterImagePos = Projectile.oldPos[i] + Projectile.Size / 2f - Main.screenPosition + Main.rand.NextVector2Circular(4.5f, 4.5f); //6f
-                float startScale = 1.1f + sineScale;
-                float rot = Projectile.oldRot[i] + PiOver2;
-                Color between = Color.Lerp(Color.Violet, Color.HotPink, 0.15f);
-                Color col = Color.Lerp(between, Color.Violet, 1f - progress);
-                float easedFadeValue = progress * progress * overallAlpha;
-                Vector2 lineScale = new Vector2(0.20f + 0.4f * progress, 1.25f);
-                lineScale.Y *= overallScale;
-                Vector2 lineScale2 = new Vector2(0.05f + 0.071f * progress, 1.25f);
-                lineScale2.Y *= overallScale;
-                SB.FastDraw(line, AfterImagePos, Color.Black * .4f * easedFadeValue, rot, line.Size() / 2f, lineScale * startScale, SpriteEffects.None);
-                SB.FastDraw(line, AfterImagePos, col.ToAddColor() * .985f * easedFadeValue, rot, line.Size() / 2f, lineScale * startScale, SpriteEffects.None);
-                SB.FastDraw(line, AfterImagePos, Color.White.ToAddColor() * .95f * easedFadeValue, rot, line.Size() / 2f, lineScale2 * startScale, SpriteEffects.None);
-            }
             return false;
         }
+
     }
 }

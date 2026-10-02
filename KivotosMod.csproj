@@ -16,7 +16,7 @@
 	  <Folder Include="Assets\Texture\Items\Tools\" />
 	  <Folder Include="Assets\Texture\Items\Vanity\" />
 	  <Folder Include="Content\Buffs\" />
-	  <Folder Include="Content\Items\Melee\" />
+	  <Folder Include="Content\Items\Weapons\Melee\" />
 	  <Folder Include="Content\Projs\Melee\" />
 	  <Folder Include="Globals\Graphics\ModDusts\" />
 	  <Folder Include="Globals\Instances\Tiles\" />

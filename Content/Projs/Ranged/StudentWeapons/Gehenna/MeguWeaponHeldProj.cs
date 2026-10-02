@@ -1,5 +1,5 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Items.Ranged.StudentWeapons.Gehenna;
+using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Gehenna;
 using KivotosMod.Cores.ScreenEffect;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;

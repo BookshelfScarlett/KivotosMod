@@ -1,5 +1,5 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Items.Ranged.StudentWeapons.Millennium;
+using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Millennium;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;

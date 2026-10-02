@@ -1,5 +1,5 @@
 ﻿using KivotosMod.Assets.Register;
-using KivotosMod.Content.Items.Ranged.StudentWeapons.Highlander;
+using KivotosMod.Content.Items.Weapons.Ranged.StudentWeapons.Highlander;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Globals.Classes;
 using KivotosMod.Globals.Methods;
