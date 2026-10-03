@@ -11,8 +11,8 @@ namespace KivotosMod.Content.Projs.Melee
     public class PracticeHockeyClubHeldProj : KivotosProjsHeld
     {
         protected override DamageClass SetDamageClass => DamageClass.Melee;
-        public override string Texture => GetInstance<PracticeCricketBat>().Texture;
-        protected override int OriginalItemID => ItemType<PracticeCricketBat>();
+        public override string Texture => GetInstance<PracticeHockeyClub>().Texture;
+        protected override int OriginalItemID => ItemType<PracticeHockeyClub>();
         protected override int ExtraUpdates => 5;
         protected virtual float SwingSpeeedRatios => 1f;
         protected virtual float BatScale => 1f;

@@ -1,4 +1,5 @@
-﻿using KivotosMod.Cores.MetaballSystem;
+﻿using KivotosMod.Cores.Halos;
+using KivotosMod.Cores.MetaballSystem;
 using KivotosMod.Cores.ParticlesECS;
 using KivotosMod.Cores.ParticleSystem;
 using KivotosMod.Cores.PixelatedRender;
@@ -18,6 +19,8 @@ namespace KivotosMod.Cores
         {
             //屏幕暗化效果
             On_Main.DrawBackground += ScreenDarknessSystem.DrawScreenDarkness;
+            //光环
+            On_Main.DrawProjectiles += BaseHaloManager.DrawHalo;
             //Metaball层级，可以考虑直接分离出去
             On_Main.DrawDust += MetaballManager.DrawRenderTarget;
             //ECS粒子系统
@@ -28,6 +31,7 @@ namespace KivotosMod.Cores
             On_Main.DrawDust += PixelatedRenderManager.DrawTarget_BeforeDust;
             On_Main.DrawPlayers_AfterProjectiles += PixelatedRenderManager.DrawTarget_BeforePlayers;
         }
+
         public override void Unload()
         {
             On_Main.DrawBackground -= ScreenDarknessSystem.DrawScreenDarkness;

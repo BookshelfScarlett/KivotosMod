@@ -1,7 +1,10 @@
+using KivotosMod.Content.Items.Vanity.Nozomi;
 using KivotosMod.Content.Projs.Ranged;
 using KivotosMod.Content.Projs.Ranged.StudentWeapons.Millennium;
+using KivotosMod.Cores.Halos;
 using KivotosMod.Globals.Database.Paths;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -26,6 +29,12 @@ namespace KivotosMod.Content.Items
             Item.shoot = ProjectileType<GeneralAssaultRifleBullet>();
             Item.shootSpeed = 16;
             Item.autoReuse = true;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            BaseHalo h = new NozomiHalo(player.whoAmI);
+            player.AddHalo(h);
+            return true;
         }
 
         public override void AddRecipes()
