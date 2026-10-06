@@ -14,7 +14,7 @@ namespace KivotosMod.Content.Items.Vanity.Nozomi
             PlayerIndex = playerIndex;
         }
     }
-    public class Halow : ModItem
+    public class Halo : ModItem
     {
         public override void SetDefaults()
         {

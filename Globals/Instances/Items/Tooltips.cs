@@ -14,15 +14,25 @@ namespace KivotosMod.Globals.Instances.Items
             if (KivotosLists.StudentWeaponDictionary.TryGetValue(item.type, out string value))
             {
                 // Modify tooltips for student weapons
-                int index = -1;
                 int firstLine = tooltips.FindIndex(t => t.Name.Contains("Tooltip") && t.Mod == "Terraria");
-                index = firstLine;
-                for (int i = firstLine; i < tooltips.Count; i++)
+                int index;
+                if (firstLine < 0)
                 {
-                    if (tooltips[i].Name.Contains("Tooltip") && tooltips[i].Mod == "Terraria")
-                        index++;
-                    else
-                        break;
+                    // Some items have no vanilla Tooltip* lines. Insert after ItemName instead
+                    // of indexing tooltips[-1].
+                    int itemNameLine = tooltips.FindIndex(t => t.Name == "ItemName" && t.Mod == "Terraria");
+                    index = itemNameLine >= 0 ? itemNameLine + 1 : tooltips.Count;
+                }
+                else
+                {
+                    index = firstLine;
+                    for (int i = firstLine; i < tooltips.Count; i++)
+                    {
+                        if (tooltips[i].Name.Contains("Tooltip") && tooltips[i].Mod == "Terraria")
+                            index++;
+                        else
+                            break;
+                    }
                 }
                 string name = Mod.GetLocalizationKey("Database.StudentNames." + value).ToLangValue();
                 string ownerPrefix = Mod.GetLocalizationKey("Database.OwnerPrefix").ToLangValue();
