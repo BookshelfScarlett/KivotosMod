@@ -1,9 +1,11 @@
-global using Microsoft.Xna.Framework;
+﻿global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using static KivotosMod.Globals.Methods.GlobalHandlers.KivotosGlobalHandlers;
 global using static Microsoft.Xna.Framework.MathHelper;
 global using static Terraria.ModLoader.ModContent;
 using Terraria.ModLoader;
+using System.IO;
+using KivotosMod.Content.Tablet;
 
 
 namespace KivotosMod
@@ -19,6 +21,11 @@ namespace KivotosMod
         public override void Unload()
         {
             Instance = null;
+        }
+
+        public override void HandlePacket(BinaryReader reader, int whoAmI)
+        {
+            TabletNet.HandlePacket(reader, whoAmI);
         }
     }
 }

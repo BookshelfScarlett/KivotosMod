@@ -75,7 +75,7 @@ namespace KivotosMod.Cores.Halos
                 return;
             }
             Player player = Main.player[PlayerIndex];
-            bool illegalPlayer =player.dead||!player.active
+            bool illegalPlayer =player.dead||!player.active;
             KivotosVanitysPlayer kivotosVanitysPlayer = player.GetModPlayer<KivotosVanitysPlayer>();
             if(kivotosVanitysPlayer.VanityName != HaloOwner)
             {

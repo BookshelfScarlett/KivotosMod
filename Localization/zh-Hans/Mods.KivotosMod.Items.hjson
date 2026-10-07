@@ -1,8 +1,23 @@
-TestItem: {
+﻿TestItem: {
 	DisplayName: 调试物品
 	Tooltip:
 		'''
 		一个调试道具，可能会因为版本随时发生变化
 		不过你是怎么看到这个东西的？
 		'''
+}
+
+YuukaHead: {
+	DisplayName: 优香发型
+	Tooltip: "时装：组成优香外观的头部与后发。"
+}
+
+YuukaBody: {
+	DisplayName: 优香制服
+	Tooltip: "时装：组成优香外观的身体、手臂与大衣。"
+}
+
+YuukaBoots: {
+	DisplayName: 优香长靴
+	Tooltip: "时装：组成优香外观的腿部。整套穿戴时仍允许鞋饰与翅膀显示。"
 }

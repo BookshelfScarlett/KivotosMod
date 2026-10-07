@@ -1,4 +1,19 @@
-TestItem: {
+﻿TestItem: {
 	DisplayName: Test Item
 	Tooltip: ""
+}
+
+YuukaHead: {
+	DisplayName: Yuuka Hair
+	Tooltip: "Vanity: Yuuka's head and rear-hair layers."
+}
+
+YuukaBody: {
+	DisplayName: Yuuka Uniform
+	Tooltip: "Vanity: Yuuka's body, composite arms, and coat layers."
+}
+
+YuukaBoots: {
+	DisplayName: Yuuka Boots
+	Tooltip: "Vanity: Yuuka's leg layer. Shoes and wings remain visible with the full set."
 }
