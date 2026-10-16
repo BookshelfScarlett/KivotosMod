@@ -1,0 +1,182 @@
+{
+  "source": "https://github.com/EsotericSoftware/spine-runtimes",
+  "branch": "3.8",
+  "commit": "8b4844bd4b193ba9e54487ed397a777993cbad56",
+  "namespace": "KivotosMod.Runtime.Spine38",
+  "files": [
+    {
+      "path": "spine-csharp/src/Animation.cs",
+      "upstreamSha256": "b7eeffbc1ce793d7d95e1c38cfcdd5d11b33cb23f2c6f69147804c9fc65c2396"
+    },
+    {
+      "path": "spine-csharp/src/AnimationState.cs",
+      "upstreamSha256": "d439d46f3cc8c64f00a5bbdda4fa49e583a67a69f7be494fd7a8cf544f38166e"
+    },
+    {
+      "path": "spine-csharp/src/AnimationStateData.cs",
+      "upstreamSha256": "9f229fe70ac7451b620cb0155b246d8e15e2806676001d1fb92172f8ad5dbf86"
+    },
+    {
+      "path": "spine-csharp/src/Atlas.cs",
+      "upstreamSha256": "662e2f6b892607fd7c3c8eb50e48717ac0c10eccfa452960cb66851076cfe78b"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/AtlasAttachmentLoader.cs",
+      "upstreamSha256": "1895ec19ef02638fb9e7341ed34a06d720fb59fea21dbb398437f761d18d0897"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/Attachment.cs",
+      "upstreamSha256": "6c87372058669f014ce372555a8647be60290415d4a463592c4c7ba3356bae43"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/AttachmentLoader.cs",
+      "upstreamSha256": "cbc25c8561fd7adcaf161963799cc567e1b872fe358ea6cdc6b047b18dbd711c"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/AttachmentType.cs",
+      "upstreamSha256": "a3c2ba9ae8217b2ab6f1bb23e7676d0f0710d9f0f9e119ff442c7cf70fe8922b"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/BoundingBoxAttachment.cs",
+      "upstreamSha256": "e19f906f6e6400e9e318038592d8c04db7337f68fd22f66d26b419955c737658"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/ClippingAttachment.cs",
+      "upstreamSha256": "b2b45da6453a74cfbf516e48310e3290b4b63651f8ffffac0a633163809974ee"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/MeshAttachment.cs",
+      "upstreamSha256": "7ba94a73228da2942e937cf356853109012e66d629e99f3af250711717d3b7b0"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/PathAttachment.cs",
+      "upstreamSha256": "14ee4cede5c113ec7b08b61513a634d3f15d6ad773810dc3ec3fe168b5b61c17"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/PointAttachment.cs",
+      "upstreamSha256": "8d0eac135e011acf3082f759a30c3479c231b0d50dc1c942b43272a1fa6685d5"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/RegionAttachment.cs",
+      "upstreamSha256": "fb96711fadc5efe8de2b8a351e8528f66f229751302dad021089dc76d0405cbd"
+    },
+    {
+      "path": "spine-csharp/src/Attachments/VertexAttachment.cs",
+      "upstreamSha256": "cac41b16b4641f3cb9a567acc804a7557b757635572d37ce2dc2cdc951374a9f"
+    },
+    {
+      "path": "spine-csharp/src/BlendMode.cs",
+      "upstreamSha256": "b286598a3d38a7bf245e764d22ec69d0fa9bc5aa25b1e848a1d0a952e09c2886"
+    },
+    {
+      "path": "spine-csharp/src/Bone.cs",
+      "upstreamSha256": "023ae69220011e92d36590f1fecd5157fcf6a6f70a286ffef92fdcf246ed5f04"
+    },
+    {
+      "path": "spine-csharp/src/BoneData.cs",
+      "upstreamSha256": "80ba7f83538147ce0bad86e264b7b8c43e757c5637d56381622ad58a80617893"
+    },
+    {
+      "path": "spine-csharp/src/Collections/OrderedDictionary.cs",
+      "upstreamSha256": "a0a9e609be43be69d5aee74cfd970260fa3b0e20383314ec643df63d644944c9"
+    },
+    {
+      "path": "spine-csharp/src/ConstraintData.cs",
+      "upstreamSha256": "e965038491e5db0f0069abd1aee84ca50c3de2a9325e13c0db1842fcdb6888cd"
+    },
+    {
+      "path": "spine-csharp/src/Event.cs",
+      "upstreamSha256": "f7cc071c7717767bc0bd71dc2f166745602122075293f1b24befe3ddfd2daabd"
+    },
+    {
+      "path": "spine-csharp/src/EventData.cs",
+      "upstreamSha256": "bd9f483588af4d9c5b391b8599e22aa0b2ac00e84f02b7800a527d011d9e6b18"
+    },
+    {
+      "path": "spine-csharp/src/ExposedList.cs",
+      "upstreamSha256": "4fabd9347283bf8f1146c835ca41eb476229f31a283b2985c6c5ff56d6572bc4"
+    },
+    {
+      "path": "spine-csharp/src/IUpdatable.cs",
+      "upstreamSha256": "2e4ea792dc176fc7aedb730883baa6acae519ae20b7f3319a6e86e50a57fee62"
+    },
+    {
+      "path": "spine-csharp/src/IkConstraint.cs",
+      "upstreamSha256": "e725be91ca1a03672347cf81917c123f9115e0176d8a0a23ad068129b824fb26"
+    },
+    {
+      "path": "spine-csharp/src/IkConstraintData.cs",
+      "upstreamSha256": "8f0c30d1464acc9c0375cd09fb3868dea9f927cf65828e0a0a6b683fb383338c"
+    },
+    {
+      "path": "spine-csharp/src/Json.cs",
+      "upstreamSha256": "782743b3eaf9713379c408f4fe4f2f86f6803b2adb03319165eff53a9f9898ee"
+    },
+    {
+      "path": "spine-csharp/src/MathUtils.cs",
+      "upstreamSha256": "a44fe177bc7161d4c3e4a2438fdbdcd5e0dbbe29f825e91d2a3194bf1cfa5a77"
+    },
+    {
+      "path": "spine-csharp/src/PathConstraint.cs",
+      "upstreamSha256": "1206fa0e9d352a40cca36755afd4a94df182443826ac5c2c1dd6b79ecb33c039"
+    },
+    {
+      "path": "spine-csharp/src/PathConstraintData.cs",
+      "upstreamSha256": "e14f0b6c894bcae86e27920235687336b031d4459d698779948e151b7d52b109"
+    },
+    {
+      "path": "spine-csharp/src/Skeleton.cs",
+      "upstreamSha256": "d7c870054bd95e82fffb4be6c7cb1a345a9bbf6de4d9d21bef6480b35e9ea4c8"
+    },
+    {
+      "path": "spine-csharp/src/SkeletonBinary.cs",
+      "upstreamSha256": "4bbab5821625e7f12c6025eb6d280e51a8ac02dcddeae96deb33065f761281ba"
+    },
+    {
+      "path": "spine-csharp/src/SkeletonBounds.cs",
+      "upstreamSha256": "6ca92ea31d1f35c3bdbf314b262f30bbf8438f70734005e4574b81ee7bca1afd"
+    },
+    {
+      "path": "spine-csharp/src/SkeletonClipping.cs",
+      "upstreamSha256": "3f44b50e180913ce93bccd873b718620980908095a88020351f036224792ba5c"
+    },
+    {
+      "path": "spine-csharp/src/SkeletonData.cs",
+      "upstreamSha256": "6d590e2a823169cc2be16b7b0c114e36a22124c7919e1eaf95ec3faacdec7327"
+    },
+    {
+      "path": "spine-csharp/src/SkeletonJson.cs",
+      "upstreamSha256": "04958f2cc79d1587ed025d6a76fffd7bda390d5364620097a359c6cc7f3efab7"
+    },
+    {
+      "path": "spine-csharp/src/Skin.cs",
+      "upstreamSha256": "ae9f73bccbf1ff685f2725046ac786e41f039bbf1862c262ae7ea6f3df4d2a89"
+    },
+    {
+      "path": "spine-csharp/src/Slot.cs",
+      "upstreamSha256": "b8bc72c76ce63c30313cfe32d9159b38a1c1b054070488a308be8511e4b72ded"
+    },
+    {
+      "path": "spine-csharp/src/SlotData.cs",
+      "upstreamSha256": "440c2fbda3d8b6b6b91e0717438f21c4be6fb6059689cfdc1dc687c04617af0a"
+    },
+    {
+      "path": "spine-csharp/src/TransformConstraint.cs",
+      "upstreamSha256": "ca46f4b54a1e0813f63593d0d2fd0b7b7d0a139e57d8a6ad0bfa907fdf0aa8af"
+    },
+    {
+      "path": "spine-csharp/src/TransformConstraintData.cs",
+      "upstreamSha256": "c4b50e4b3602f41cf064f9cb6ba0c47706d47a596a5d80d0482eb983350627e4"
+    },
+    {
+      "path": "spine-csharp/src/Triangulator.cs",
+      "upstreamSha256": "416c66a3748a130b816392307b85dd8723d094b5f8ab75a7e8e3a69afce85006"
+    }
+  ],
+  "modifications": [
+    "Namespace changed to KivotosMod.Runtime.Spine38; Collections kept within that namespace.",
+    "SkeletonBinary.AllowLegacy3875 opt-in; default upstream rejection remains. Only inspected user Arona asset opts in.",
+    "Skin.OrderedDictionary is fully qualified to avoid ambiguity on newer .NET hosts.",
+    "SharpJson helper namespace isolated; OrderedDictionary namespace starts with global:: to avoid the KivotosMod class shadow."
+  ]
+}

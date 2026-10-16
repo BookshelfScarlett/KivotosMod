@@ -10,6 +10,7 @@ namespace KivotosMod.Cores.PixelatedRender
     public class PixelatedRenderManager : ModSystem
     {
         public static bool BeginDrawProj = false;
+        public static bool IsRenderingToTarget { get; private set; }
         public static RenderTarget2D BeforePlayerTarget;
         public static RenderTarget2D BeforeDustTarget;
         public static RenderTarget2D BeforeProjTarget;
@@ -78,11 +79,21 @@ namespace KivotosMod.Cores.PixelatedRender
             BeforeProjs.Clear();
             BeforePlayers_Addictive.Clear();
             BeforeDusts_Addictive.Clear();
+            BeginDrawBeforePlayers = false;
+            BeginDrawBeforeDusts = false;
+            BeginDrawBeforeProjs = false;
+            BeginDrawBeforePlayers_Addictive = false;
+            BeginDrawBeforeDusts_Addictive = false;
             // 创建像素化矩阵，暂时用不到
             // float pixelScale = 2f;
             // Matrix shrinkMatrix = Matrix.CreateScale(1f / pixelScale, 1f / pixelScale, 1f);
             if (BeginDrawProj)
             {
+                KivotosMethods.ResetRT2D(ref BeforePlayerTarget);
+                KivotosMethods.ResetRT2D(ref BeforeDustTarget);
+                KivotosMethods.ResetRT2D(ref BeforeProjTarget);
+                KivotosMethods.ResetRT2D(ref BeforePlayerTarget_Addictive);
+                KivotosMethods.ResetRT2D(ref BeforeDustTarget_Addictive);
                 // 检查所有弹幕，如果弹幕继承了接口，那就会把这个添加到对应图层表单中
                 foreach (Projectile projectile in Main.ActiveProjectiles)
                 {
@@ -135,30 +146,40 @@ namespace KivotosMod.Cores.PixelatedRender
                     DrawToRenderTarget_Addictive(BeforePlayerTarget_Addictive, BeforePlayers_Addictive);
                     BeginDrawBeforePlayers_Addictive = true;
                 }
-                Main.graphics.GraphicsDevice.SetRenderTarget(null);
                 BeginDrawProj = false;
             }
         }
         public static void DrawToRenderTarget(RenderTarget2D renderTarget, List<IPixelatedRenderer> pixelPrimitives)
         {
-            renderTarget.SwapToTarget();
-            if (pixelPrimitives.Count != 0)
-            {
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null);
-                foreach (var pixelPrimitiveDrawer in pixelPrimitives)
-                    pixelPrimitiveDrawer.RenderPixelated(Main.spriteBatch);
-                Main.spriteBatch.End();
-            }
+            DrawToRenderTarget(renderTarget, pixelPrimitives, BlendState.AlphaBlend);
         }
         public static void DrawToRenderTarget_Addictive(RenderTarget2D renderTarget, List<IPixelatedRenderer> pixelPrimitives)
         {
-            renderTarget.SwapToTarget();
-            if (pixelPrimitives.Count != 0)
+            DrawToRenderTarget(renderTarget, pixelPrimitives, BlendState.Additive);
+        }
+
+        private static void DrawToRenderTarget(RenderTarget2D renderTarget, List<IPixelatedRenderer> pixelPrimitives, BlendState blendState)
+        {
+            if (pixelPrimitives.Count == 0)
+                return;
+
+            GraphicsDevice device = Main.graphics.GraphicsDevice;
+            RenderTargetBinding[] previousTargets = device.GetRenderTargets();
+            if (!renderTarget.SwapToTarget())
+                return;
+
+            IsRenderingToTarget = true;
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, blendState, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null);
+            try
             {
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null);
                 foreach (var pixelPrimitiveDrawer in pixelPrimitives)
                     pixelPrimitiveDrawer.RenderPixelated(Main.spriteBatch);
+            }
+            finally
+            {
                 Main.spriteBatch.End();
+                IsRenderingToTarget = false;
+                device.SetRenderTargets(previousTargets);
             }
         }
 

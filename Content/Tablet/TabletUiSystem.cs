@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,7 +17,7 @@ using Terraria.UI;
 namespace KivotosMod.Content.Tablet;
 
 [Autoload(Side = ModSide.Client)]
-public sealed class TabletUiSystem : ModSystem
+public sealed partial class TabletUiSystem : ModSystem
 {
     private enum TabletPage
     {
@@ -38,26 +39,19 @@ public sealed class TabletUiSystem : ModSystem
 
     private static readonly Rectangle DisplayRect = new(32, 32, 514, 386);
 
-    private static readonly Rectangle HomeShop = new(386, 94, 148, 72);
-    private static readonly Rectangle HomeFormation = new(386, 170, 148, 72);
-    private static readonly Rectangle HomeTravel = new(310, 246, 72, 72);
-    private static readonly Rectangle HomeMessage = new(386, 246, 72, 72);
-    private static readonly Rectangle HomeMission = new(462, 246, 72, 72);
-    private static readonly Rectangle HomeWardrobe = new(310, 322, 72, 72);
-    private static readonly Rectangle HomeUpgrade = new(386, 322, 72, 72);
-    private static readonly Rectangle HomeArchive = new(462, 322, 72, 72);
-
     private static readonly Rectangle ReturnRect = new(50, 48, 36, 34);
     private static readonly Rectangle HomeButtonRect = new(556, 207, 36, 36);
     private static readonly Rectangle SettingsButtonRect = new(514, 40, 32, 20);
 
     // Tablet-local settings overlay.  "Resolution" here is the physical tablet render scale:
     // the authored surface remains 610x450, while the player can render it from 60% to 140%.
-    private static readonly Rectangle SettingsPanelRect = new(156, 126, 298, 198);
+    private static readonly Rectangle SettingsPanelRect = new(156, 126, 298, 258);
     private static readonly Rectangle SettingsBackRect = new(166, 132, 32, 28);
     private static readonly Rectangle SettingsScaleDownRect = new(184, 220, 46, 34);
     private static readonly Rectangle SettingsScaleUpRect = new(380, 220, 46, 34);
     private static readonly Rectangle SettingsResetRect = new(244, 274, 122, 28);
+    private static readonly Rectangle SettingsClockRealRect = new(184, 332, 112, 28);
+    private static readonly Rectangle SettingsClockGameRect = new(314, 332, 112, 28);
 
     private static readonly Rectangle ShopPanelRect = new(302, 76, 240, 308);
     private static readonly Rectangle ShopCreditRect = new(302, 388, 100, 26);
@@ -108,15 +102,11 @@ public sealed class TabletUiSystem : ModSystem
     // from a root below the visible display, producing a large upper-body composition instead of
     // fitting a whole character inside the left pane.  We reproduce that presentation without
     // importing the old UI/portrait code.
-    private static readonly Rectangle HomePortraitRect = new(36, 70, 252, 348);
-    private const float HomePortraitScale = 1.00f;
     // HOME portraits are intentionally anchored lower than Formation.  The previous
     // 34px offset left the head/halo above the visible display after clipping, so the
     // character read as a cropped torso.  116px keeps the authored large portrait scale
     // while framing the face and upper body inside the HOME screen.
     private const float HomePortraitRootOffset = 116f;
-    private static readonly Rectangle HomeStudentLeftRect = new(40, 226, 18, 30);
-    private static readonly Rectangle HomeStudentRightRect = new(262, 226, 18, 30);
 
     public static bool Visible { get; private set; }
 
@@ -135,6 +125,38 @@ public sealed class TabletUiSystem : ModSystem
     private static bool _settingsOpen;
     private static bool _leftWasDown;
     private static bool _escapeWasDown;
+    private static long _previousUiAnimationTimestamp;
+
+    // Two entrances, one tablet surface: the held item and the inventory shortcut.
+    // Inventory mode never requires a ShittimTablet item and never closes the backpack.
+    private static bool _openedFromInventory;
+    private static bool _inventoryEscapeClosing;
+    private static bool _restoreInventoryAfterEscape;
+    private static bool _iconLeftWasDown;
+    private static bool _iconRightWasDown;
+    private static bool _draggingInventoryIcon;
+    // Prevent the same left click that opens the shortcut from reaching an item slot.
+    private static bool _openingShortcutClick;
+    private static Vector2 _inventoryIconDragOffset;
+    private static Asset<Texture2D> _inventoryIconSheet;
+
+    // The opened tablet can also be moved with right-click, independent of the shortcut.
+    private static bool _tabletRightWasDown;
+    private static bool _draggingTablet;
+    private static Vector2 _tabletDragLastMouse;
+
+    // Vanilla inventory slots are processed while drawing. Temporarily move the hit-test
+    // pointer away only during that vanilla layer, then restore it for our tablet/UI.
+    private static bool _inventoryMouseShieldActive;
+    // SHOP records only tooltips produced by the tablet itself. A later vanilla UI
+    // layer may queue inventory button text; restore this item after masking those layers.
+    private static int _tabletTooltipItemType;
+    private static int _savedInventoryMouseX;
+    private static int _savedInventoryMouseY;
+    private static bool _savedInventoryLeft;
+    private static bool _savedInventoryRight;
+    private static bool _savedInventoryLeftRelease;
+    private static bool _savedInventoryRightRelease;
     private static int _selectedStudentIndex;
 
     // 0 = fully put away, OpenCloseTicks = fully presented.  Keeping the timer when the
@@ -165,16 +187,8 @@ public sealed class TabletUiSystem : ModSystem
     private static Asset<Texture2D> _shopBackground;
     private static Asset<Texture2D> _topBar;
     private static Asset<Texture2D> _returnButton;
-    private static Asset<Texture2D> _mainShop;
     private static Asset<Texture2D> _shopSoraForeground;
     private static Asset<Texture2D> _shopSoraSpeechBubble;
-    private static Asset<Texture2D> _mainFormation;
-    private static Asset<Texture2D> _mainMission;
-    private static Asset<Texture2D> _mainTravel;
-    private static Asset<Texture2D> _mainArchive;
-    private static Asset<Texture2D> _mainWardrobe;
-    private static Asset<Texture2D> _mainUpgrade;
-    private static Asset<Texture2D> _mainMessage;
     private static Asset<Texture2D> _shopPanel;
     private static Asset<Texture2D> _productCard;
     private static Asset<Texture2D> _purchaseButton;
@@ -194,8 +208,6 @@ public sealed class TabletUiSystem : ModSystem
     private static Asset<Texture2D> _creditIcon;
     private static Asset<Texture2D> _pyroxeneIcon;
     private static Asset<Texture2D> _settingsButton;
-    private static Asset<Texture2D> _studentLeft;
-    private static Asset<Texture2D> _studentRight;
     private static Asset<Texture2D> _touchEffect;
     private static Asset<Texture2D> _touchParticle;
     private static Asset<Texture2D> _mainNotification;
@@ -216,7 +228,7 @@ public sealed class TabletUiSystem : ModSystem
     private static Asset<Texture2D> _formationStudentButton;
     private static Asset<Texture2D> _formationOutfitButton;
     private static Asset<Texture2D> _formationBond;
-    private static readonly Asset<Texture2D>[] _studentThumbnails = new Asset<Texture2D>[6];
+    private static Asset<Texture2D>[] _studentThumbnails = Array.Empty<Asset<Texture2D>>();
     private static readonly Dictionary<TabletStudentId, Asset<Texture2D>> _studentPortraitBase = new();
     private static readonly Dictionary<TabletStudentId, Asset<Texture2D>> _studentPortraitFace = new();
     private static readonly Dictionary<TabletStudentId, Asset<Texture2D>> _studentPortraitHalo = new();
@@ -234,6 +246,7 @@ public sealed class TabletUiSystem : ModSystem
         _tabletState.Activate();
 
         const AssetRequestMode mode = AssetRequestMode.ImmediateLoad;
+        _inventoryIconSheet = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/ShittimTablet", mode);
         _frame = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/TabletFrameOpen", mode);
         _homeButton = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/TabletHomeButton", mode);
         _mainBackground = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainBackground", mode);
@@ -242,14 +255,6 @@ public sealed class TabletUiSystem : ModSystem
         _shopSoraSpeechBubble = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/ShopSoraSpeechBubble", mode);
         _topBar = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/TopBar", mode);
         _returnButton = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/ReturnButton", mode);
-        _mainShop = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainShop", mode);
-        _mainFormation = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainFormation", mode);
-        _mainMission = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainMission", mode);
-        _mainTravel = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainTravel", mode);
-        _mainArchive = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainArchive", mode);
-        _mainWardrobe = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainWardrobe", mode);
-        _mainUpgrade = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainUpgrade", mode);
-        _mainMessage = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainMessage", mode);
         _shopPanel = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/ShopPanel", mode);
         _productCard = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/ProductCard", mode);
         _purchaseButton = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/PurchaseButton", mode);
@@ -269,8 +274,6 @@ public sealed class TabletUiSystem : ModSystem
         _creditIcon = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/Currency/UnionCredit", mode);
         _pyroxeneIcon = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/Currency/Pyroxene", mode);
         _settingsButton = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/SettingsButton", mode);
-        _studentLeft = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/StudentLeft", mode);
-        _studentRight = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/StudentRight", mode);
         _touchEffect = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/TouchEffect", mode);
         _touchParticle = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/TouchParticle", mode);
         _mainNotification = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/UI/MainNotification", mode);
@@ -292,7 +295,10 @@ public sealed class TabletUiSystem : ModSystem
         _formationOutfitButton = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/Formation/FormationLayer_OutfitButton", mode);
         _formationBond = ModContent.Request<Texture2D>("KivotosMod/Assets/Tablet/Formation/FormationLayer_Bond", mode);
 
-        for (int i = 0; i < TabletStudentCatalog.Students.Count; i++)
+        // Formation entries can grow as students are added. Keep the preview array
+        // sized from the catalog instead of a hardcoded student count.
+        _studentThumbnails = new Asset<Texture2D>[TabletStudentCatalog.Students.Count];
+        for (int i = 0; i < _studentThumbnails.Length; i++)
         {
             TabletStudentInfo student = TabletStudentCatalog.Students[i];
             _studentThumbnails[i] = ModContent.Request<Texture2D>(student.ThumbnailPath, mode);
@@ -315,6 +321,7 @@ public sealed class TabletUiSystem : ModSystem
         };
         for (int i = 0; i < classroomNames.Length; i++)
             _classroomLayers[i] = ModContent.Request<Texture2D>($"KivotosMod/Assets/Tablet/UI/Classroom/{classroomNames[i]}", mode);
+        LoadLegacyPresentation();
 
         string[] categoryNames =
         {
@@ -330,6 +337,17 @@ public sealed class TabletUiSystem : ModSystem
     {
         Visible = false;
         _holdTimer = 0;
+        _openedFromInventory = false;
+        _inventoryEscapeClosing = false;
+        _restoreInventoryAfterEscape = false;
+        _draggingInventoryIcon = false;
+        _openingShortcutClick = false;
+        _draggingTablet = false;
+        _tabletRightWasDown = false;
+        _iconLeftWasDown = false;
+        _iconRightWasDown = false;
+        _inventoryMouseShieldActive = false;
+        _inventoryIconSheet = null;
         _settingsOpen = false;
         _pageTransitionElapsed = -1;
         TouchBursts.Clear();
@@ -345,12 +363,10 @@ public sealed class TabletUiSystem : ModSystem
         ProductQuantities.Clear();
         _frame = _homeButton = _mainBackground = _shopBackground = _topBar = _returnButton = null;
         _shopSoraForeground = _shopSoraSpeechBubble = null;
-        _mainShop = _mainFormation = _mainMission = _mainTravel = _mainArchive = null;
-        _mainWardrobe = _mainUpgrade = _mainMessage = null;
         _shopPanel = _productCard = _purchaseButton = _productPlus = _productMinus = null;
         _currencyPanel = _cartButton = _cartEntry = _cartPlus = _cartMinus = _cartRemove = null;
         _checkoutBackground = _checkoutPanel = _checkoutCancel = _checkoutConfirm = _checkoutCheckbox = null;
-        _creditIcon = _pyroxeneIcon = _settingsButton = _studentLeft = _studentRight = null;
+        _creditIcon = _pyroxeneIcon = _settingsButton = null;
         _touchEffect = _touchParticle = _mainNotification = null;
         _formationBackground = _formationSelectionBackground = _formationTile = _formationTileBackgrounds = null;
         _formationAttackTypes = _formationRoles = _formationNameplateBackground = _formationInfoBackground = null;
@@ -358,8 +374,9 @@ public sealed class TabletUiSystem : ModSystem
         _formationSortButton = _formationSwitchButton = _formationFilterButton = null;
         _formationStudentButton = _formationOutfitButton = _formationBond = null;
         TabletDynamicPortraitRenderer.Unload();
-        for (int i = 0; i < _studentThumbnails.Length; i++)
-            _studentThumbnails[i] = null;
+        UnloadLobby();
+        UnloadLegacyPresentation();
+        _studentThumbnails = Array.Empty<Asset<Texture2D>>();
         _studentPortraitBase.Clear();
         _studentPortraitFace.Clear();
         _studentPortraitHalo.Clear();
@@ -385,12 +402,17 @@ public sealed class TabletUiSystem : ModSystem
             return;
 
         Visible = true;
+        Startup.Start();
+        _previousUiAnimationTimestamp = 0;
         _holdTimer = 0;
         _instance?._tabletInterface?.SetState(_instance._tabletState);
         _draggingScrollbar = false;
         _checkoutPending = false;
         _settingsOpen = false;
         _leftWasDown = Main.mouseLeft;
+        _tabletRightWasDown = Main.mouseRight;
+        _draggingTablet = false;
+        _openingShortcutClick = false;
         _escapeWasDown = false;
         _pageTransitionElapsed = -1;
         TouchBursts.Clear();
@@ -404,24 +426,50 @@ public sealed class TabletUiSystem : ModSystem
         // UpdateUI keeps the tablet suspended until the inventory is closed, then opens normally.
     }
 
+    private static void OpenFromInventory()
+    {
+        if (!Main.playerInventory || Main.gameMenu)
+            return;
+
+        // Open() only initializes the common TabletSurfaceState: it does not select or
+        // manufacture an item, move inventory slots, or change the vanilla inventory flag.
+        if (Visible)
+            ForceClose();
+        Open();
+        _openedFromInventory = true;
+        _openingShortcutClick = Main.mouseLeft;
+        _inventoryEscapeClosing = false;
+        _escapeWasDown = Main.keyState.IsKeyDown(Keys.Escape);
+        SoundEngine.PlaySound(SoundID.MenuOpen);
+    }
+
     // Hard close is reserved for leaving the world/menu.  Normal hotbar deselection is handled
     // by UpdateUI and animates _holdTimer back to zero before the UIState is detached.
     public static void Close() => ForceClose();
 
     private static void ForceClose()
     {
+        _draggingTablet = false;
         _holdTimer = 0;
         FinishClose();
     }
 
     private static void FinishClose()
     {
+        Startup.Reset();
+        _previousUiAnimationTimestamp = 0;
+        _draggingTablet = false;
+        _openingShortcutClick = false;
         Visible = false;
+        _openedFromInventory = false;
+        _inventoryEscapeClosing = false;
         _instance?._tabletInterface?.SetState(null);
         _draggingScrollbar = false;
         _checkoutOpen = false;
         _checkoutPending = false;
         _settingsOpen = false;
+        _lobbyNotice = null;
+        _lobbyCharactersOpen = false;
         _pageTransitionElapsed = -1;
         TouchBursts.Clear();
         TouchSparks.Clear();
@@ -445,34 +493,69 @@ public sealed class TabletUiSystem : ModSystem
             Main.NewText(message, success ? new Color(120, 220, 255) : new Color(255, 120, 120));
     }
 
+    internal static float UiAnimationDelta(long previous, long current)
+    {
+        if (previous == 0) return 0;
+        return Math.Clamp((float)((current - previous) / (double)Stopwatch.Frequency), 0, 0.1f);
+    }
+
     public override void UpdateUI(GameTime gameTime)
     {
         if (Main.gameMenu)
         {
             if (Visible)
                 ForceClose();
+            _draggingInventoryIcon = false;
+            _draggingTablet = false;
+            _restoreInventoryAfterEscape = false;
             return;
         }
 
         Player player = Main.LocalPlayer;
+        bool escapeDown = Main.keyState.IsKeyDown(Keys.Escape);
 
-        // The vanilla backpack/inventory takes priority over the tablet UI.  This is important
-        // for a tablet stored outside the hotbar: the player must be able to open the backpack,
-        // drag it into a hotbar slot, rearrange items, or move it away again without our UI
-        // consuming mouse input or immediately closing Main.playerInventory.
-        //
-        // If the tablet was already open, opening the backpack temporarily puts it away.  When
-        // the backpack closes and the tablet is still the selected held item, the normal
-        // take-out animation starts again from frame zero.
-        if (Main.playerInventory)
+        // Terraria may process Esc before ModSystem.UpdateUI. For the inventory shortcut,
+        // the first Esc MUST return to the still-open backpack instead of closing it.
+        if (_openedFromInventory && escapeDown && !_escapeWasDown && !_inventoryEscapeClosing)
         {
+            _inventoryEscapeClosing = true;
+            _restoreInventoryAfterEscape = true;
+            Main.playerInventory = true;
+            _escapeWasDown = true;
+            _leftWasDown = Main.mouseLeft;
+            _iconLeftWasDown = Main.mouseLeft;
+            _iconRightWasDown = Main.mouseRight;
+            SoundEngine.PlaySound(SoundID.MenuClose);
+            return;
+        }
+
+        if (_restoreInventoryAfterEscape)
+        {
+            if (escapeDown)
+                Main.playerInventory = true;
+            else
+                _restoreInventoryAfterEscape = false;
+        }
+
+        // Only the inventory icon reacts to clicks; it is independent of item ownership.
+        // It is not painted while the tablet is open, so its hitbox cannot cover buttons.
+        UpdateInventoryShortcut(player);
+
+        if (_openedFromInventory && !Main.playerInventory)
+        {
+            // Inventory closed through another control (e.g. the inventory hotkey):
+            // put away the shortcut as well. Esc is handled above with a restore.
+            ForceClose();
+        }
+
+        if (Main.playerInventory && !_openedFromInventory)
+        {
+            // Retain the original held-item behavior: rearranging items in the vanilla
+            // inventory must never open the held device over the backpack.
             if (Visible)
                 ForceClose();
-
-            // Keep edge-trigger state in sync while vanilla owns the mouse/escape key so the
-            // first click after closing the inventory cannot leak through into a tablet button.
             _leftWasDown = Main.mouseLeft;
-            _escapeWasDown = Main.keyState.IsKeyDown(Keys.Escape);
+            _escapeWasDown = escapeDown;
             return;
         }
 
@@ -483,23 +566,35 @@ public sealed class TabletUiSystem : ModSystem
             && player.HeldItem != null
             && player.HeldItem.type == tabletType;
 
-        if (holdingTablet && !Visible)
+        // Shortcut-mode ignores the held item entirely; physical-mode is unchanged.
+        if (holdingTablet && !Visible && !Main.playerInventory)
             Open();
 
         if (!Visible)
+        {
+            _draggingTablet = false;
+            _tabletRightWasDown = Main.mouseRight;
+            _escapeWasDown = escapeDown;
+            _leftWasDown = Main.mouseLeft;
             return;
+        }
 
-        // The held item drives a reversible presentation timer.  Switching slots does not
-        // destroy the UI instantly; it retracts first, exactly like putting the device away.
-        _holdTimer = Math.Clamp(_holdTimer + (holdingTablet ? 1 : -1), 0, OpenCloseTicks);
-
-        if (!holdingTablet && _holdTimer <= 0)
+        bool wantsTablet = (_openedFromInventory && !_inventoryEscapeClosing) || holdingTablet;
+        _holdTimer = Math.Clamp(_holdTimer + (wantsTablet ? 1 : -1), 0, OpenCloseTicks);
+        if (!wantsTablet && _holdTimer <= 0)
         {
             FinishClose();
             return;
         }
 
         UpdatePageTransition();
+        long timestamp = Stopwatch.GetTimestamp();
+        float animationSeconds = UiAnimationDelta(_previousUiAnimationTimestamp, timestamp);
+        _previousUiAnimationTimestamp = timestamp;
+        Startup.Update(animationSeconds);
+        TabletDynamicPortraitRenderer.UpdateSpine38(Mod, animationSeconds);
+        if (_page == TabletPage.Home)
+            UpdateLobby(animationSeconds);
 
         // Let tModLoader establish the exact UI coordinate space first. The tablet then reads
         // its full-screen UIState dimensions for both layout and hit-testing.
@@ -510,16 +605,55 @@ public sealed class TabletUiSystem : ModSystem
         Vector2 mouseTablet = layout.ToTablet(mouseUi);
         Point p = mouseTablet.ToPoint();
         bool insideTablet = new Rectangle(0, 0, TabletWidth, TabletHeight).Contains(p);
-        bool inputEnabled = holdingTablet && FullyOpened && !PageTransitionActive;
+        bool inputEnabled = wantsTablet && FullyOpened && !PageTransitionActive;
 
-        if (insideTablet && holdingTablet)
+        // Right mouse button drags the entire opened tablet, from ANY point on its body.
+        // This works both when held as an item and when opened beside the vanilla backpack.
+        // Left clicks continue to operate HOME / SHOP / Formation while right-dragging.
+        bool rightDown = Main.mouseRight;
+        bool rightPressed = rightDown && !_tabletRightWasDown;
+        _tabletRightWasDown = rightDown;
+        if (!_draggingTablet && rightPressed && wantsTablet && FullyOpened && insideTablet)
+        {
+            _draggingTablet = true;
+            _tabletDragLastMouse = mouseUi;
+            SoundEngine.PlaySound(SoundID.MenuTick);
+        }
+
+        if (_draggingTablet)
+        {
+            if (rightDown && wantsTablet && FullyOpened)
+            {
+                CalculatedStyle root = _instance?._tabletState?.GetDimensions() ?? default;
+                float viewportWidth = root.Width > 1f ? root.Width : Main.screenWidth;
+                float viewportHeight = root.Height > 1f ? root.Height : Main.screenHeight;
+                Vector2 delta = mouseUi - _tabletDragLastMouse;
+                player.GetModPlayer<TabletUiPreferencesPlayer>().MoveTabletOffset(
+                    delta, viewportWidth, viewportHeight,
+                    TabletWidth * layout.Scale, TabletHeight * layout.Scale);
+                _tabletDragLastMouse = mouseUi;
+
+                // Recompute hit testing *after* moving, so buttons and the shield track
+                // the same tablet position during a drag without a one-frame offset.
+                layout = GetLayout();
+                mouseTablet = layout.ToTablet(mouseUi);
+                p = mouseTablet.ToPoint();
+                insideTablet = new Rectangle(0, 0, TabletWidth, TabletHeight).Contains(p);
+            }
+            else
+            {
+                _draggingTablet = false;
+            }
+        }
+
+        if ((insideTablet && wantsTablet) || _draggingTablet)
         {
             player.mouseInterface = true;
             PlayerInput.LockVanillaMouseScroll("KivotosMod:Tablet");
         }
 
         bool leftDown = Main.mouseLeft;
-        bool clicked = leftDown && !_leftWasDown;
+        bool clicked = leftDown && !_leftWasDown && !_draggingTablet;
         bool released = !leftDown && _leftWasDown;
         _leftWasDown = leftDown;
 
@@ -528,8 +662,7 @@ public sealed class TabletUiSystem : ModSystem
             inputEnabled && clicked && DisplayRect.Contains(p),
             mouseTablet);
 
-        bool escapeDown = Main.keyState.IsKeyDown(Keys.Escape);
-        if (inputEnabled && escapeDown && !_escapeWasDown)
+        if (!_openedFromInventory && inputEnabled && !Startup.Visible && escapeDown && !_escapeWasDown)
         {
             if (_settingsOpen)
             {
@@ -542,6 +675,16 @@ public sealed class TabletUiSystem : ModSystem
             }
         }
         _escapeWasDown = escapeDown;
+
+        // The legacy S screen owns display clicks through its entire fade.
+        // Consuming the click here prevents opening a menu underneath the logo.
+        if (Startup.Visible)
+        {
+            if (inputEnabled && clicked && DisplayRect.Contains(p))
+                Startup.Tap();
+            _draggingScrollbar = false;
+            return;
+        }
 
         if (!inputEnabled)
         {
@@ -581,7 +724,7 @@ public sealed class TabletUiSystem : ModSystem
 
         // The gear is available from every tablet page.  Settings is modal: while it is open,
         // clicks cannot leak through to HOME/Shop/Formation controls underneath it.
-        if (SettingsButtonRect.Contains(p))
+        if (SettingsButtonRect.Contains(p) && (_page != TabletPage.Home || (!_lobbyHidden && _lobbyNotice == null && !_lobbyCharactersOpen)))
         {
             _settingsOpen = !_settingsOpen;
             _draggingScrollbar = false;
@@ -615,6 +758,16 @@ public sealed class TabletUiSystem : ModSystem
                 prefs.ResetScale();
                 SoundEngine.PlaySound(SoundID.MenuTick);
             }
+            else if (SettingsClockRealRect.Contains(p))
+            {
+                prefs.SetClockSource(true);
+                SoundEngine.PlaySound(SoundID.MenuTick);
+            }
+            else if (SettingsClockGameRect.Contains(p))
+            {
+                prefs.SetClockSource(false);
+                SoundEngine.PlaySound(SoundID.MenuTick);
+            }
             return;
         }
 
@@ -631,36 +784,7 @@ public sealed class TabletUiSystem : ModSystem
 
         if (_page == TabletPage.Home)
         {
-            // HOME portrait switching is independent from Formation/player appearance.
-            if (HomeStudentLeftRect.Contains(p))
-            {
-                player.GetModPlayer<TabletCompanionPlayer>().Cycle(-1);
-                SoundEngine.PlaySound(SoundID.MenuTick);
-                return;
-            }
-
-            if (HomeStudentRightRect.Contains(p))
-            {
-                player.GetModPlayer<TabletCompanionPlayer>().Cycle(1);
-                SoundEngine.PlaySound(SoundID.MenuTick);
-                return;
-            }
-
-            if (HomeShop.Contains(p))
-            {
-                _shopScrollRow = 0;
-                _selectedCategory = TabletShopCategory.All;
-                _showingCart = false;
-                RequestPage(TabletPage.Shop);
-            }
-            else if (HomeFormation.Contains(p))
-            {
-                TabletStudentAppearancePlayer appearance = player.GetModPlayer<TabletStudentAppearancePlayer>();
-                _selectedStudentIndex = appearance.HasSelection
-                    ? TabletStudentCatalog.FormationIndexOf(appearance.SelectedStudent)
-                    : 0;
-                RequestPage(TabletPage.Formation);
-            }
+            HandleLobbyClick(player, p);
             return;
         }
 
@@ -772,6 +896,13 @@ public sealed class TabletUiSystem : ModSystem
 
     private static void HandleBack()
     {
+        if (_page == TabletPage.Home && (_lobbyNotice != null || _lobbyCharactersOpen || _lobbyHidden))
+        {
+            _lobbyNotice = null;
+            _lobbyCharactersOpen = false;
+            _lobbyHidden = false;
+            return;
+        }
         if (_checkoutOpen)
         {
             if (!_checkoutPending)
@@ -970,21 +1101,271 @@ public sealed class TabletUiSystem : ModSystem
 
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
-        int index = layers.FindIndex(layer => layer.Name == "Vanilla: Mouse Text");
+        // Each vanilla UI layer starts/ends its own SpriteBatch. Do NOT call its Draw()
+        // from a legacy custom layer. Intercept the cursor state only while that original
+        // layer runs, and restore right after it. This protects inventory *buttons* too:
+        // sort/quick-stack, equipment toggles, hotbar, and their hover descriptions.
+        string[] vanillaHitTestLayers =
+        {
+            "Vanilla: Inventory",
+            "Vanilla: Info Accessories Bar",
+            "Vanilla: Settings Button",
+            "Vanilla: Hotbar",
+            "Vanilla: Builder Accessories Bar",
+            "Vanilla: Radial Hotbars",
+            "Vanilla: Mouse Over",
+            // The vanilla emote/chat button is NOT processed by the Inventory layer.
+            // Its tooltip (e.g. GameUI.Emote) is created later by Player Chat.
+            "Vanilla: Player Chat",
+        };
+        foreach (string layerName in vanillaHitTestLayers)
+        {
+            int at = layers.FindIndex(layer => layer.Name == layerName);
+            if (at < 0)
+                continue;
+            layers.Insert(at, new LegacyGameInterfaceLayer(
+                "KivotosMod: Shield Input Before " + layerName,
+                () => { ShieldVanillaInventoryMouse(); return true; }, InterfaceScaleType.UI));
+            layers.Insert(at + 2, new LegacyGameInterfaceLayer(
+                "KivotosMod: Restore Input After " + layerName,
+                () => { RestoreVanillaInventoryMouse(); return true; }, InterfaceScaleType.UI));
+        }
+
+        // Mouse Text can consume queued vanilla tooltip state before the tablet is drawn.
+        // Cancel that state immediately before it is rendered, not only before the
+        // tablet: sort/quick-stack/other native controls may have populated it.
+        int nativeMouseTextIndex = layers.FindIndex(layer => layer.Name == "Vanilla: Mouse Text");
+        if (nativeMouseTextIndex >= 0)
+            layers.Insert(nativeMouseTextIndex, new LegacyGameInterfaceLayer(
+                "KivotosMod: Cancel Covered Vanilla Tooltips",
+                () => { ClearUnderlyingInventoryTooltip(); return true; }, InterfaceScaleType.UI));
+
+        // Draw the physical tablet above the vanilla Mouse Text AND Player Chat layers.
+        // Vanilla may draw some control names directly during those passes, rather than
+        // deferring them through Main.hoverItemName. Drawing after them makes the tablet
+        // a true foreground surface, while leaving the cursor layer above the tablet.
+        int index = layers.FindIndex(layer => layer.Name == "Vanilla: Cursor");
+        if (index < 0)
+            index = layers.FindIndex(layer => layer.Name == "Vanilla: Mouse Text");
         if (index < 0)
             index = layers.Count;
 
         layers.Insert(index, new LegacyGameInterfaceLayer(
-            "KivotosMod: Tablet",
-            delegate
+            "KivotosMod: Inventory Tablet Shortcut and Surface",
+            () =>
             {
-                // Inventory is a vanilla modal surface.  Even if another system toggles it
-                // after UpdateUI ran this frame, never draw the tablet over the backpack.
-                if (Visible && !Main.gameMenu && !Main.playerInventory)
-                    _tabletInterface?.Draw(Main.spriteBatch, new GameTime());
+                // Safety net for an interrupted inventory draw in another mod. Never
+                // leave mouse buttons masked when drawing the tablet or other UI.
+                RestoreVanillaInventoryMouse();
+                // The first Esc dismisses only the tablet, leaving the backpack open.
+                if (_restoreInventoryAfterEscape && Main.keyState.IsKeyDown(Keys.Escape))
+                    Main.playerInventory = true;
+
+                if (!Main.gameMenu)
+                {
+                    if (Main.playerInventory && !_openedFromInventory)
+                        DrawInventoryShortcut(Main.spriteBatch);
+
+                    // The vanilla inventory has already had its chance to enqueue item
+                    // hover text. Suppressing the mouse during its layer prevents clicks,
+                    // but cannot erase tooltip state set in an earlier UI layer. Clear it
+                    // here, BEFORE drawing the tablet, so SHOP can enqueue its own tooltip.
+                    ClearUnderlyingInventoryTooltip();
+                    _tabletTooltipItemType = 0;
+                    if (Visible && (!Main.playerInventory || _openedFromInventory))
+                        _tabletInterface?.Draw(Main.spriteBatch, new GameTime());
+                }
                 return true;
-            },
-            InterfaceScaleType.UI));
+            }, InterfaceScaleType.UI));
+
+        // Late native hover logic can still queue text after the tablet was drawn.
+        // Give the tablet's own SHOP item tooltip priority at the final text boundary.
+        int finalMouseTextIndex = layers.FindIndex(layer => layer.Name == "Vanilla: Interface Logic 4");
+        if (finalMouseTextIndex >= 0)
+            layers.Insert(finalMouseTextIndex, new LegacyGameInterfaceLayer(
+                "KivotosMod: Final Tablet Tooltip Priority",
+                () =>
+                {
+                    if (PointerOverInventoryTablet())
+                    {
+                        int tabletItem = _tabletTooltipItemType;
+                        ClearUnderlyingInventoryTooltip();
+                        if (tabletItem > ItemID.None)
+                            ShowItemTooltip(tabletItem);
+                    }
+                    return true;
+                }, InterfaceScaleType.UI));
+    }
+
+    // Keep inventory hit testing and tooltip suppression on EXACTLY the same rectangle.
+    // The opened tablet's entire body (including its frame) is a modal overlay for the
+    // underlying vanilla inventory, even when the body is being right-dragged.
+    private static bool PointerOverInventoryTablet()
+    {
+        if (!_openedFromInventory || !Visible || Main.gameMenu || !Main.playerInventory)
+            return false;
+
+        Rectangle bounds = GetLayout().ToScreen(new Rectangle(0, 0, TabletWidth, TabletHeight));
+        return bounds.Contains(GetUiMousePosition().ToPoint()) || _draggingTablet;
+    }
+
+    private static void ClearUnderlyingInventoryTooltip()
+    {
+        if (!PointerOverInventoryTablet())
+            return;
+
+        // Inventory mouse shielding alone cannot cancel a tooltip that vanilla or
+        // another UI layer already queued before the tablet was drawn.  These fields
+        // feed Terraria's later Mouse Text stage.  Do not change Main.mouseItem (the
+        // actual item held by the cursor) and do not clear once the tablet is drawn:
+        // SHOP's own item tooltip is intentionally allowed to replace this state.
+        Main.hoverItemName = string.Empty;
+        Main.HoverItem = new Item();
+        Main.mouseText = false;
+    }
+
+    private static void ShieldVanillaInventoryMouse()
+    {
+        if (_restoreInventoryAfterEscape && Main.keyState.IsKeyDown(Keys.Escape))
+            Main.playerInventory = true;
+
+        _inventoryMouseShieldActive = false;
+        if (!Main.playerInventory || Main.gameMenu)
+            return;
+
+        Vector2 mouse = GetUiMousePosition();
+        bool coverByTablet = PointerOverInventoryTablet();
+        bool coverByIcon = (!_openedFromInventory
+            && (GetInventoryShortcutBounds().Contains(mouse.ToPoint()) || _draggingInventoryIcon))
+            || (_openingShortcutClick && Main.mouseLeft && GetInventoryShortcutBounds().Contains(mouse.ToPoint()));
+        if (!coverByTablet && !coverByIcon)
+            return;
+
+        // Only suppress input while vanilla's inventory layer is executing. The tablet's
+        // custom UI has already read the real mouse input during UpdateUI, and receives
+        // the real cursor again as soon as the inventory layer completes.
+        Player player = Main.LocalPlayer;
+        if (player != null && player.active)
+            player.mouseInterface = true;
+        PlayerInput.LockVanillaMouseScroll("KivotosMod:TabletInventoryShield");
+
+        _savedInventoryMouseX = Main.mouseX;
+        _savedInventoryMouseY = Main.mouseY;
+        _savedInventoryLeft = Main.mouseLeft;
+        _savedInventoryRight = Main.mouseRight;
+        _savedInventoryLeftRelease = Main.mouseLeftRelease;
+        _savedInventoryRightRelease = Main.mouseRightRelease;
+        _inventoryMouseShieldActive = true;
+
+        // Both pointer location AND click/release flags are blocked. Otherwise a cached
+        // slot hover or a quick-move/r-click can still act on a covered inventory slot.
+        Main.mouseX = -100000;
+        Main.mouseY = -100000;
+        Main.mouseLeft = false;
+        Main.mouseRight = false;
+        Main.mouseLeftRelease = false;
+        Main.mouseRightRelease = false;
+    }
+
+    private static void RestoreVanillaInventoryMouse()
+    {
+        if (!_inventoryMouseShieldActive)
+            return;
+        Main.mouseX = _savedInventoryMouseX;
+        Main.mouseY = _savedInventoryMouseY;
+        Main.mouseLeft = _savedInventoryLeft;
+        Main.mouseRight = _savedInventoryRight;
+        Main.mouseLeftRelease = _savedInventoryLeftRelease;
+        Main.mouseRightRelease = _savedInventoryRightRelease;
+        _inventoryMouseShieldActive = false;
+    }
+
+    private static Rectangle GetInventoryShortcutBounds()
+    {
+        CalculatedStyle root = _instance?._tabletState?.GetDimensions() ?? default;
+        int width = Math.Max(42, (int)(root.Width > 1f ? root.Width : Main.screenWidth));
+        int height = Math.Max(42, (int)(root.Height > 1f ? root.Height : Main.screenHeight));
+        Player player = Main.LocalPlayer;
+        Vector2 position = player != null && player.active
+            ? player.GetModPlayer<TabletUiPreferencesPlayer>().GetInventoryIconPosition(width, height)
+            : new Vector2(Math.Min(735f, width - 42f), 52f);
+        return new Rectangle((int)MathF.Round(position.X), (int)MathF.Round(position.Y), 38, 36);
+    }
+
+    private static void UpdateInventoryShortcut(Player player)
+    {
+        bool leftDown = Main.mouseLeft;
+        if (!leftDown)
+            _openingShortcutClick = false;
+        bool rightDown = Main.mouseRight;
+        bool leftPressed = leftDown && !_iconLeftWasDown;
+        bool rightPressed = rightDown && !_iconRightWasDown;
+        _iconLeftWasDown = leftDown;
+        _iconRightWasDown = rightDown;
+
+        if (!Main.playerInventory || _openedFromInventory || _restoreInventoryAfterEscape ||
+            player == null || !player.active || player.dead)
+        {
+            _draggingInventoryIcon = false;
+            return;
+        }
+
+        Rectangle bounds = GetInventoryShortcutBounds();
+        Vector2 mouse = GetUiMousePosition();
+        bool hovered = bounds.Contains(mouse.ToPoint());
+        if (hovered || _draggingInventoryIcon)
+        {
+            player.mouseInterface = true;
+            PlayerInput.LockVanillaMouseScroll("KivotosMod:InventoryTabletIcon");
+        }
+
+        if (rightPressed && hovered)
+        {
+            _draggingInventoryIcon = true;
+            _inventoryIconDragOffset = mouse - new Vector2(bounds.X, bounds.Y);
+            SoundEngine.PlaySound(SoundID.MenuTick);
+        }
+
+        if (_draggingInventoryIcon)
+        {
+            if (rightDown)
+            {
+                CalculatedStyle root = _instance?._tabletState?.GetDimensions() ?? default;
+                int width = (int)(root.Width > 1f ? root.Width : Main.screenWidth);
+                int height = (int)(root.Height > 1f ? root.Height : Main.screenHeight);
+                player.GetModPlayer<TabletUiPreferencesPlayer>().SetInventoryIconPosition(
+                    mouse - _inventoryIconDragOffset, width, height);
+            }
+            else
+            {
+                _draggingInventoryIcon = false;
+            }
+            return;
+        }
+
+        if (leftPressed && hovered)
+            OpenFromInventory();
+    }
+
+    private static void DrawInventoryShortcut(SpriteBatch sb)
+    {
+        if (_inventoryIconSheet == null)
+            return;
+
+        Rectangle bounds = GetInventoryShortcutBounds();
+        bool hovered = bounds.Contains(GetUiMousePosition().ToPoint()) || _draggingInventoryIcon;
+        Texture2D pixel = TextureAssets.MagicPixel.Value;
+        sb.Draw(pixel, bounds, hovered ? new Color(71, 139, 200, 225) : new Color(32, 49, 99, 210));
+        sb.Draw(pixel, new Rectangle(bounds.X + 2, bounds.Y + 2, bounds.Width - 4, bounds.Height - 4),
+            new Color(20, 29, 56, 230));
+        // Frame 11 of the existing 34x(23*24) item art is the illuminated Shittim Tablet.
+        sb.Draw(_inventoryIconSheet.Value, new Rectangle(bounds.X + 2, bounds.Y + 6, 34, 24),
+            new Rectangle(0, 11 * 24, 34, 24), Color.White);
+        if (hovered)
+        {
+            Utils.DrawBorderString(sb, "左键：打开平板  右键拖动：移动图标",
+                new Vector2(bounds.X, bounds.Bottom + 5), Color.White, 0.68f);
+        }
     }
 
     private static void DrawTabletSurface(SpriteBatch sb)
@@ -995,21 +1376,28 @@ public sealed class TabletUiSystem : ModSystem
         Layout layout = GetLayout();
         Vector2 mouseTablet = layout.ToTablet(GetUiMousePosition());
 
+        // The authored bezel is transparent after its 30-31px inner lip. Fill behind
+        // the DISPLAY plus a 2px bleed so fractional UI scaling cannot expose the
+        // underlying vanilla inventory through a 1px gap at the top / left edges.
+        DrawSolid(sb, new Rectangle(DisplayRect.X - 2, DisplayRect.Y - 2,
+            DisplayRect.Width + 4, DisplayRect.Height + 4), new Color(16, 63, 103), layout);
+
         if (_page == TabletPage.Shop)
             DrawTexture(sb, _shopBackground.Value, DisplayRect, layout);
         else if (_page == TabletPage.Formation)
             DrawNativeCentered(sb, _formationBackground.Value, DisplayRect, layout, new Rectangle(130, 2, 514, 386));
         else
-            DrawClassroomBackground(sb, layout);
+            DrawLobbyBackground(sb, layout);
 
         if (_page == TabletPage.Home)
-            DrawHome(sb, layout, mouseTablet);
+            DrawLobbyHome(sb, layout, mouseTablet);
         else if (_page == TabletPage.Shop)
             DrawShop(sb, layout, mouseTablet);
         else
             DrawFormation(sb, layout, mouseTablet);
 
-        DrawTopBar(sb, layout, mouseTablet);
+        if (_page != TabletPage.Home)
+            DrawTopBar(sb, layout, mouseTablet);
 
         // Return sits above the top bar so the bar can never cover it.
         if (_page == TabletPage.Shop || _page == TabletPage.Formation)
@@ -1019,33 +1407,10 @@ public sealed class TabletUiSystem : ModSystem
             DrawSettingsOverlay(sb, layout, mouseTablet);
 
         DrawPageTransitionOverlay(sb, layout);
+        DrawStartupScreen(sb, layout);
         DrawTouchFeedback(sb, layout);
         DrawPowerOverlay(sb, layout);
         DrawFrame(sb, layout, mouseTablet);
-    }
-
-    private static void DrawHome(SpriteBatch sb, Layout layout, Vector2 mouseTablet)
-    {
-        // The legacy home screen always had a live companion portrait in the left half.
-        // It is drawn before the buttons so the right-side HOME controls remain on top.
-        TabletCompanionPlayer companion = Main.LocalPlayer.GetModPlayer<TabletCompanionPlayer>();
-        TabletStudentInfo companionStudent = TabletStudentCatalog.Get(companion.Companion);
-        DrawTabletPortrait(sb, companionStudent, HomePortraitRect, layout, mouseTablet,
-            HomePortraitScale, HomePortraitRootOffset, DisplayRect);
-
-        DrawHomeButton(sb, _mainShop.Value, HomeShop, "Shop", true, mouseTablet, layout);
-        DrawHomeButton(sb, _mainFormation.Value, HomeFormation, "Formation", true, mouseTablet, layout);
-        DrawHomeButton(sb, _mainTravel.Value, HomeTravel, "Travel", false, mouseTablet, layout);
-        DrawHomeButton(sb, _mainMessage.Value, HomeMessage, "Message", false, mouseTablet, layout);
-        DrawHomeButton(sb, _mainMission.Value, HomeMission, "Mission", false, mouseTablet, layout);
-        DrawHomeButton(sb, _mainWardrobe.Value, HomeWardrobe, "Wardrobe", false, mouseTablet, layout);
-        DrawHomeButton(sb, _mainUpgrade.Value, HomeUpgrade, "Upgrade", false, mouseTablet, layout);
-        DrawHomeButton(sb, _mainArchive.Value, HomeArchive, "Archive", false, mouseTablet, layout);
-
-        // Notification red dots are intentionally disabled for now.
-
-        DrawStudentSwitchButton(sb, _studentLeft.Value, HomeStudentLeftRect, HomeStudentLeftRect.Contains(mouseTablet.ToPoint()), layout);
-        DrawStudentSwitchButton(sb, _studentRight.Value, HomeStudentRightRect, HomeStudentRightRect.Contains(mouseTablet.ToPoint()), layout);
     }
 
     private static void DrawFormation(SpriteBatch sb, Layout layout, Vector2 mouseTablet)
@@ -1632,6 +1997,13 @@ public sealed class TabletUiSystem : ModSystem
         DrawSettingsButton(sb, SettingsResetRect, "Reset 100%",
             SettingsResetRect.Contains(mouseTablet.ToPoint()), true, layout);
 
+        DrawText(sb, "时钟来源", new Vector2(SettingsPanelRect.X + 24, 309),
+            new Color(48, 68, 93), 0.36f, layout);
+        DrawSettingsButton(sb, SettingsClockRealRect, "现实时间",
+            SettingsClockRealRect.Contains(mouseTablet.ToPoint()), true, layout, prefs.UseRealTimeClock);
+        DrawSettingsButton(sb, SettingsClockGameRect, "游戏时间",
+            SettingsClockGameRect.Contains(mouseTablet.ToPoint()), true, layout, !prefs.UseRealTimeClock);
+
         DrawCenteredText(sb, "Back / ESC / gear: close",
             new Vector2(SettingsPanelRect.Center.X, SettingsPanelRect.Bottom - 20),
             new Color(90, 108, 130), 0.29f, layout, bold: false);
@@ -1643,10 +2015,13 @@ public sealed class TabletUiSystem : ModSystem
         string text,
         bool hover,
         bool enabled,
-        Layout layout)
+        Layout layout,
+        bool selected = false)
     {
         Color fill = !enabled
             ? new Color(172, 183, 198, 210)
+            : selected
+                ? new Color(36, 154, 191)
             : hover
                 ? new Color(76, 120, 190, 255)
                 : new Color(91, 113, 158, 255);
@@ -1657,7 +2032,13 @@ public sealed class TabletUiSystem : ModSystem
 
     private static void DrawFrame(SpriteBatch sb, Layout layout, Vector2 mouseTablet)
     {
-        DrawTexture(sb, _frame.Value, new Rectangle(0, 0, TabletWidth, TabletHeight), layout);
+        Texture2D frame = _frame.Value;
+        DrawTexture(sb, frame, new Rectangle(0, 0, TabletWidth, TabletHeight), layout);
+
+        // FIX14: the actual seam was the INNER bezel at Y=30/31, not the topmost
+        // Y=0/1 outline. The supplied TabletFrameOpen.png resource is corrected at
+        // those two rows, so no extra SpriteBatch overlay is needed here.
+
         Texture2D tex = _homeButton.Value;
         int frameWidth = tex.Width / 2;
         bool hover = HomeButtonRect.Contains(mouseTablet.ToPoint());
@@ -1833,6 +2214,7 @@ public sealed class TabletUiSystem : ModSystem
 
         // Use Terraria's own HoverItem/MouseText pipeline so the shop tooltip contains the same
         // damage, knockback, use speed, rarity, modded tooltip lines and description as inventory hover.
+        _tabletTooltipItemType = itemType;
         Item sample = ContentSamples.ItemsByType[itemType].Clone();
         Main.HoverItem = sample;
         Main.hoverItemName = sample.Name;
@@ -1846,6 +2228,11 @@ public sealed class TabletUiSystem : ModSystem
         Rectangle source = new(250, 0, DisplayRect.Width, DisplayRect.Height);
         for (int i = 0; i < _classroomLayers.Length; i++)
         {
+            if (i == 2)
+            {
+                DrawLegacyPresentationPass(sb, layout, startup: false);
+                continue;
+            }
             Texture2D tex = _classroomLayers[i].Value;
             sb.Draw(tex, layout.ToScreen(DisplayRect), source, Color.White);
         }
@@ -2025,6 +2412,9 @@ public sealed class TabletUiSystem : ModSystem
         // spill outside the current UI viewport.  The lower clamp only protects tiny windows.
         float scale = MathHelper.Clamp(Math.Min(requestedScale, fit), 0.55f, 1.40f);
         Vector2 origin = rootPos + new Vector2((uiWidth - TabletWidth * scale) * 0.5f, (uiHeight - TabletHeight * scale) * 0.5f);
+        if (localPlayer != null && localPlayer.active)
+            origin += localPlayer.GetModPlayer<TabletUiPreferencesPlayer>().GetTabletOffset(
+                uiWidth, uiHeight, TabletWidth * scale, TabletHeight * scale);
 
         // Raise/lower the entire physical tablet from the bottom of the screen with an OutQuad
         // curve.  At progress 0 its authored center is one UI-screen below the resting position.

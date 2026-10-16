@@ -9,12 +9,15 @@ namespace KivotosMod.Content.Tablet;
 /// </summary>
 public enum TabletStudentId : byte
 {
-    Yuuka,
-    Hoshino,
-    Shiroko,
-    Arona,
-    Sora,
-    Plana,
+    // These values are persisted in existing character data. Do not renumber.
+    Yuuka = 0,
+    Hoshino = 1,
+    Shiroko = 2,
+    Arona = 3,
+    Sora = 4,
+    Plana = 5,
+    Hina = 6,
+    Noa = 7,
 }
 
 public sealed class TabletStudentInfo
@@ -131,6 +134,25 @@ public static class TabletStudentCatalog
             new Microsoft.Xna.Framework.Vector2(34f, 52f),
             new Microsoft.Xna.Framework.Vector2(0f, -97f)),
 
+        new(
+            TabletStudentId.Hina, "Hina Sorasaki", "Hina", "Gehenna", 7, 1, 2,
+            "KivotosMod/Assets/Tablet/Students/Yuuka/Thumbnail",
+            true,
+            "KivotosMod/Assets/Tablet/Students/Yuuka/Portrait/Base",
+            "KivotosMod/Assets/Tablet/Students/Yuuka/Portrait/Face",
+            "KivotosMod/Assets/Tablet/Students/Yuuka/Portrait/Halo",
+            2, 9,
+            new Microsoft.Xna.Framework.Vector2(0f, -263f),
+            new Microsoft.Xna.Framework.Vector2(122f, 203f),
+            new Microsoft.Xna.Framework.Vector2(0f, -99f),
+            new Microsoft.Xna.Framework.Vector2(34f, 54f),
+            new Microsoft.Xna.Framework.Vector2(-16f, -99f)),
+
+        // Only player-format artwork was supplied for Noa. The Formation card
+        // displays a sprite-derived thumbnail until full portrait assets arrive.
+        new(TabletStudentId.Noa, "诺亚", "诺亚", "Millennium", 7, 3, 4,
+            "KivotosMod/Assets/Tablet/Students/Noa/Thumbnail"),
+
         new(TabletStudentId.Arona, "Arona", "Arona", "Schale", 3, 0, 0,
             "KivotosMod/Assets/Tablet/Students/Arona/Thumbnail"),
         new(TabletStudentId.Sora, "Sora", "Sora", "Angel 24", 4, 0, 0,
@@ -140,11 +162,13 @@ public static class TabletStudentCatalog
     };
 
     // Unit Formation is a player-appearance picker, not the HOME companion roster.
-    // Keep only the three FIX6-era playable students in the grid. Companion/portrait
-    // entries are a separate concern and are not presented as player outfits.
+    // Entries with playable player-format sprites appear here; companion portraits
+    // are a separate concern and do not imply a playable outfit.
     public static readonly IReadOnlyList<TabletStudentInfo> FormationStudents = new TabletStudentInfo[]
     {
         Get(TabletStudentId.Yuuka),
+        Get(TabletStudentId.Noa),
+        Get(TabletStudentId.Hina),
         Get(TabletStudentId.Shiroko),
         Get(TabletStudentId.Hoshino),
     };

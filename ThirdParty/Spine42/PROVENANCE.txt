@@ -1,0 +1,7 @@
+Source: https://github.com/EsotericSoftware/spine-runtimes
+Branch: 4.2
+Commit: e7dc1435fa4a0083ab431f1b28e083c14a1f5c68
+The namespace was changed to KivotosMod.Runtime.Spine42 to avoid collisions with other mods.
+Copyright and license notices are preserved in every source file.
+
+2026-10-12 integration fix: SharpJson helper namespace isolated into KivotosMod.Runtime.Spine42.SharpJson.

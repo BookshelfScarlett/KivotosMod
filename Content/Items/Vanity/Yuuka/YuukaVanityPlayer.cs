@@ -20,7 +20,6 @@ public sealed class YuukaVanityPlayer : ModPlayer
         PlayerDrawLayers.BackAcc.Hide();
         PlayerDrawLayers.Backpacks.Hide();
         PlayerDrawLayers.BalloonAcc.Hide();
-        PlayerDrawLayers.Carpet.Hide();
         PlayerDrawLayers.FaceAcc.Hide();
         PlayerDrawLayers.FrontAccBack.Hide();
         PlayerDrawLayers.FrontAccFront.Hide();
@@ -40,6 +39,7 @@ public sealed class YuukaVanityPlayer : ModPlayer
         PlayerDrawLayers.ArmorLongCoat.Hide();
 
         // Intentionally NOT hidden:
+        // PlayerDrawLayers.Carpet                 -> functional Flying Carpet remains visible.
         // PlayerDrawLayers.Shoes                  -> footwear accessories may stay visible.
         // PlayerDrawLayers.Wings                  -> wings may stay visible.
         // HeldItem / ArmOverItem / ProjectileOverArm -> weapons continue to work visually.

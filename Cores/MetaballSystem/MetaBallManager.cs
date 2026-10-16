@@ -70,6 +70,12 @@ namespace KivotosMod.Cores.MetaballSystem
 
             foreach (BaseMetaball baseMetaBall in MetaballList)
             {
+                if (baseMetaBall.Active())
+                    KivotosMethods.ResetRT2D(ref baseMetaBall.AlphaTexture);
+            }
+
+            foreach (BaseMetaball baseMetaBall in MetaballList)
+            {
                 if (!baseMetaBall.Active())
                     continue;
                 if (baseMetaBall.SetPority)

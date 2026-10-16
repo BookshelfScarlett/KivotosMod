@@ -1,4 +1,4 @@
-﻿TestItem: {
+TestItem: {
 	DisplayName: 调试物品
 	Tooltip:
 		'''
@@ -9,15 +9,70 @@
 
 YuukaHead: {
 	DisplayName: 优香发型
-	Tooltip: "时装：组成优香外观的头部与后发。"
+	Tooltip: 时装：组成优香外观的头部与后发。
 }
 
 YuukaBody: {
 	DisplayName: 优香制服
-	Tooltip: "时装：组成优香外观的身体、手臂与大衣。"
+	Tooltip: 时装：组成优香外观的身体、手臂与大衣。
 }
 
 YuukaBoots: {
 	DisplayName: 优香长靴
-	Tooltip: "时装：组成优香外观的腿部。整套穿戴时仍允许鞋饰与翅膀显示。"
+	Tooltip: 时装：组成优香外观的腿部。整套穿戴时仍允许鞋饰与翅膀显示。
+}
+
+Halo: {
+	// DisplayName: Halo
+	// Tooltip: ""
+}
+
+Pyroxene: {
+	// DisplayName: 青辉石
+	// Tooltip: 1 青辉石 = 10000 联合币 = 1 金币
+}
+
+UnionCredit: {
+	// DisplayName: 联合币
+	// Tooltip: 1 联合币 = 1 铜币
+}
+
+DeliveryPackage: {
+	// DisplayName: Delivery Package
+	// Tooltip: ""
+}
+
+ShittimTablet: {
+	// DisplayName: 什亭之匣
+	// Tooltip: 拿在手中时打开平板；切换到其他物品时关闭
+}
+
+HinaBody: {
+	// DisplayName: Hina Body
+	// Tooltip: ""
+}
+
+HinaBoots: {
+	// DisplayName: Hina Boots
+	// Tooltip: ""
+}
+
+HinaHead: {
+	// DisplayName: Hina Head
+	// Tooltip: ""
+}
+
+NoaHead: {
+	// Tooltip: ""
+	// DisplayName: Noa Head
+}
+
+NoaBoots: {
+	// Tooltip: ""
+	// DisplayName: Noa Boots
+}
+
+NoaBody: {
+	// Tooltip: ""
+	// DisplayName: Noa Body
 }

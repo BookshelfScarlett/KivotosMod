@@ -1,1 +1,4 @@
-Projectiles.EyeofHorusHeldProj.DisplayName: Eyeof Horus Held Proj
+Projectiles: {
+	EyeofHorusHeldProj.DisplayName: Eyeof Horus Held Proj
+	DeliveryDroneProjectile.DisplayName: Delivery Drone Projectile
+}

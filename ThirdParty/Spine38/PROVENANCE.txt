@@ -1,0 +1,9 @@
+Source: https://github.com/EsotericSoftware/spine-runtimes
+Branch: 3.8
+Commit: 8b4844bd4b193ba9e54487ed397a777993cbad56
+Namespace: KivotosMod.Runtime.Spine38
+Modifications: namespace isolation, legacy 3.8.75 opt-in for validated user asset, qualified OrderedDictionary for .NET compatibility.
+Copyright and license headers remain intact. Original license: LICENSE.txt.
+Upstream legacy export note: https://github.com/EsotericSoftware/spine-runtimes/issues/2428
+
+2026-10-12 integration fix: SharpJson helper namespace isolated into KivotosMod.Runtime.Spine38.SharpJson.

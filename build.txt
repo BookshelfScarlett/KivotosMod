@@ -1,3 +1,4 @@
 displayName = KivotosMod
 author = HiDa
 version = 0.1
+buildIgnore = Tools/*

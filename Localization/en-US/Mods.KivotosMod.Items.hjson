@@ -1,19 +1,74 @@
-﻿TestItem: {
+TestItem: {
 	DisplayName: Test Item
 	Tooltip: ""
 }
 
 YuukaHead: {
 	DisplayName: Yuuka Hair
-	Tooltip: "Vanity: Yuuka's head and rear-hair layers."
+	Tooltip: Vanity: Yuuka's head and rear-hair layers.
 }
 
 YuukaBody: {
 	DisplayName: Yuuka Uniform
-	Tooltip: "Vanity: Yuuka's body, composite arms, and coat layers."
+	Tooltip: Vanity: Yuuka's body, composite arms, and coat layers.
 }
 
 YuukaBoots: {
 	DisplayName: Yuuka Boots
-	Tooltip: "Vanity: Yuuka's leg layer. Shoes and wings remain visible with the full set."
+	Tooltip: Vanity: Yuuka's leg layer. Shoes and wings remain visible with the full set.
+}
+
+Halo: {
+	DisplayName: Halo
+	Tooltip: ""
+}
+
+Pyroxene: {
+	DisplayName: 青辉石
+	Tooltip: 1 青辉石 = 10000 联合币 = 1 金币
+}
+
+UnionCredit: {
+	DisplayName: 联合币
+	Tooltip: 1 联合币 = 1 铜币
+}
+
+DeliveryPackage: {
+	DisplayName: Delivery Package
+	Tooltip: ""
+}
+
+ShittimTablet: {
+	DisplayName: 什亭之匣
+	Tooltip: 拿在手中时打开平板；切换到其他物品时关闭
+}
+
+HinaBody: {
+	DisplayName: Hina Body
+	Tooltip: ""
+}
+
+HinaBoots: {
+	DisplayName: Hina Boots
+	Tooltip: ""
+}
+
+HinaHead: {
+	DisplayName: Hina Head
+	Tooltip: ""
+}
+
+NoaHead: {
+	Tooltip: ""
+	DisplayName: Noa Head
+}
+
+NoaBoots: {
+	Tooltip: ""
+	DisplayName: Noa Boots
+}
+
+NoaBody: {
+	Tooltip: ""
+	DisplayName: Noa Body
 }

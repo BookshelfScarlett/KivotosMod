@@ -8,6 +8,7 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Tools\**\*.cs" />
 	  <AdditionalFiles Remove="Assets\Texture\Items\Weapons\Misc\**" />
 	  <Compile Remove="Assets\Texture\Items\Weapons\Misc\**" />
 	  <EmbeddedResource Remove="Assets\Texture\Items\Weapons\Misc\**" />

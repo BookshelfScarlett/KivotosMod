@@ -13,6 +13,9 @@ namespace KivotosMod.Globals.Classes
     /// </summary>
     public abstract class KivotosRangedWeaponProjectile : ModProjectile, ILocalizedModType
     {
+        private Vector2 _lastSyncedAim;
+        private int _lastSyncedDirection;
+
         public Player Owner => Main.player[Projectile.owner];
         public override string LocalizationCategory => LocalizationsDatabase.Projs.StudentWeapons;
         /// <summary>
@@ -75,6 +78,7 @@ namespace KivotosMod.Globals.Classes
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.SetUpHeldProj(ProjExtraUpdates);
+            Projectile.netImportant = true;
             ExSD();
         }
         protected virtual void ExSD() { }
@@ -87,6 +91,8 @@ namespace KivotosMod.Globals.Classes
         protected virtual void ProjAI()
         {
             UpdatePlayerState();
+            if (!Projectile.active)
+                return;
             //处理玩家手持该武器时的状态
             UpdateHeldProjectile();
             //后坐力动画
@@ -163,7 +169,7 @@ namespace KivotosMod.Globals.Classes
         protected virtual void UpdatePlayerState()
         {
             //手持物品不对
-            if (Owner.IsHolding(OriginalItemID) && !Owner.CCed && !Owner.dead)
+            if (Owner.active && Owner.IsHolding(OriginalItemID) && !Owner.CCed && !Owner.dead)
                 Projectile.timeLeft = 2;
             else
                 Projectile.Kill();
@@ -216,6 +222,7 @@ namespace KivotosMod.Globals.Classes
             Timer = 0;
             RecoilTimer = AttackSpeed;
             Projectile.ContinuouslyUpdateDamageStats = true;
+            Projectile.netUpdate = true;
         }
         /// <summary>
         /// 武器的实际攻击效果
@@ -233,14 +240,28 @@ namespace KivotosMod.Globals.Classes
         {
             if (Projectile.IsMe())
             {
-                Projectile.rotation = Owner.ToMouseVector2().ToRotation();
-                Projectile.spriteDirection = Projectile.direction = (Main.MouseWorld.X > Owner.Center.X).ToDirectionInt();
-                Owner.ChangeDir(Projectile.direction);
-                Owner.heldProj = Projectile.whoAmI;
-                Owner.ControlPlayerArm(Projectile.rotation);
-                Projectile.Center = Owner.MountedCenter;
-                Projectile.position.Y += Owner.gfxOffY;
+                Vector2 aim = Owner.ToMouseVector2();
+                int direction = (Main.MouseWorld.X > Owner.Center.X).ToDirectionInt();
+                if (Vector2.DistanceSquared(_lastSyncedAim, aim) > 0.0001f
+                    || _lastSyncedDirection != direction)
+                {
+                    Projectile.netUpdate = true;
+                    _lastSyncedAim = aim;
+                    _lastSyncedDirection = direction;
+                }
+                // Velocity carries the aim through Terraria's standard projectile packet.
+                Projectile.velocity = aim;
             }
+
+            Projectile.rotation = Projectile.velocity.ToSafeNormalize().ToRotation();
+            Projectile.direction = (Projectile.velocity.X > 0f).ToDirectionInt();
+            Projectile.spriteDirection = Projectile.direction;
+            Owner.ChangeDir(Projectile.direction);
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.ControlPlayerArm(Projectile.rotation);
+            // Every peer anchors the gun to the owner; recoil must never accumulate in world space.
+            Projectile.Center = Owner.MountedCenter;
+            Projectile.position.Y += Owner.gfxOffY;
         }
         /// <summary>
         /// 武器后坐力动画的进程控制
@@ -250,7 +271,7 @@ namespace KivotosMod.Globals.Classes
         {
             float progress = Utils.GetLerpValue(AttackSpeed, 0, RecoilTimer, true);
             float pullback;
-            float rot = (Projectile.Center - Main.MouseWorld).ToRotation() * Owner.gravDir;
+            float rot = (Projectile.rotation + Pi) * Owner.gravDir;
             if (progress > RecoilWeaponPullbackRatios)
             {
                 float pro = (1 - progress) / (1 - RecoilWeaponPullbackRatios);

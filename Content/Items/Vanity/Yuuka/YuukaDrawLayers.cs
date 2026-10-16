@@ -61,6 +61,65 @@ public sealed class YuukaBackHairLayer : PlayerDrawLayer
     }
 }
 
+
+/// <summary>
+/// The revised Yuuka art has a separate, single-frame 40x56 halo.
+/// It uses the same 40px player-frame origin and head transforms as the hair/head,
+/// so it follows the player when looking left, aiming, moving, or flipping.
+/// </summary>
+[Autoload(Side = ModSide.Client)]
+public sealed class YuukaHaloLayer : PlayerDrawLayer
+{
+    private static Asset<Texture2D>? _halo;
+
+    public override bool GetDefaultVisibility(PlayerDrawSet drawInfo)
+        => !drawInfo.drawPlayer.dead
+           && !drawInfo.drawPlayer.ghost
+           && YuukaVanitySet.HeadVisible(drawInfo.drawPlayer);
+
+    // Draw above Yuuka's custom head/front hair, rather than underneath it.
+    public override Position GetDefaultPosition()
+        => new AfterParent(PlayerDrawLayers.Head);
+
+    public override bool IsHeadLayer => true;
+
+    protected override void Draw(ref PlayerDrawSet drawInfo)
+    {
+        Player player = drawInfo.drawPlayer;
+        _halo ??= ModContent.Request<Texture2D>(
+            "KivotosMod/Content/Items/Vanity/Yuuka/YuukaHalo",
+            AssetRequestMode.ImmediateLoad);
+
+        Texture2D texture = _halo.Value;
+        Vector2 position = drawInfo.helmetOffset
+            + new Vector2(
+                (int)(drawInfo.Position.X - Main.screenPosition.X - player.bodyFrame.Width / 2f + player.width / 2f),
+                (int)(drawInfo.Position.Y - Main.screenPosition.Y + player.height - player.bodyFrame.Height + 4f))
+            + player.headPosition
+            + drawInfo.headVect;
+
+        // The new halo sits a little too close to the head when using the exact same
+        // anchor as the face/hair layer. Raise it slightly so it reads as floating above
+        // the head instead of贴头.
+        position.Y -= 4f;
+
+        DrawData halo = new(
+            texture,
+            position,
+            new Rectangle(0, 0, texture.Width, texture.Height),
+            drawInfo.colorArmorHead,
+            player.headRotation,
+            drawInfo.headVect,
+            1f,
+            drawInfo.playerEffect,
+            0f)
+        {
+            shader = drawInfo.cHead
+        };
+        drawInfo.DrawDataCache.Add(halo);
+    }
+}
+
 /// <summary>
 /// Draws the supplied legacy 40x1120 torso and coat sheets immediately before Terraria's
 /// native composite-body layer. The native YuukaBody_Body texture contains the supplied

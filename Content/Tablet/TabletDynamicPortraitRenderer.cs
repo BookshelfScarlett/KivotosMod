@@ -67,11 +67,76 @@ internal static class TabletDynamicPortraitRenderer
 
     private static readonly Dictionary<string, Asset<Texture2D>> Assets = new(StringComparer.Ordinal);
     private static Rectangle? _activeClipBounds;
+    private static TabletSpine38Scene _arona38;
+    private static bool _arona38LoadFailed;
+    private static TabletSpine38Scene _sora38;
+    private static bool _sora38LoadFailed;
+
+    public static void UpdateSpine38(Mod mod, float seconds)
+    {
+        if (_arona38 == null && !_arona38LoadFailed)
+        {
+            try { _arona38 = new TabletSpine38Scene(mod); }
+            catch (Exception exception)
+            {
+                _arona38LoadFailed = true;
+                mod.Logger.Error("Unable to load the supplied Arona Spine 3.8 asset.", exception);
+            }
+        }
+        if (_sora38 == null && !_sora38LoadFailed)
+        {
+            try { _sora38 = new TabletSpine38Scene(mod, sora: true); }
+            catch (Exception exception)
+            {
+                _sora38LoadFailed = true;
+                mod.Logger.Error("Unable to load the supplied Sora Spine 3.8 asset.", exception);
+            }
+        }
+        _arona38?.Update(seconds);
+        _sora38?.Update(seconds);
+    }
+
+    public static bool DrawArona38(SpriteBatch sb, Func<Vector2, Vector2> toScreen, float uiScale,
+        Vector2 centerTop, float fullHeight, Rectangle clip, Vector2 mouseTablet)
+        => DrawSpine38(_arona38, sb, toScreen, uiScale, centerTop, fullHeight, clip, mouseTablet);
+
+    private static bool DrawSpine38(TabletSpine38Scene scene, SpriteBatch sb, Func<Vector2, Vector2> toScreen,
+        float uiScale, Vector2 centerTop, float fullHeight, Rectangle clip, Vector2 mouseTablet)
+    {
+        if (scene == null) return false;
+        Rectangle bounds = scene.Bounds;
+        float scale = fullHeight / Math.Max(1, bounds.Height);
+        Vector2 anchor = new(centerTop.X - (bounds.X + bounds.Width / 2f) * scale,
+            centerTop.Y + (bounds.Y + bounds.Height) * scale);
+        Rectangle screenClip = new(
+            (int)MathF.Floor(toScreen(new Vector2(clip.X, clip.Y)).X),
+            (int)MathF.Floor(toScreen(new Vector2(clip.X, clip.Y)).Y),
+            Math.Max(1, (int)MathF.Ceiling(clip.Width * uiScale)), Math.Max(1, (int)MathF.Ceiling(clip.Height * uiScale)));
+        // Both pointer and anchor are in tablet coordinates. Invert the exact
+        // drawing transform here, including the skeleton's upward Y axis.
+        scene.LookAt((mouseTablet.X - anchor.X) / scale, (anchor.Y - mouseTablet.Y) / scale);
+        scene.Draw(sb, toScreen(anchor), scale * uiScale, screenClip);
+        return true;
+    }
+
+    public static bool BlinkArona38()
+    {
+        if (_arona38 == null) return false;
+        _arona38.Blink();
+        return true;
+    }
 
     public static void Unload()
     {
         Assets.Clear();
         _activeClipBounds = null;
+        TabletSpine38Scene arona = _arona38;
+        _arona38 = null;
+        _arona38LoadFailed = false;
+        TabletSpine38Scene sora = _sora38;
+        _sora38 = null;
+        _sora38LoadFailed = false;
+        Main.QueueMainThreadAction(() => { arona?.Dispose(); sora?.Dispose(); });
     }
 
     public static bool Draw(
@@ -92,9 +157,13 @@ internal static class TabletDynamicPortraitRenderer
             switch (id)
             {
                 case TabletStudentId.Arona:
+                    if (DrawArona38(sb, toScreen, uiScale, new Vector2(tabletBounds.Center.X, tabletBounds.Top),
+                        tabletBounds.Height * 1.8f * portraitScale, clipBounds ?? tabletBounds, mouseTablet)) return true;
                     DrawArona(sb, toScreen, uiScale, tabletBounds, mouseTablet, portraitScale, rootYOffset);
                     return true;
                 case TabletStudentId.Sora:
+                    if (DrawSpine38(_sora38, sb, toScreen, uiScale, new Vector2(tabletBounds.Center.X, tabletBounds.Top),
+                        tabletBounds.Height * 1.8f * portraitScale, clipBounds ?? tabletBounds, mouseTablet)) return true;
                     DrawSora(sb, toScreen, uiScale, tabletBounds, mouseTablet, portraitScale, rootYOffset);
                     return true;
                 default:

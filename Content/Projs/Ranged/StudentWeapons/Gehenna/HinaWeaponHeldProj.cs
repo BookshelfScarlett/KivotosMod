@@ -21,17 +21,9 @@ namespace KivotosMod.Content.Projs.Ranged.StudentWeapons.Gehenna
         public override float RecoilWeaponPullbackRatios => base.RecoilWeaponPullbackRatios;
         protected override void UpdateHeldProjectile()
         {
-            if (Projectile.IsMe())
-            {
-                Projectile.rotation = Owner.ToMouseVector2().ToRotation();
-                Projectile.spriteDirection = Projectile.direction = (Main.MouseWorld.X > Owner.Center.X).ToDirectionInt();
-                Owner.ChangeDir(Projectile.direction);
-                Owner.heldProj = Projectile.whoAmI;
-                float offset = Owner.direction > 0 ? PiOver4 : -PiOver4;
-                Owner.ControlPlayerArm(Projectile.rotation + offset);
-                Projectile.Center = Owner.MountedCenter;
-                Projectile.position.Y += Owner.gfxOffY;
-            }
+            base.UpdateHeldProjectile();
+            float offset = Owner.direction > 0 ? PiOver4 : -PiOver4;
+            Owner.ControlPlayerArm(Projectile.rotation + offset);
         }
         protected override void UpdateWeaponUsing()
         {

@@ -89,20 +89,24 @@ namespace KivotosMod.Globals.Methods
         {
             return srcVel.ToRandVelocity(randRads, Main.rand.NextFloat(minSpeed, maxSpeed));
         }
+        // Offscreen pixels are transformed when the target is composited into the world.
+        private static Matrix DrawTransform => global::KivotosMod.Cores.PixelatedRender.PixelatedRenderManager.IsRenderingToTarget
+            ? Matrix.Identity : Main.GameViewMatrix.TransformationMatrix;
+
         public static void EnterShaderArea(this SpriteBatch SB)
         {
             SB.End();
-            SB.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            SB.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, DrawTransform);
         }
         public static void EnterShaderArea(this SpriteBatch SB, SpriteSortMode mode, BlendState blendState)
         {
             SB.End();
-            SB.Begin(mode, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            SB.Begin(mode, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, DrawTransform);
         }
         public static void EnterShaderArea(this SpriteBatch SB, BlendState blendState)
         {
             SB.End();
-            SB.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            SB.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, DrawTransform);
         }
         public static void EndShaderArea(this SpriteBatch SB)
         {
@@ -120,7 +124,7 @@ namespace KivotosMod.Globals.Methods
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null);
         }
         public static void BeginDefault(this SpriteBatch SB) =>
-          SB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+          SB.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, DrawTransform);
         public static Color RandLerpColor(this Color c1, Color c2) => Color.Lerp(c1, c2, Main.rand.NextFloat());
         public static Vector2 RandVector2() => Main.rand.NextFloat(TwoPi).ToRotationVector2();
         public static RenderTarget2D NewRT2D(float Mult = 1f)
@@ -143,17 +147,14 @@ namespace KivotosMod.Globals.Methods
             gD.Clear(Color.Transparent);
             return true;
         }
-        public static void ResetRT2D(this RenderTarget2D rt)
+        public static void ResetRT2D(ref RenderTarget2D rt)
         {
-            Vector2 size = rt.Size();
-            Vector2 ScreenSize = new Vector2(Main.screenWidth, Main.screenHeight);
-            if (size != ScreenSize)
-            {
-                Main.QueueMainThreadAction(() =>
-                {
-                    rt = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
-                });
-            }
+            // Called on the drawing thread, before binding the target.
+            if (rt != null && !rt.IsDisposed && rt.Width == Main.screenWidth && rt.Height == Main.screenHeight)
+                return;
+
+            rt?.Dispose();
+            rt = NewRT2D();
         }
         public static Vector2 GetScreenSize
         {

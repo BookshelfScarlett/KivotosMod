@@ -73,7 +73,17 @@ namespace KivotosMod.Globals.Classes
         public Color BackgroundEdgeColor;
         public Color TextColor;
         public Color TextEdgeColor;
+        // Transient render-only cache, refreshed by ModifyTooltips for this item instance.
+        // Never share an old tooltip list with a cloned inventory item.
         public IReadOnlyList<TooltipLine> CacheTooltipList = null;
+
+        public override ModItem Clone(Item newEntity)
+        {
+            StudentWeaponClass clone = (StudentWeaponClass)base.Clone(newEntity);
+            clone.CacheTooltipList = null;
+            return clone;
+        }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             CacheTooltipList = tooltips;
@@ -102,6 +112,9 @@ namespace KivotosMod.Globals.Classes
         }
         public override void HoldItem(Player player)
         {
+            // Held projectiles are owner-created and replicated by Terraria.
+            if (player.whoAmI != Main.myPlayer)
+                return;
             if (player.HasProj(Item.shoot))
                 return;
             int projDamage = (int)player.GetTotalDamage<RangedDamageClass>().ApplyTo(Item.damage);
